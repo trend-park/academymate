@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://trend-park.github.io/academymate/sitemap.xml
