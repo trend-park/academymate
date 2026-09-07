@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>학원메이트</title>
+    <link>https://trend-park.github.io/academymate/</link>
+    <description>지역·과목별 학원 정보를 안내하는 학원메이트</description>
+    <language>ko</language>
+    <lastBuildDate>Mon, 07 Sep 2026 22:11:03 +0900</lastBuildDate>
+    <item>
+      <title>학원메이트 – 지역·과목별 학원 안내</title>
+      <link>https://trend-park.github.io/academymate/</link>
+      <guid isPermaLink="true">https://trend-park.github.io/academymate/</guid>
+      <description>지역·과목별로 학원을 고를 때 볼 것과 학년별 학습 방향을 정리하고, 그 지역에서 수업하는 학원을 안내합니다.</description>
+      <pubDate>Mon, 07 Sep 2026 22:11:03 +0900</pubDate>
+    </item>
+    <item>
+      <title>전체 지역 | 학원메이트</title>
+      <link>https://trend-park.github.io/academymate/regions/</link>
+      <guid isPermaLink="true">https://trend-park.github.io/academymate/regions/</guid>
+      <description>학원메이트에서 안내 중인 지역과 과목 목록입니다.</description>
+      <pubDate>Mon, 07 Sep 2026 22:11:03 +0900</pubDate>
+    </item>
+    <item>
+      <title>사이트 소개 | 학원메이트</title>
+      <link>https://trend-park.github.io/academymate/about/</link>
+      <guid isPermaLink="true">https://trend-park.github.io/academymate/about/</guid>
+      <description>학원메이트는 지역·과목별 학원 정보를 안내하는 정보 제공 사이트입니다.</description>
+      <pubDate>Mon, 07 Sep 2026 22:11:03 +0900</pubDate>
+    </item>
+    <item>
+      <title>장지동 학원 안내 | 학원메이트</title>
+      <link>https://trend-park.github.io/academymate/jangji-dong/</link>
+      <guid isPermaLink="true">https://trend-park.github.io/academymate/jangji-dong/</guid>
+      <description>서울 송파구 장지동의 과목별 학원 안내 페이지입니다.</description>
+      <pubDate>Mon, 07 Sep 2026 22:11:03 +0900</pubDate>
+    </item>
+    <item>
+      <title>[장지동 초등영어] 삼성영어 메이플문현 – 문현초·문정동·장지동 초등 영어학원 | 학원메이트</title>
+      <link>https://trend-park.github.io/academymate/jangji-dong/elementary-english/</link>
+      <guid isPermaLink="true">https://trend-park.github.io/academymate/jangji-dong/elementary-english/</guid>
+      <description>장지동·문정동 초등 영어학원 삼성영어 메이플문현. 문현초 인근, 아이 수준을 확인한 뒤 맞는 단계에서 시작하는 초등 영어. 듣기·말하기·읽기·쓰기를 함께 배웁니다. 상담 02-403-9905</description>
+      <pubDate>Mon, 07 Sep 2026 22:11:03 +0900</pubDate>
+    </item>
+  </channel>
+</rss>
