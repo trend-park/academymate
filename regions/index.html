@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전체 지역 | 학원메이트</title>
+<meta name="description" content="학원메이트에서 안내 중인 지역과 과목 목록입니다.">
+<meta name="keywords" content="">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://trend-park.github.io/academymate/regions/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="학원메이트">
+<meta property="og:title" content="전체 지역 | 학원메이트">
+<meta property="og:description" content="학원메이트에서 안내 중인 지역과 과목 목록입니다.">
+<meta property="og:url" content="https://trend-park.github.io/academymate/regions/">
+
+<meta property="og:locale" content="ko_KR">
+
+
+<style>
+:root{--ink:#1f2a44;--ink-2:#41506b;--muted:#6b7688;--line:#e3e8ef;--bg:#ffffff;--soft:#f3f7f6;--soft-2:#eaf2f0;
+--primary:#0e7c7b;--primary-dark:#0a5f5e;--accent:#f5b301;--accent-ink:#5b4300}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.75;word-break:keep-all;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+/* header */
+.top{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:5}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:18px;letter-spacing:-0.02em;color:var(--ink)}
+.brand i{width:26px;height:26px;border-radius:7px;background:var(--primary);display:inline-block;position:relative}
+.brand i:after{content:"";position:absolute;left:7px;top:7px;width:12px;height:12px;border-radius:3px;background:var(--accent)}
+.nav{display:flex;gap:18px;font-size:14px}
+.nav a{text-decoration:none;color:var(--ink-2)}
+.nav a:hover{color:var(--primary)}
+.crumb{font-size:13px;color:var(--muted);margin:20px 0 8px}
+.crumb a{text-decoration:none}
+.crumb span{margin:0 6px}
+/* hero */
+h1{font-size:32px;line-height:1.3;letter-spacing:-0.02em;margin:0 0 12px;text-wrap:balance}
+.lead{font-size:17px;color:var(--ink-2);margin:0 0 18px;max-width:64ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.chips span{font-size:13px;background:var(--soft);color:var(--ink-2);padding:6px 12px;border-radius:999px}
+/* toc */
+.toc{background:var(--soft);border-radius:12px;padding:18px 22px;margin:0 0 36px}
+.toc b{display:block;font-size:14px;color:var(--primary-dark);letter-spacing:.04em;margin-bottom:8px}
+.toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px;font-size:15px}
+.toc li{margin:3px 0;break-inside:avoid}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--primary)}
+/* sections */
+h2{font-size:23px;line-height:1.35;letter-spacing:-0.01em;margin:44px 0 14px;padding-bottom:10px;border-bottom:2px solid var(--primary)}
+h3{font-size:17px;margin:24px 0 8px;color:var(--primary-dark)}
+p{margin:0 0 14px;max-width:70ch}
+ul.plain{padding-left:20px;margin:0 0 14px}
+ul.plain li{margin:4px 0}
+.note{background:var(--soft-2);border-left:4px solid var(--primary);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0 8px}
+.grid figure{margin:0}
+.grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.grid.three{grid-template-columns:1fr 1fr 1fr}
+.grid.three img{aspect-ratio:auto;object-fit:contain;border:1px solid var(--line);background:#fff}
+figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+.hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:0 0 8px}
+/* academy card */
+.card{border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:18px 0 26px;background:#fff;box-shadow:0 1px 2px rgba(31,42,68,.04)}
+.card .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--accent-ink);background:var(--accent);padding:3px 9px;border-radius:6px;margin-bottom:8px}
+.card h3{margin:0 0 6px;font-size:21px;color:var(--ink)}
+.card .sub{color:var(--muted);font-size:14px;margin-bottom:14px}
+.meta{display:grid;grid-template-columns:110px 1fr;gap:6px 12px;font-size:15px;margin:0}
+.meta dt{color:var(--muted)}
+.meta dd{margin:0}
+.meta a{color:var(--primary-dark)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:14.5px;padding:10px 16px;border-radius:8px;background:var(--primary);color:#fff}
+.btn:hover{background:var(--primary-dark)}
+.btn.ghost{background:#fff;color:var(--primary-dark);border:1px solid var(--primary)}
+/* table */
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0 18px;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--line);padding:10px 10px;text-align:left;vertical-align:middle}
+thead th{background:var(--soft);color:var(--ink-2);font-weight:700;text-align:center}
+tbody td{text-align:center}
+table.kv th{width:32%;background:var(--soft);font-weight:700;color:var(--ink-2)}
+table.kv td{text-align:left}
+/* reviews */
+.review{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin-bottom:10px;font-size:15px}
+.review b{display:block;font-size:13px;color:var(--muted);margin-top:6px;font-weight:500}
+/* faq */
+.faq details{border-bottom:1px solid var(--line);padding:12px 0}
+.faq summary{cursor:pointer;font-weight:700;font-size:15.5px}
+.faq p{margin:8px 0 0;font-size:15px}
+/* cta */
+.cta{background:var(--ink);color:#fff;border-radius:14px;padding:28px 24px;margin:40px 0 20px}
+.cta h2{border:0;margin:0 0 6px;padding:0;color:#fff;font-size:22px}
+.cta p{color:#c9d2e3;margin-bottom:16px}
+.cta .btn{background:var(--accent);color:var(--accent-ink)}
+.cta .btn.ghost{background:transparent;color:#fff;border-color:#8e9bb5}
+/* related */
+.related{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.related a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:15px;color:var(--ink)}
+.related a small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.related a:hover{border-color:var(--primary)}
+.related a.soon{color:var(--muted);border-style:dashed}
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 46px;font-size:13px;color:var(--muted)}
+footer .links{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+footer a{text-decoration:none}
+/* home */
+.list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.list a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:18px 18px;color:var(--ink)}
+.list a b{display:block;font-size:16px}
+.list a span{font-size:13.5px;color:var(--muted)}
+.list a:hover{border-color:var(--primary);background:var(--soft)}
+@media (max-width:640px){h1{font-size:26px}.toc ol{columns:1}.grid,.related,.list{grid-template-columns:1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}.meta{grid-template-columns:90px 1fr}.nav{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/academymate/"><i></i>학원메이트</a>
+  <nav class="nav"><a href="/academymate/regions/">지역별 학원</a><a href="/academymate/about/">사이트 소개</a></nav>
+</div></header>
+<main class="wrap">
+
+<div class="crumb"><a href="/academymate/">홈</a><span>›</span>전체 지역</div>
+<h1>전체 지역</h1>
+<p class="lead">현재 안내 중인 지역과 과목입니다. 지역은 계속 추가됩니다.</p>
+<h2>서울 송파구</h2>
+<div class="list">
+  <a href="/academymate/jangji-dong/"><b>장지동</b><span>초등영어</span></a>
+</div>
+
+</main>
+<footer><div class="wrap">
+  <div class="links"><a href="/academymate/">홈</a><a href="/academymate/regions/">전체 지역</a><a href="/academymate/about/">사이트 소개</a></div>
+  <div>학원메이트 · 지역·과목별 학원 정보를 안내하는 정보 제공 사이트입니다. 학원 정보는 각 학원이 제공한 자료와 교육청 등록 정보를 바탕으로 정리했으며, 교습비 등 세부 내용은 상담 시 학원에 확인하시기 바랍니다.</div>
+  <div>© 2026 학원메이트</div>
+</div></footer>
+</body>
+</html>
