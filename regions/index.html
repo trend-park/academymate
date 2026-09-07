@@ -8,6 +8,8 @@
 <meta name="keywords" content="">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://trend-park.github.io/academymate/regions/">
+<link rel="icon" type="image/png" sizes="64x64" href="/academymate/images/favicon.png">
+<link rel="apple-touch-icon" href="/academymate/images/favicon-192.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="학원메이트">
 <meta property="og:title" content="전체 지역 | 학원메이트">
@@ -29,9 +31,8 @@ img{max-width:100%;display:block}
 /* header */
 .top{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:5}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
-.brand{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:18px;letter-spacing:-0.02em;color:var(--ink)}
-.brand i{width:26px;height:26px;border-radius:7px;background:var(--primary);display:inline-block;position:relative}
-.brand i:after{content:"";position:absolute;left:7px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:900;font-size:20px;letter-spacing:-0.04em;color:#1e2a5a}
+.brand svg{width:30px;height:27px;display:block}
 .nav{display:flex;gap:18px;font-size:14px}
 .nav a{text-decoration:none;color:var(--ink-2)}
 .nav a:hover{color:var(--primary)}
@@ -62,7 +63,14 @@ ul.plain li{margin:4px 0}
 .grid figure{margin:0}
 .grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
 .grid.three{grid-template-columns:1fr 1fr 1fr}
-.grid.three img{aspect-ratio:auto;object-fit:contain;border:1px solid var(--line);background:#fff}
+.grid.three img{aspect-ratio:1/1.05;object-fit:cover;object-position:top;border:1px solid var(--line);background:#fff}
+.grid.director{align-items:stretch}
+.grid.director figure{display:flex;flex-direction:column}
+.grid.director .ph{position:relative;flex:1;min-height:220px;border-radius:10px;overflow:hidden}
+.grid.director img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center top}
+.grid.director p{margin-bottom:18px}
+.grid.director figcaption{flex:none}
+@media (max-width:640px){.grid.director .ph{min-height:0;aspect-ratio:3/4}}
 figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
 .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:0 0 8px}
 /* academy card */
@@ -117,10 +125,11 @@ footer a{text-decoration:none}
 .list a:hover{border-color:var(--primary);background:var(--soft)}
 @media (max-width:640px){h1{font-size:26px}.toc ol{columns:1}.grid,.related,.list{grid-template-columns:1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}.meta{grid-template-columns:90px 1fr}.nav{display:none}}
 </style>
+
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="/academymate/"><i></i>학원메이트</a>
+  <a class="brand" href="/academymate/"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#1e2a5a"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>학원메이트</a>
   <nav class="nav"><a href="/academymate/regions/">지역별 학원</a><a href="/academymate/about/">사이트 소개</a></nav>
 </div></header>
 <main class="wrap">
