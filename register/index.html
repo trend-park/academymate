@@ -228,9 +228,9 @@ footer a{text-decoration:none}
   <label>등록증 · 교습비 게시표 사진 (선택, 나중에 보내셔도 됩니다)<input type="file" name="attachment" accept="image/*,.pdf"></label>
 
   <label class="agree"><input type="checkbox" name="개인정보 동의" value="동의" required> 입력한 정보를 학원 페이지 제작·안내 목적으로만 사용하는 데 동의합니다.</label>
-  <div class="btns"><button type="submit" class="btn" data-track="register-submit">등록 신청 보내기</button><a class="btn ghost" href="mailto:trendpark@naver.com">메일로 대신 보내기</a></div>
+  <div class="btns"><button type="submit" class="btn" data-track="register-submit">등록 신청 보내기</button></div>
 </form>
-<p style="font-size:13px;color:var(--muted);margin-top:14px">보내신 내용은 trendpark@naver.com로 접수됩니다. 최고·최초·유일 같은 표현, 기간을 정한 결과 약속, 확인할 수 없는 실적은 페이지에 싣지 않습니다.</p>
+<p style="font-size:13px;color:var(--muted);margin-top:14px">최고·최초·유일 같은 표현, 기간을 정한 결과 약속, 확인할 수 없는 실적은 페이지에 싣지 않습니다.</p>
 
 </main>
 <script>document.addEventListener("click",function(ev){var a=ev.target.closest("a[data-track]");if(!a)return;var d={method:a.getAttribute("data-track"),page:location.pathname,label:(a.textContent||"").trim().slice(0,40)};if(window.gtag){gtag("event","contact_click",d);}if(window.wcs&&window.wcs.event){try{wcs.event("contact_click",d.method);}catch(e){}}});</script>
