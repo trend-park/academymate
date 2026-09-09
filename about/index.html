@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>사이트 소개 | 학원메이트</title>
-<meta name="description" content="학원메이트는 지역·과목별 학원 정보를 안내하는 정보 제공 사이트입니다.">
-<meta name="keywords" content="">
+<title>사이트 소개 · 학원 등록 문의 | 학원메이트</title>
+<meta name="description" content="학원메이트는 교습비와 교육청 등록 정보를 공개하는 학원을 지역·과목별로 안내하는 정보 제공 사이트입니다. 운영 주체와 학원 등록 절차를 안내합니다.">
+<meta name="keywords" content="학원메이트, 학원 등록, 학원 페이지 제작, 학원 정보 사이트">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://trend-park.github.io/academymate/about/">
 <link rel="icon" type="image/png" sizes="64x64" href="/academymate/images/favicon.png">
 <link rel="apple-touch-icon" href="/academymate/images/favicon-192.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="학원메이트">
-<meta property="og:title" content="사이트 소개 | 학원메이트">
-<meta property="og:description" content="학원메이트는 지역·과목별 학원 정보를 안내하는 정보 제공 사이트입니다.">
+<meta property="og:title" content="사이트 소개 · 학원 등록 문의 | 학원메이트">
+<meta property="og:description" content="학원메이트는 교습비와 교육청 등록 정보를 공개하는 학원을 지역·과목별로 안내하는 정보 제공 사이트입니다. 운영 주체와 학원 등록 절차를 안내합니다.">
 <meta property="og:url" content="https://trend-park.github.io/academymate/about/">
 
 <meta property="og:locale" content="ko_KR">
@@ -118,31 +118,91 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 46px;font
 footer .links{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px}
 footer a{text-decoration:none}
 /* home */
+.hero{background:linear-gradient(135deg,#fdf0f6 0%,#fff 55%,#fff8d6 100%);border:1px solid var(--line);border-radius:18px;padding:34px 30px 28px;margin:24px 0 30px}
+.hero h1{margin:0 0 10px;font-size:32px;line-height:1.3;letter-spacing:-0.02em}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero p{font-size:16.5px;color:var(--ink-2);margin-bottom:16px}
+.hero .chips{margin-bottom:0}
+.hero .chips span{background:#fff;border:1px solid var(--line)}
+.explore{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 8px}
+.explore .box{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:#fff}
+.explore .box b{display:block;font-size:17px;margin-bottom:8px}
+.explore .box b small{font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+.explore .box a{display:inline-block;text-decoration:none;font-size:14px;background:var(--soft);color:var(--ink-2);padding:5px 11px;border-radius:999px;margin:0 6px 6px 0}
+.explore .box a:hover{background:var(--primary);color:#fff}
+.acard{display:grid;grid-template-columns:150px 1fr;gap:16px;border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 12px;text-decoration:none;color:var(--ink);background:#fff}
+.acard:hover{border-color:var(--primary);background:var(--soft)}
+.acard img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.acard b{display:block;font-size:17px;line-height:1.35}
+.acard .where{font-size:13.5px;color:var(--muted);margin:2px 0 8px}
+.acard .desc{font-size:14.5px;color:var(--ink-2);margin:0 0 8px}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.badges span{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;background:#eef3ff;color:#1a3fa8}
+.badges span.fee{background:#fff3c4;color:#7a5a00}
+.badges span.reg{background:#e6f6ec;color:#1e6b3a}
+.how{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0}
+.how div{border-top:3px solid var(--primary);background:var(--soft);border-radius:0 0 12px 12px;padding:14px 16px;font-size:14.5px}
+.how div b{display:block;font-size:15.5px;margin-bottom:4px;color:var(--ink)}
+.check{list-style:none;padding:0;margin:0 0 14px}
+.check li{position:relative;padding-left:28px;margin:8px 0;font-size:15.5px}
+.check li:before{content:"✓";position:absolute;left:0;top:0;width:20px;height:20px;border-radius:6px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;text-align:center;line-height:20px}
+.check.no li:before{content:"✕";background:#9aa0b4}
 .list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
 .list a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:18px 18px;color:var(--ink)}
 .list a b{display:block;font-size:16px}
 .list a span{font-size:13.5px;color:var(--muted)}
 .list a:hover{border-color:var(--primary);background:var(--soft)}
-@media (max-width:640px){h1{font-size:26px}.toc ol{columns:1}.grid,.related,.list{grid-template-columns:1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}.meta{grid-template-columns:90px 1fr}.nav{display:none}}
+@media (max-width:640px){h1{font-size:26px}.toc ol{columns:1}.grid,.related,.list,.explore,.how{grid-template-columns:1fr}.hero{padding:26px 20px}.hero h1{font-size:26px}.acard{grid-template-columns:110px 1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}.meta{grid-template-columns:90px 1fr}.nav{display:none}}
 </style>
 
 </head>
 <body>
 <header class="top"><div class="wrap">
   <a class="brand" href="/academymate/"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#1e2a5a"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>학원메이트</a>
-  <nav class="nav"><a href="/academymate/regions/">지역별 학원</a><a href="/academymate/about/">사이트 소개</a></nav>
+  <nav class="nav"><a href="/academymate/regions/">지역별 학원</a><a href="/academymate/guide/">학원 고르기 가이드</a><a href="/academymate/about/">사이트 소개</a></nav>
 </div></header>
 <main class="wrap">
 
 <div class="crumb"><a href="/academymate/">홈</a><span>›</span>사이트 소개</div>
 <h1>학원메이트 소개</h1>
-<p class="lead">학원메이트는 지역·과목별 학원 정보를 안내하는 정보 제공 사이트입니다.</p>
-<p>페이지마다 학원을 고를 때 볼 기준과 학년별 학습 방향을 먼저 정리하고, 그 지역에서 수업하는 학원의 위치·대상·등록 정보·교습비를 함께 안내합니다. 학원 정보는 각 학원이 제공한 자료와 교육청 등록 정보를 바탕으로 정리하며, 과장된 표현이나 근거 없는 실적은 싣지 않습니다.</p>
-<p>교습비 등 세부 내용은 변경될 수 있으니 상담 시 학원에 직접 확인하시기 바랍니다.</p>
+<p class="lead">학원메이트는 교습비와 교육청 등록 정보를 공개하는 학원을 지역·과목별로 안내하는 정보 제공 사이트입니다.</p>
+
+<h2>왜 만들었나</h2>
+<p>학원을 알아보는 학부모가 가장 먼저 부딪히는 문제는 "비교할 정보가 없다"는 것입니다. 광고 문구는 많은데 교습비는 물어봐야 알 수 있고, 누가 가르치는지, 교육청에 등록된 곳인지는 확인하기 번거롭습니다. 학원메이트는 학원을 고를 때 볼 기준을 먼저 정리하고, 그 기준으로 확인할 수 있는 정보를 공개한 학원을 한곳에 모읍니다.</p>
+
+<h2>페이지에 싣는 것과 싣지 않는 것</h2>
+<div class="grid">
+  <div class="card" style="margin:0"><div class="tag">싣는 것</div>
+    <ul class="check"><li>교습비, 교습 시간, 반환 기준</li><li>교육청 등록번호와 등록 상호</li><li>주소, 연락처, 대상 연령·학년</li><li>수업 방식과 원장·지도진 소개</li><li>출처가 있는 학부모 이야기</li></ul></div>
+  <div class="card" style="margin:0"><div class="tag" style="background:var(--soft-2);color:var(--primary-dark)">싣지 않는 것</div>
+    <ul class="check no"><li>최고·최초·유일·1위 같은 표현</li><li>확인할 수 없는 경력·수상·합격 실적</li><li>기간을 정해 결과를 약속하는 문구</li><li>지어낸 후기, 출처 없는 인용</li><li>다른 학원과의 비교·비방</li></ul></div>
+</div>
+<p style="margin-top:14px">학원 정보는 각 학원이 제공한 자료와 교육청 등록 정보를 바탕으로 정리합니다. 교습비 등 세부 내용은 변경될 수 있으니 상담 시 학원에 직접 확인하시기 바랍니다.</p>
+
+<h2>운영 주체</h2>
+<p>학원메이트는 학원과 교육업 마케팅을 돕는 팀이 운영합니다. 15년 넘게 학원 원장님과 교육업 종사자를 대상으로 온라인 마케팅 교육을 진행하면서, 학원이 광고 규정을 지키면서도 학부모에게 제대로 소개될 수 있는 방법이 필요하다고 느껴 이 사이트를 만들었습니다. 페이지 문구는 서울시교육청 학원 광고 관련 기준을 참고해 작성하며, 게재 전 학원과 함께 확인합니다.</p>
+
+<h2 id="register">학원 등록 문의</h2>
+<p>교습비와 등록 정보를 공개할 수 있는 학원이라면 어느 지역·과목이든 페이지를 만들 수 있습니다. 등록 절차는 다음과 같습니다.</p>
+<div class="how">
+  <div><b>1. 문의</b>학원명, 지역, 과목, 대상 연령을 알려 주세요.</div>
+  <div><b>2. 자료 준비</b>교육청 등록증, 교습비 게시표, 수업 사진, 원장·지도진 소개, 학원 소개 글을 보내 주세요.</div>
+  <div><b>3. 검수 후 게재</b>광고 규정에 맞게 문구를 다듬고 원장님 확인을 거쳐 게재합니다. 이후 수정 요청도 받습니다.</div>
+</div>
+<h3>준비하시면 좋은 자료</h3>
+<ul class="check">
+  <li>학원 등록증(등록번호·등록 상호가 보이는 것)</li>
+  <li>교습비 게시표(과정별 월 교습비·교습 시간·반환 기준)</li>
+  <li>학원 소개 글 또는 블로그·네이버 플레이스 주소</li>
+  <li>수업·시설 사진 5~10장, 원장·지도진 사진과 소개</li>
+  <li>네이버 플레이스 등 출처가 있는 학부모 후기(선택)</li>
+</ul>
+
+<p style="font-size:14px;color:var(--muted);margin-top:12px">페이지는 학원메이트 도메인 아래 <code>/지역/과목/</code> 주소로 만들어지며, 네이버 검색 노출을 위해 사이트맵과 RSS에 자동 등록됩니다.</p>
 
 </main>
 <footer><div class="wrap">
-  <div class="links"><a href="/academymate/">홈</a><a href="/academymate/regions/">전체 지역</a><a href="/academymate/about/">사이트 소개</a></div>
+  <div class="links"><a href="/academymate/">홈</a><a href="/academymate/regions/">전체 지역</a><a href="/academymate/guide/">학원 고르기 가이드</a><a href="/academymate/about/">사이트 소개</a><a href="/academymate/about/#register">학원 등록 문의</a></div>
   <div>학원메이트 · 지역·과목별 학원 정보를 안내하는 정보 제공 사이트입니다. 학원 정보는 각 학원이 제공한 자료와 교육청 등록 정보를 바탕으로 정리했으며, 교습비 등 세부 내용은 상담 시 학원에 확인하시기 바랍니다.</div>
   <div>© 2026 학원메이트</div>
 </div></footer>
