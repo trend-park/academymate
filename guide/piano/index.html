@@ -15,10 +15,11 @@
 <meta property="og:title" content="유아·초등 피아노 학원 고르는 법 – 레슨 방식과 연습 환경 | 학원메이트">
 <meta property="og:description" content="유아·초등 피아노 학원을 고를 때 확인할 것. 교습비 게시표, 1:1·순환식·그룹 레슨 방식, 직접 레슨 시간, 연습 환경과 악기 상태, 이론 병행, 발표회 비용. 연령별로 다르게 볼 것.">
 <meta property="og:url" content="https://hakwonmate.co.kr/guide/piano/">
-
+<meta property="og:image" content="https://hakwonmate.co.kr/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:locale" content="ko_KR">
 
-
+<meta name="naver-site-verification" content="9c3d3e419cb0498a6038a0a12e6bdd2721dff61e"><meta name="naver-site-verification" content="d7885880513b663504406a2fcdce9677c3c8c8ac"><meta name="naver-site-verification" content="4c1bcb5d5941ec75e3523bb4e0a6752ef5d0b925"><meta name="naver-site-verification" content="9b4165c8e28c5a58e8fc5b8a36b989155958c532">
 
 <style>
 :root{--ink:#1e2a5a;--ink-2:#3b4670;--muted:#6b6b6b;--line:#f0dbe7;--bg:#ffffff;--soft:#fdf0f6;--soft-2:#fce4ef;
@@ -147,6 +148,18 @@ footer a{text-decoration:none}
 .check{list-style:none;padding:0;margin:0 0 14px}
 .check li{position:relative;padding-left:28px;margin:8px 0;font-size:15.5px}
 .check li:before{content:"✓";position:absolute;left:0;top:0;width:20px;height:20px;border-radius:6px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;text-align:center;line-height:20px}
+/* form */
+.form label{display:block;font-size:14.5px;font-weight:700;color:var(--ink-2);margin:0 0 14px}
+.form label .req{font-size:11px;font-weight:700;color:var(--primary);margin-left:4px;vertical-align:middle}
+.form input[type=text],.form input[type=tel],.form input[type=email],.form select,.form textarea{display:block;width:100%;margin-top:6px;padding:11px 12px;border:1px solid #d9d9e3;border-radius:8px;font:inherit;font-size:15px;font-weight:400;color:var(--ink);background:#fff}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(230,0,126,.12)}
+.form input[type=file]{display:block;margin-top:6px;font-weight:400;font-size:14px}
+.form .row.two{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.form .agree{font-weight:500;font-size:14px;margin-top:6px}
+.form .agree input{margin-right:6px}
+.form h2{font-size:19px;margin-top:30px}
+.form button.btn{border:0;cursor:pointer;font:inherit;font-weight:700;font-size:15px}
+@media (max-width:640px){.form .row.two{grid-template-columns:1fr}}
 .check.no li:before{content:"✕";background:#9aa0b4}
 .list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
 .list a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:18px 18px;color:var(--ink)}
@@ -204,7 +217,7 @@ footer a{text-decoration:none}
 </main>
 <script>document.addEventListener("click",function(ev){var a=ev.target.closest("a[data-track]");if(!a)return;var d={method:a.getAttribute("data-track"),page:location.pathname,label:(a.textContent||"").trim().slice(0,40)};if(window.gtag){gtag("event","contact_click",d);}if(window.wcs&&window.wcs.event){try{wcs.event("contact_click",d.method);}catch(e){}}});</script>
 <footer><div class="wrap">
-  <div class="links"><a href="/">홈</a><a href="/regions/">전체 지역</a><a href="/guide/">학원 고르기 가이드</a><a href="/about/">사이트 소개</a><a href="/about/#register">학원 등록 문의</a></div>
+  <div class="links"><a href="/">홈</a><a href="/regions/">전체 지역</a><a href="/guide/">학원 고르기 가이드</a><a href="/about/">사이트 소개</a><a href="/register/">학원 등록 문의</a></div>
   <div>학원메이트 · 지역·과목별 학원 정보를 안내하는 정보 제공 사이트입니다. 학원 정보는 각 학원이 제공한 자료와 교육청 등록 정보를 바탕으로 정리했으며, 교습비 등 세부 내용은 상담 시 학원에 확인하시기 바랍니다.</div>
   <div>© 2026 학원메이트</div>
 </div></footer>
