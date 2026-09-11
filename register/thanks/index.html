@@ -31,7 +31,8 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.75;word-break:keep-all;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 img{max-width:100%;display:block}
-.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.main.narrow{max-width:860px}
 /* header */
 .top{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:5}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
@@ -186,7 +187,7 @@ footer a{text-decoration:none}
 footer{background:#141622;border-top:1px solid #2c3147;color:#8a90ab}
 footer a{color:#c3c8de}
 body.dark{--bg:#141622;--ink:#f3f4fa;--ink-2:#c3c8de;--muted:#8a90ab;--line:#2c3147;--soft:#1f2334;--soft-2:#2a1f33;--primary:#ff4fa3;--primary-dark:#ff77b8;--accent-ink:#1e2a5a;--card:#1b1e2d}
-body.dark .wrap.main{max-width:700px}
+body.dark .wrap.main{max-width:1180px}
 body.dark h2{border-bottom-color:#2c3147;font-size:20px;margin-top:var(--s5)}
 body.dark h2 i{font-style:normal;color:var(--primary);margin-right:6px}
 body.dark .list a,body.dark .related a,body.dark .acard,body.dark .mag a,body.dark .explore .box,body.dark .box,body.dark .how div{background:var(--card);border-color:var(--line);color:var(--ink)}
@@ -265,6 +266,54 @@ body.dark .band .mag a .cat{color:#e6007e}
 .list a span{font-size:13.5px;color:var(--muted)}
 .list a:hover{border-color:var(--primary);background:var(--soft)}
 @media (max-width:640px){h1{font-size:26px}.toc ol{columns:1}.grid,.related,.list,.explore,.how,.mag{grid-template-columns:1fr}.hero{padding:26px 20px}.hero h1{font-size:26px}.acard{grid-template-columns:110px 1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}.meta{grid-template-columns:90px 1fr}.nav a:not(.cta){display:none}}
+/* ---- PC 레이아웃 (1024px 이상) ---- */
+.cols{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s5);align-items:start}
+.col-side{margin-top:var(--s5)}
+.side{border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s4);background:#fff;margin-bottom:var(--s3)}
+.side h3{margin:0 0 var(--s2);font-size:15px;color:var(--ink)}
+.side .nm{font-size:19px;font-weight:900;letter-spacing:-.02em;margin:0 0 2px}
+.side .kw{font-size:13px;color:var(--muted);margin:0 0 var(--s2)}
+.side .tel{display:block;font-size:24px;font-weight:900;color:var(--primary-dark);text-decoration:none;letter-spacing:-.01em;margin:0 0 var(--s2)}
+.side .btns{margin-top:0}
+.side .btns .btn{flex:1 1 auto;text-align:center;padding:10px 12px;font-size:14px}
+.side dl{margin:var(--s3) 0 0;font-size:13.5px;color:var(--ink-2)}
+.side dt{color:var(--muted);font-size:12px;margin-top:8px}.side dd{margin:0}
+.side .links a{display:block;text-decoration:none;color:var(--ink);font-size:14px;font-weight:600;padding:8px 0;border-bottom:1px solid var(--line)}
+.side .links a:last-child{border-bottom:0}
+.side .links a small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+.side .links a:hover{color:var(--primary)}
+.side .acard{grid-template-columns:72px 1fr;padding:var(--s2);margin:0 0 var(--s1)}
+.side .acard b{font-size:14px}.side .acard .desc,.side .acard .badges{display:none}.side .acard .where{margin:2px 0 0;font-size:12px}
+.side .acard img{aspect-ratio:1;border-radius:8px}
+.acards{display:grid;grid-template-columns:1fr;gap:var(--s2)}
+.acards .acard{margin:0}
+.home2{display:grid;grid-template-columns:1fr;gap:var(--s3)}
+@media (max-width:1023px){.side.pc{display:none}}
+@media (min-width:1024px){
+  .cols{grid-template-columns:minmax(0,1fr) 340px;gap:56px}
+  .col-side{position:sticky;top:76px;margin-top:0;padding-top:var(--s4)}
+  .col-main{min-width:0}
+  .list,.related,.mag{grid-template-columns:repeat(3,1fr)}
+  .mag.feature{grid-template-columns:2fr 1fr}
+  .diff{grid-template-columns:repeat(4,1fr)}
+  .acards{grid-template-columns:repeat(3,1fr)}
+  .acards .acard{grid-template-columns:1fr;gap:var(--s2)}
+  .acards .acard img{aspect-ratio:16/10}
+  .home2{grid-template-columns:1fr 1fr;align-items:stretch}
+  .home2 .box{display:flex;flex-direction:column}
+  .home2 .rank{grid-template-columns:1fr;gap:10px;font-size:15px}
+  .home2 .rep{margin-top:0;border-top:0;padding-top:0}
+  .home2 .rep .g{grid-template-columns:1fr}
+  .dhero{padding:var(--s6) 0 var(--s5)}
+  .dhero h1{font-size:46px}
+  .dhero .search,.dhero .sresults,.dhero .quick,.dhero .tip{max-width:820px;margin-left:auto;margin-right:auto}
+  .dhero .sresults{margin-top:var(--s2)}
+  .stats b{font-size:28px}
+  .toc ol{columns:3}
+  .grid.director{grid-template-columns:1fr 1fr}
+  h1{font-size:36px}
+  body.dark .band{padding:var(--s5)}
+}
 </style>
 
 </head>
@@ -273,7 +322,7 @@ body.dark .band .mag a .cat{color:#e6007e}
   <a class="brand" href="/"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#9db7ff"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>학원메이트</a>
   <nav class="nav"><a href="/regions/">학원 찾기</a><a href="/guide/">학원 고르기 가이드</a><a href="/magazine/">매거진</a><a href="/about/">사이트 소개</a><a class="cta" href="/register/">학원 등록</a></nav>
 </div></header>
-<main class="wrap main">
+<main class="wrap main narrow">
 
 <div class="crumb"><a href="/">홈</a><span>›</span>학원 등록 신청</div>
 <h1>신청이 접수되었습니다</h1>
