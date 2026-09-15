@@ -333,12 +333,13 @@ body.dark .band .mag a .cat{color:#e6007e}
   <div><b>3. 검수 후 게재</b>광고 기준에 맞게 다듬고 원장님 확인을 거쳐 게재합니다.</div>
 </div>
 
-<form class="form" action="https://formsubmit.co/2cedafb7765d6a4c377e740040620172" method="POST" enctype="multipart/form-data">
+<form class="form" id="regform" action="https://formsubmit.co/2cedafb7765d6a4c377e740040620172" method="POST" enctype="multipart/form-data" novalidate>
   <input type="hidden" name="_subject" value="[학원메이트 등록 신청] 새 학원 접수">
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_captcha" value="false">
   <input type="hidden" name="_next" value="https://hakwonmate.co.kr/register/thanks/">
-  <input type="text" name="_honey" style="display:none">
+  <input type="hidden" name="_cc" value="trendpark@naver.com">
+  <input type="hidden" name="_autoresponse" value="[학원메이트] 등록 신청이 접수되었습니다. 내용을 확인한 뒤 1~2일 안에 회신드리겠습니다. 사진(수업·시설·원장님 4~8장), 교육청 등록증, 교습비 게시표 사진을 이 메일에 답장으로 보내 주시면 페이지에 반영합니다.">
 
   <h2>학원 기본 정보</h2>
   <div class="row two">
@@ -355,7 +356,7 @@ body.dark .band .mag a .cat{color:#e6007e}
     <label>대상 연령·학년 <span class="req">필수</span><input type="text" name="대상" required placeholder="예: 5~7세, 초등 1~6학년"></label>
   </div>
   <div class="row two">
-    <label>지역(구 / 동) <span class="req">필수</span><input type="text" name="지역" required placeholder="예: 송파구 송파동"></label>
+    <label>지역(시·구 / 동) <span class="req">필수</span><input type="text" name="지역" required placeholder="예: 송파구 송파동, 용인시 기흥구 동백동"></label>
     <label>주소<input type="text" name="주소" placeholder="도로명 주소 + 층"></label>
   </div>
   <label>대표 검색 키워드 (학부모가 네이버에 칠 말)<input type="text" name="대표 키워드" placeholder="예: 송파동 영어학원"></label>
@@ -363,21 +364,56 @@ body.dark .band .mag a .cat{color:#e6007e}
 
   <h2>연락처</h2>
   <div class="row two">
-    <label>원장 성함 <span class="req">필수</span><input type="text" name="원장 성함" required></label>
-    <label>연락 받을 전화 <span class="req">필수</span><input type="tel" name="전화" required placeholder="010-0000-0000"></label>
+    <label>원장 성함 <span class="req">필수</span><input type="text" name="원장 성함" required autocomplete="name"></label>
+    <label>연락 받을 전화 <span class="req">필수</span><input type="tel" name="전화" required placeholder="010-0000-0000" autocomplete="tel"></label>
   </div>
   <div class="row two">
-    <label>이메일 (회신용) <span class="req">필수</span><input type="email" name="email" required placeholder="회신 받을 메일"></label>
+    <label>이메일 (회신용) <span class="req">필수</span><input type="email" name="email" required placeholder="회신 받을 메일" autocomplete="email"></label>
     <label>블로그 · 플레이스 · 카카오 채널 주소<input type="text" name="온라인 채널" placeholder="있는 것만"></label>
+  </div>
+  <div class="row two">
+    <label>탑시크릿 수강 원장님이신가요? <span class="req">필수</span>
+      <select name="탑시크릿 수강" required><option value="">선택</option><option>네, 탑시크릿 수강 원장입니다</option><option>아니요</option></select></label>
+    <label>탑시크릿 기수 (수강 원장님만)<input type="text" name="탑시크릿 기수" placeholder="예: 10기"></label>
   </div>
 
   <h2>추가로 알려 주실 것</h2>
   <label>학원 소개나 문의 내용 (자유롭게)<textarea name="문의 내용" rows="5" placeholder="수업 특징, 궁금한 점, 희망 게재 시기 등"></textarea></label>
-  <label>등록증 · 교습비 게시표 사진 (선택, 나중에 보내셔도 됩니다)<input type="file" name="attachment" accept="image/*,.pdf"></label>
+  <label>등록증 · 교습비 게시표 사진 (선택, 나중에 보내셔도 됩니다)<input type="file" name="attachment" id="att" accept="image/*,.pdf"><small style="display:block;font-weight:400;color:var(--muted);margin-top:4px">사진은 자동으로 줄여서 보냅니다. 5MB가 넘는 PDF는 메일로 보내 주세요.</small></label>
 
   <label class="agree"><input type="checkbox" name="개인정보 동의" value="동의" required> 입력한 정보를 학원 페이지 제작·안내 목적으로만 사용하는 데 동의합니다.</label>
-  <div class="btns"><button type="submit" class="btn" data-track="register-submit">등록 신청 보내기</button></div>
+  <div id="regmsg" style="display:none;margin:0 0 12px;padding:12px 14px;border-radius:8px;background:#fff3c4;color:#7a5a00;font-size:14px"></div>
+  <div class="btns"><button type="submit" class="btn" id="regbtn" data-track="register-submit">등록 신청 보내기</button></div>
+  <p style="font-size:13px;color:var(--muted);margin-top:12px">보내기 버튼을 누르면 "신청이 접수되었습니다" 화면으로 바뀌고, 적어 주신 메일로 접수 확인 메일이 갑니다. 화면이 바뀌지 않으면 아래 "내용 복사" 후 <b>miae0210@gmail.com</b>로 붙여넣어 보내 주세요. <a href="#" id="regcopy" style="color:var(--primary-dark)">내용 복사</a></p>
 </form>
+<script>
+(function(){
+  var f=document.getElementById('regform'),btn=document.getElementById('regbtn'),msg=document.getElementById('regmsg'),att=document.getElementById('att');
+  function say(t){msg.style.display='block';msg.textContent=t;msg.scrollIntoView({behavior:'smooth',block:'center'});}
+  function fields(){var o=[];f.querySelectorAll('input,select,textarea').forEach(function(el){if(el.name&&el.name[0]!=='_'&&el.type!=='file'&&el.type!=='hidden'&&!(el.type==='checkbox'&&!el.checked))o.push(el.name+': '+el.value);});return o.join('\n');}
+  document.getElementById('regcopy').addEventListener('click',function(e){e.preventDefault();var t='[학원메이트 등록 신청]\n'+fields();if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){say('내용을 복사했습니다. 메일에 붙여넣어 보내 주세요.');});}else{prompt('아래 내용을 복사해 메일로 보내 주세요',t);}});
+  // 사진 자동 축소(폰 사진 10~20MB → 1~2MB)
+  att.addEventListener('change',function(){var file=att.files[0];if(!file||!/^image\//.test(file.type)||file.size<1500000)return;
+    var img=new Image(),url=URL.createObjectURL(file);img.onload=function(){var s=Math.min(1,1600/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      c.toBlob(function(b){try{var dt=new DataTransfer();dt.items.add(new File([b],file.name.replace(/\.[^.]+$/,'')+'.jpg',{type:'image/jpeg'}));att.files=dt.files;}catch(e){}URL.revokeObjectURL(url);},'image/jpeg',0.82);};img.src=url;});
+  f.addEventListener('submit',function(e){
+    e.preventDefault();msg.style.display='none';
+    var bad=null;f.querySelectorAll('[required]').forEach(function(el){if(!bad&&((el.type==='checkbox'&&!el.checked)||(el.type!=='checkbox'&&!el.value.trim())))bad=el;});
+    if(bad){say('필수 항목을 채워 주세요: '+(bad.closest('label')?bad.closest('label').textContent.replace('필수','').trim():'')); bad.focus();return;}
+    var em=f.email.value.trim();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){say('이메일 주소를 다시 확인해 주세요.');f.email.focus();return;}
+    if(att.files[0]&&att.files[0].size>5*1024*1024){say('첨부 파일이 5MB를 넘습니다. 파일을 빼고 보내신 뒤 메일로 따로 보내 주세요.');return;}
+    btn.disabled=true;btn.textContent='보내는 중…';
+    var fd=new FormData(f);fd.delete('_next');
+    var done=false;
+    var native=function(){if(done)return;done=true;try{localStorage.setItem('hm_reg',fields());}catch(x){}f.submit();};
+    var t=setTimeout(native,12000);
+    fetch('https://formsubmit.co/ajax/2cedafb7765d6a4c377e740040620172',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+      .then(function(r){return r.json();})
+      .then(function(j){clearTimeout(t);if(j&&(j.success==='true'||j.success===true)){done=true;if(window.gtag)gtag('event','register_submit');location.href='https://hakwonmate.co.kr/register/thanks/';}else{native();}})
+      .catch(function(){clearTimeout(t);native();});
+  });
+})();
+</script>
 <p style="font-size:13px;color:var(--muted);margin-top:14px">최고·최초·유일 같은 표현, 기간을 정한 결과 약속, 확인할 수 없는 실적은 페이지에 싣지 않습니다.</p>
 
 </main>
