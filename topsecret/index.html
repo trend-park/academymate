@@ -101,6 +101,8 @@ strong{font-weight:700}
 .case{border:1px solid #e5e5e5;background:#fff;padding:20px;margin:0 0 14px;text-align:left}
 .case b{display:block;margin-bottom:6px}
 .case p{margin:0;font-size:16px;color:var(--gray2)}
+.cases{display:grid;grid-template-columns:1fr;gap:14px;margin:0 0 14px}
+.caseimg{margin:0 auto 30px;border:1px solid #e5e5e5}
 .cur{width:100%;border-collapse:collapse;font-size:15px;text-align:left;margin:0 0 26px}
 .cur th{font-size:12px;color:var(--gray);font-weight:600;padding:8px 6px;border-bottom:2px solid #ddd}
 .cur td{padding:11px 6px;border-bottom:1px solid #e9e9e9;vertical-align:top;font-weight:500}
@@ -159,6 +161,84 @@ footer p{margin:0}
 .agreef input{margin-top:4px}
 .agreef a{color:var(--red);font-weight:700}
 .modal .btn{width:100%;font-size:18px;height:54px}
+
+/* ══════════ PC (768px 이상) — 비즈니스 PT PC 레이아웃 그대로 ══════════
+   본문 컬럼 900px · 로고 바 80px · 탭 52px/20px · 히어로 340px, 제목 54px · 소제목 24px + 밑줄
+   카드 섹션(연회색/흰 박스, 8px 라운드, 40×60 패딩, 제목 26px + 가운데 밑줄) · 큰 전화번호 54px
+   하단 바: 1000px 떠 있는 바(8px 라운드, 아래 30px), 66px */
+@media(min-width:768px){
+  :root{--w:900px}
+  body{padding-bottom:120px}
+  .wrap{padding:0}
+  .logo{height:80px}
+  .logo .wrap{height:80px;max-width:1100px;padding:0 20px}
+  .logo .brand{font-size:22px}
+  .logo .brand i{width:32px;height:32px;font-size:18px;border-radius:6px}
+  .logo .brand small{font-size:13px}
+  .logo .mini{font-size:14px;padding:10px 22px}
+  .tabs{top:80px;height:52px}
+  .tabs ul{height:52px}
+  .tabs a{height:52px;font-size:20px;border-bottom-width:3px}
+  .hero .wrap{grid-template-columns:1fr 420px;min-height:340px;padding-top:0}
+  .hero h2{font-size:46px;line-height:1.3;padding:50px 0 0;margin-bottom:24px;letter-spacing:-.01em}
+  .hero .who{font-size:13px;margin-bottom:34px}
+  .hero .photo .ph{max-width:420px;height:340px;border-radius:0;font-size:14px}
+  .article{padding:56px 0 20px}
+  .article h3.t{font-size:24px;margin:64px 0 32px;padding-bottom:14px;border-bottom:1px solid #e3e3e3}
+  .article h4{border-left:3px solid #111;padding-left:14px;font-size:19px;margin:34px 0 22px}
+  .article .cream{padding:22px 28px;font-size:17px}
+  .shot{min-height:260px;font-size:15px}
+  .order{font-size:16px;gap:8px}
+  .order span{padding:8px 16px}
+  .cta{padding:60px 0 80px}
+  .cta p{font-size:20px;font-weight:600;margin-bottom:30px}
+  .btn{width:360px;height:66px;font-size:24px}
+  .dark{padding:100px 0;background:linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.72)),#0f0f0f}
+  .dark h2{font-size:34px;margin-bottom:34px}
+  .dark p{font-size:20px;font-weight:600;color:#fff;margin-bottom:30px}
+  .dark .red{font-size:24px}
+  .sec{padding:70px 0}
+  .sec p{font-size:19px}
+  .sec .lead{font-size:20px}
+  .sec h3{font-size:26px;font-weight:700;padding-bottom:16px;margin-bottom:34px;position:relative;color:var(--red2)}
+  .sec h3::after{content:"";display:block;width:70%;height:1px;background:#111;margin:16px auto 0}
+  .sec h3.c::after{width:70%}
+  /* 카드형 섹션: 흰 배경 위엔 연회색 박스, 회색 배경 위엔 흰 박스 */
+  .sec.left .wrap{background:var(--paper2);border-radius:8px;padding:44px 60px}
+  .sec.left.g .wrap,.sec.g2 .wrap{background:#fff;box-shadow:0 2px 14px rgba(0,0,0,.06);padding:44px 60px;border-radius:8px}
+  .sec.left p,.list{font-size:17px}
+  .list li{margin-bottom:12px}
+  .cases{grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .case{margin:0;padding:26px;border-radius:6px;background:var(--paper2);border:0}
+  .caseimg{max-width:560px}
+  .case b{font-size:18px}
+  .case p{font-size:15px}
+  .cur{font-size:16px}
+  .cur td{padding:13px 8px}
+  .contact{padding:80px 0}
+  .contact p{font-size:20px;font-weight:600}
+  .contact .btn{width:420px;height:80px;background:#fff;color:#111;font-size:28px;gap:12px}
+  .contact .btn::before{content:"친";display:inline-flex;width:38px;height:38px;background:var(--red);color:#fff;border-radius:6px;align-items:center;justify-content:center;font-size:20px;font-weight:900}
+  .contact .btn:hover{background:#f3f3f3}
+  .contact .agree{font-size:14px;margin:16px 0 48px}
+  .contact .lbl{font-size:16px}
+  .contact .tel{font-size:54px}
+  .contact .tel small{display:block;width:max-content;margin:16px auto 0;background:#FEE500;color:#111;font-size:15px;font-weight:600;padding:8px 26px;border-radius:999px}
+  .faqh{font-size:26px;padding:30px 0}
+  .faq{background:var(--paper3);padding:40px 0 60px}
+  .faq details{background:#fff;border:0;border-radius:8px;box-shadow:0 2px 14px rgba(0,0,0,.06);margin-bottom:20px;padding:10px 40px 6px}
+  .faq summary{font-size:24px;font-weight:700;padding:30px 30px 18px;position:relative}
+  .faq summary::before{content:"";display:block;position:absolute;left:5%;right:5%;bottom:0;height:1px;background:#111}
+  .faq summary::after{right:0;top:30px;font-size:26px}
+  .faq .a{font-size:17px;padding:22px 0 26px}
+  footer{font-size:12px;padding:34px 0 40px}
+  .bar{left:50%;right:auto;bottom:30px;width:1000px;transform:translate(-50%,140%);border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+  .bar.on{transform:translate(-50%,0)}
+  .bar .wrap{height:66px;padding:0 30px;max-width:none}
+  .bar .t{font-size:20px}
+  .bar .t small{display:inline;font-size:14px;color:#dadada;margin-left:8px}
+  .bar button{font-size:16px;padding:10px 28px}
+}
 </style>
 </head>
 <body>
@@ -264,13 +344,13 @@ footer p{margin:0}
   <div class="wrap">
     <p>“정말 따라만 하면 되나요?”<br>많은 원장님이 이렇게 묻습니다.</p>
     <p>말로 설명하지 않겠습니다.<br>바로 이전 기수 원장님들이 단톡방에 남긴<br><span class="red">카톡 원문</span>을 그대로 보여드립니다.</p>
-    <img src="cases-1.jpg" alt="이전 기수 원장님들의 성과 인증 카톡 캡처: 학원 오픈 전 47명 등록, 수업 한 달 만에 신규 22명, 신규 한 달 만에 20명, 수업 이후 원생 85명" style="margin:0 0 30px;border:1px solid #e5e5e5">
+    <img src="cases-1.jpg" alt="이전 기수 원장님들의 성과 인증 카톡 캡처: 학원 오픈 전 47명 등록, 수업 한 달 만에 신규 22명, 신규 한 달 만에 20명, 수업 이후 원생 85명" class="caseimg">
     <p>이분들의 팔로워 수와 블로그 글 개수를 알게 되신다면 놀라실 수 있습니다.<br>많지 않습니다. 순서대로 놓였을 뿐입니다.</p>
-    <div class="case"><b>학원 오픈 전 47명 등록</b><p>9월 1일 정식 오픈을 앞두고 플레이스·블로그 세팅부터 잡았습니다. 문을 열기도 전에 47명이 등록했고, 목표로 잡았던 50명은 오픈 첫 주 상담으로 채워졌습니다.</p></div>
-    <div class="case"><b>수업 한 달 만에 신규 22명</b><p>7월 한 달 신입생 22명. 원장님 말 그대로 옮기면 “정비 안 해놨으면 어땠을까, 가슴이 철렁합니다.” 잘해서가 아니라 검색됐을 때 보이는 화면을 먼저 정비했기 때문입니다.</p></div>
+    <div class="cases"><div class="case"><b>학원 오픈 전 47명 등록</b><p>9월 1일 정식 오픈을 앞두고 플레이스·블로그 세팅부터 잡았습니다. 문을 열기도 전에 47명이 등록했고, 목표로 잡았던 50명은 오픈 첫 주 상담으로 채워졌습니다.</p></div>
+    <div class="case"><b>수업 한 달 만에 신규 22명</b><p>7월 한 달 신입생 22명. 원장님 말 그대로 옮기면 “정비 안 해놨으면 어땠을까, 가슴이 철렁합니다.” 잘해서가 아니라 검색됐을 때 보이는 화면을 먼저 정비했기 때문입니다.</p></div></div>
     <p style="margin-top:30px">아직도 팔로워를 늘리기 위해 애를 쓰고 계신가요?<br>여전히 조회수를 올리기 위해 릴스에서 춤을 추고 계신가요?</p>
-    <div class="case"><b>신규 한 달 만에 20명</b><p>블로그까지는 큰 변화가 없었습니다. 릴스를 시작하고 자료 나눔을 하면서부터 문의가 몰렸습니다. 얼굴을 내걸고 춤을 춘 게 아니라, 학부모가 확인하러 왔을 때 보이는 화면을 채운 것뿐입니다.</p></div>
-    <div class="case"><b>수업 이후 원생 85명</b><p>상담 전화가 오면 블로그 글을 먼저 보내드리고, 그 글을 보고 오는 학부모가 많아졌습니다. 정기공연 소식도 블로그에 적어 소개하니 참여율까지 올랐습니다. 세팅 이후 지금 원생 85명.</p></div>
+    <div class="cases"><div class="case"><b>신규 한 달 만에 20명</b><p>블로그까지는 큰 변화가 없었습니다. 릴스를 시작하고 자료 나눔을 하면서부터 문의가 몰렸습니다. 얼굴을 내걸고 춤을 춘 게 아니라, 학부모가 확인하러 왔을 때 보이는 화면을 채운 것뿐입니다.</p></div>
+    <div class="case"><b>수업 이후 원생 85명</b><p>상담 전화가 오면 블로그 글을 먼저 보내드리고, 그 글을 보고 오는 학부모가 많아졌습니다. 정기공연 소식도 블로그에 적어 소개하니 참여율까지 올랐습니다. 세팅 이후 지금 원생 85명.</p></div></div>
     <p style="margin-top:30px">“그 원장님들은 원래 잘하던 분들 아닌가요?”<br><span class="red" style="font-size:20px">아닙니다. 따라 했을 뿐입니다.</span></p>
     <p>네 분 다 대형 학원이 아닙니다. 원장님 혼자 운영하는 동네 학원이고,<br>마케팅을 배운 적이 없던 분들입니다.<br>다른 게 하나 있다면, 매주 과제를 순서대로 냈다는 것입니다.</p>
   </div>
