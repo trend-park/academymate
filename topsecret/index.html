@@ -52,9 +52,9 @@ strong{font-weight:700}
 
 /* 히어로 (검정 그라데이션, 흰 큰 제목, 오른쪽 사진) */
 .hero{background:linear-gradient(90deg,#0b0b0b 0%,#151515 55%,#2a2a2a 100%);color:#fff;overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;min-height:300px;padding-top:28px}
-.hero h2{font-size:26px;font-weight:700;line-height:1.3;margin:0 0 20px;padding-bottom:30px}
-.hero .who{font-size:12px;color:#bbb;margin:0 0 30px;letter-spacing:.02em}
+.hero .wrap{display:grid;grid-template-columns:1fr;align-items:center;min-height:260px;padding:40px 24px}
+.hero h2{font-size:28px;font-weight:800;line-height:1.3;margin:0 0 16px}
+.hero .who{font-size:13px;color:#bbb;margin:0;letter-spacing:.02em}
 .hero .photo{align-self:stretch;display:flex;align-items:flex-end;justify-content:center}
 .hero .photo .ph{width:100%;max-width:250px;height:280px;border:1px dashed #666;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;text-align:center;padding:12px;line-height:1.5}
 @media(max-width:560px){.hero .wrap{grid-template-columns:1fr}.hero .photo .ph{height:200px;max-width:200px}.hero h2{font-size:24px;padding-bottom:16px}}
@@ -66,7 +66,7 @@ strong{font-weight:700}
 .article h4{font-size:20px;font-weight:800;line-height:1.5;margin:30px 0 18px;color:var(--ink)}
 .article .cream{background:var(--cream);padding:18px 22px;margin:0 0 26px;list-style:none;font-weight:700;font-size:16px;line-height:1.9}
 .article .cream li::before{content:"· "}
-.article .cap{font-size:13px;color:var(--gray);text-align:center;margin:-16px 0 30px}
+.article .cap{font-size:13px;color:var(--gray);text-align:center;margin:0 0 30px}
 .shot{border:1px dashed #cfcfcf;background:var(--paper3);border-radius:6px;min-height:160px;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;text-align:center;padding:16px;margin:0 0 12px;line-height:1.5}
 .order{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 26px;font-size:15px;font-weight:700}
 .order span{background:var(--paper2);padding:6px 12px;border-radius:4px}
@@ -103,6 +103,7 @@ strong{font-weight:700}
 .case p{margin:0;font-size:16px;color:var(--gray2)}
 .cases{display:grid;grid-template-columns:1fr;gap:14px;margin:0 0 14px}
 .caseimg{margin:0 auto 30px;border:1px solid #e5e5e5}
+.searchimg{margin:0 auto 12px;border:1px solid #e5e5e5;border-radius:6px}
 .cur{width:100%;border-collapse:collapse;font-size:15px;text-align:left;margin:0 0 26px}
 .cur th{font-size:12px;color:var(--gray);font-weight:600;padding:8px 6px;border-bottom:2px solid #ddd}
 .cur td{padding:11px 6px;border-bottom:1px solid #e9e9e9;vertical-align:top;font-weight:500}
@@ -181,9 +182,9 @@ footer p{margin:0}
   .tabs{top:80px;height:52px}
   .tabs ul{height:52px}
   .tabs a{height:52px;font-size:20px;border-bottom-width:3px}
-  .hero .wrap{grid-template-columns:1fr 420px;min-height:340px;padding-top:0}
-  .hero h2{font-size:46px;line-height:1.3;padding:50px 0 0;margin-bottom:24px;letter-spacing:-.01em}
-  .hero .who{font-size:13px;margin-bottom:34px}
+  .hero .wrap{grid-template-columns:1fr;min-height:340px;padding:0}
+  .hero h2{font-size:52px;line-height:1.25;padding:0;margin-bottom:22px;letter-spacing:-.01em}
+  .hero .who{font-size:15px;margin:0}
   .hero .photo .ph{max-width:420px;height:340px;border-radius:0;font-size:14px}
   .article{padding:56px 0 20px}
   .article h3.t{font-size:32px;margin:68px 0 32px;padding-bottom:16px;border-bottom:1px solid #e3e3e3}
@@ -213,6 +214,7 @@ footer p{margin:0}
   .cases{grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
   .case{margin:0;padding:26px;border-radius:6px;background:var(--paper2);border:0}
   .caseimg{max-width:560px}
+  .searchimg{max-width:560px}
   .case b{font-size:18px}
   .case p{font-size:15px}
   .cur{font-size:16px}
@@ -265,9 +267,9 @@ footer p{margin:0}
   <div class="wrap">
     <div>
       <h2>조용히 원생 채우는<br>원장님들의<br>‘원생이 오는 순서’</h2>
-      <p class="who">친절한 마케팅 · 탑시크릿 <span class="fill">10</span>기 진행 중</p>
+      <p class="who">친절한 마케팅 · 학원 원장님 전용 8주 마케팅 트레이닝 · 탑시크릿 10기 진행 중</p>
     </div>
-    <div class="photo"><div class="ph">[ 대표님 상반신 사진<br>배경 없는 PNG 권장 ]</div></div>
+    <div class="photo"></div>
   </div>
 </section>
 
@@ -278,8 +280,8 @@ footer p{margin:0}
     <p>원장님들을 만나면 첫 질문이 거의 같습니다. “블로그 몇 개 써야 문의가 와요?”, “인스타 팔로워 얼마나 있어야 돼요?”, “전단지 몇 장 돌려야 돼요?”</p>
     <p>전부 ‘양’을 묻는 질문입니다. 그런데 학부모는 원장님 블로그 글 개수를 세지 않습니다. 검색창에 ‘동네 이름 + 과목’을 치고, 맨 위에 나온 학원 세 곳을 눌러봅니다. 100개를 써도 검색이 안 되면 0개와 같고, 5개를 써도 검색되면 문의가 옵니다.</p>
 
-    <div class="shot">[ 캡처: 네이버에서 ‘○○동 초등 영어학원’ 검색 결과 상단 3곳 ]</div>
-    <p class="cap">사진: 학부모가 실제로 보는 화면. 글 개수가 아니라 여기에 뜨느냐가 전부입니다.</p>
+    <img src="search-1.jpg" alt="네이버에서 ‘중계동 태권도’를 검색했을 때 보이는 플레이스 상단 화면" class="searchimg">
+    <p class="cap">사진: 학부모가 실제로 보는 화면. ‘중계동 태권도’를 검색하면 지도와 함께 플레이스 상단 학원부터 보입니다. 글 개수가 아니라 여기에 뜨느냐가 전부입니다.</p>
 
     <p>인스타도 마찬가지입니다. 팔로워 천 명인 학원과 80명인 학원 중 어디가 원생이 많을까요. 상관없습니다. 인스타의 진짜 역할은 상담 예약을 한 학부모가 “여기 믿어도 되나” 확인하러 들어오는 것입니다. 그때 수업 사진 세 장에 원장 얼굴 없고 마지막 글이 6개월 전이면, 그 학부모는 상담 오기 전에 이미 마음이 반은 떠나 있습니다.</p>
     <p>전단지도 그렇습니다. 전단지를 받은 학부모는 전화를 하지 않습니다. 검색을 합니다. 거기서 플레이스가 비어 있고 리뷰가 두 개면, 전단지 5천 장은 거기서 끝납니다.</p>
@@ -294,17 +296,17 @@ footer p{margin:0}
     <h4>원장님, 지금 우리 학원 정체성 한 줄이 바로 나오시나요? 안 나온다면 그게 문의가 안 오는 이유입니다. 채널 문제가 아니었습니다.</h4>
 
     <h3 class="t">저희도 처음엔 틀렸습니다</h3>
-    <p>친절한 마케팅 초반에는 원장님들께 <span class="fill">[ 초기에 했던 접근 — 예: “블로그 매일 쓰세요, 인스타 매일 올리세요” ]</span>라고만 했습니다. 열심히 하시는 분들은 정말 열심히 하셨습니다. 그런데 <span class="fill">[ 실제 결과 — 예: 3개월 하고 지쳐 멈추신 분, 글은 쌓였는데 문의는 그대로였던 학원 ]</span>. 그때 알았습니다. 방법을 알려준 게 아니라 숙제만 준 것이었습니다.</p>
+    <p>친절한 마케팅 초반에는 원장님들께 “블로그 매일 쓰세요, 인스타 매일 올리세요”라고만 했습니다. 채널을 먼저 가르친 것입니다. 열심히 하시는 분들은 정말 열심히 하셨습니다. 그런데 석 달쯤 지나면 지쳐서 멈추는 분이 나왔고, 끝까지 하신 분도 글은 쌓였는데 문의는 그대로인 경우가 있었습니다. 그때 알았습니다. 방법을 알려준 게 아니라 숙제만 준 것이었습니다.</p>
     <p>그래서 순서를 통째로 바꿨습니다. 채널을 먼저 가르치지 않고, 정체성부터 잡고, 검색됐을 때 보이는 화면부터 정리하고, 그다음에 글을 쓰게 했습니다. 그랬더니 결과가 달라졌습니다. 9월 1일 정식 오픈을 앞두고 세팅부터 잡은 원장님은 문을 열기 전에 47명이 등록했고, 수업 한 달 만에 신입생 22명이 들어온 원장님은 “정비 안 해놨으면 어땠을까, 가슴이 철렁하다”고 하셨습니다. 같은 원장님, 같은 학원인데 순서만 바꿨더니 달라졌습니다.</p>
     <ul class="cream">
       <li>탑시크릿 1주차가 인스타가 아니라 ‘플레이스’인 이유</li>
       <li>학부모가 검색했을 때 제일 먼저 보는 화면이기 때문</li>
-      <li>누적 <span class="fill">[ ]</span>기 · 거쳐 간 학원 <span class="fill">[ ]</span>곳</li>
+      <li>2026년 9월 현재 10기 진행 중 · 매 기수 원장님 화면을 직접 보며 확인</li>
     </ul>
 
     <h3 class="t">혼자 하면 이만큼 걸립니다</h3>
-    <p>숨기는 것 없이 다 말씀드리겠습니다. 첫째, 검색됐을 때 보이는 화면 정리. 플레이스 업체 정보·대표 사진·소개글·예약·스마트콜·쿠폰·영수증 리뷰 이벤트를 빈칸 없이 채우는 데 처음이면 <span class="fill">[ ]</span>일. 둘째, 우리 동네 같은 과목 학원 20~30곳의 플레이스와 블로그 조사, 그리고 매주 키워드 순위 기록. 셋째, 키워드 3~5회·1,000자·사진 10장 공식으로 쓰는 상위노출 글. 넷째, 상담 전 문자와 상담 후 문자. 다섯째, 여기까지 해놓고 그다음에 인스타.</p>
-    <p>혼자 다 하면 매일 한두 시간씩 최소 <span class="fill">[ ]</span>개월입니다. 그런데 원장님은 오후 2시부터 밤 10시까지 수업을 하십니다.</p>
+    <p>숨기는 것 없이 다 말씀드리겠습니다. 첫째, 검색됐을 때 보이는 화면 정리. 플레이스 업체 정보·대표 사진·소개글·예약·스마트콜·쿠폰·영수증 리뷰 이벤트를 빈칸 없이 채우는 것. 처음 하시면 이것만으로 며칠이 갑니다. 둘째, 우리 동네 같은 과목 학원 20~30곳의 플레이스와 블로그 조사, 그리고 매주 키워드 순위 기록. 셋째, 키워드 3~5회·1,000자·사진 10장 공식으로 쓰는 상위노출 글. 넷째, 상담 전 문자와 상담 후 문자. 다섯째, 여기까지 해놓고 그다음에 인스타.</p>
+    <p>혼자 다 하면 매일 한두 시간씩 잡아도 몇 달이 걸립니다. 그런데 원장님은 오후 2시부터 밤 10시까지 수업을 하십니다.</p>
     <h4>진짜 문제는 시간이 아닙니다. 혼자 하면 내가 지금 맞게 하고 있는지 확인할 방법이 없다는 것입니다. 그래서 3주 하다 멈춥니다. 안 돼서가 아니라, 되고 있는지 몰라서.</h4>
     <p>강의를 들으면 ‘아는 것’까지는 됩니다. 대행사에 맡기면 우리 학원 수업을 모르니 글이 다 비슷하고 계약이 끝나면 아무것도 남지 않습니다. 세 가지의 공통점은 하나입니다. 실행을 확인해 주는 사람이 없다는 것. 그래서 저희는 강의가 아니라 ‘확인’을 파는 프로그램으로 만들었습니다.</p>
     <p>이 글에서 원생이 오는 순서를 이해하셨다면, 이제 그 순서를 원장님 학원에 대입해 볼 차례입니다. 순서는 저희가 8주로 잡아 두었습니다. 원장님은 따라 하기만 하시면 됩니다.</p>
@@ -322,7 +324,7 @@ footer p{margin:0}
 <section class="dark" id="intro">
   <div class="wrap">
     <h2>8주, 순서대로 따라만 하면<br>신규 등록이 이어집니다</h2>
-    <p>저희는 이 구조를 찾는 데 <span class="fill" style="color:#222">[ ]</span>기가 걸렸습니다.<br>비결은 특별한 기술이 아닙니다.</p>
+    <p>저희는 이 구조를 열 기수에 걸쳐 다듬었습니다.<br>비결은 특별한 기술이 아닙니다.</p>
     <p>학부모가 학원을 고르는 순서<br>‘검색 → 선택 → 확인 → 상담 → 등록’을<br>그대로 8주에 넣었을 뿐입니다.</p>
     <p>그래서 매주 과제 하나를 따라 하면<br>학부모가 지나가는 길목에 하나씩 우리 학원이 놓입니다.</p>
     <p class="red">지금부터 보여드리는 것이 그 구조입니다.</p>
@@ -337,8 +339,6 @@ footer p{margin:0}
     <div class="order" style="justify-content:center"><span class="hot">1~2주 검색됨</span><i>→</i><span class="hot">3~4주 선택받음</span><i>→</i><span class="hot">5~6주 확인됨</span><i>→</i><span class="hot">7~8주 상담·등록</span></div>
     <p>매주 과제는 딱 하나씩입니다. 플레이스 빈칸 채우기, 리뷰 이벤트, 소개글 한 편, 순위 기록, 상담 문자 템플릿, 인스타 프로필, 하이라이트, 릴스 한 편. 하나를 끝내면 그 하나가 원장님 것으로 남습니다. 8주가 끝나면 여덟 개가 쌓여 있고, 학부모는 어느 길목에서 들어와도 우리 학원을 만납니다.</p>
     <p class="lead">그래서 따라만 하면 됩니다. 순서를 저희가 잡아 두었으니까요.</p>
-    <div class="shot">[ 캡처: 8주 과제 체크리스트 · 1주차부터 8주차까지 채워진 화면 ]</div>
-    <p class="note c" style="text-align:center">위는 실제 기수에서 쓰는 주간 과제 체크리스트입니다.</p>
   </div>
 </section>
 
@@ -362,7 +362,7 @@ footer p{margin:0}
   <div class="wrap">
     <p>탑시크릿은 8주간 이어지는 <span class="red">온라인 라이브 트레이닝 + 매주 피드백</span>입니다.</p>
     <p>탑시크릿의 목표는<br>8주 뒤 원장님 학원에 신규 등록이 이어지는 구조가 남는 것이고,<br>그 목표에 도달하도록 매주 과제와 확인을 제공합니다.</p>
-    <p>지금까지 누적 <span class="fill">[ ]</span>기, <span class="fill">[ ]</span>곳의 학원을 만났고<br>여전히 매주 원장님 화면을 띄워놓고 “어디서 막혔는지”를 묻고 있습니다.</p>
+    <p>2026년 9월 현재 10기가 진행 중이고,<br>여전히 매주 원장님 화면을 띄워놓고 “어디서 막혔는지”를 묻고 있습니다.</p>
     <p>친절한 마케팅이 15년 동안 원장님만 가르치며 쌓은<br>모든 경험을 넣어 준비했습니다.</p>
   </div>
 </section>
@@ -463,7 +463,6 @@ footer p{margin:0}
 <footer>
   <div class="wrap">
     <p class="links"><a href="/privacy/">개인정보 처리방침</a><a href="/about/">학원메이트 소개</a></p>
-    <p>친절한 마케팅 · <span class="fill">[ 상호 · 대표 · 사업자등록번호 · 통신판매업 신고번호 · 주소 ]</span></p>
     <p>© 친절한 마케팅. 학원 원장님을 위한 온라인 마케팅 교육</p>
   </div>
 </footer>
