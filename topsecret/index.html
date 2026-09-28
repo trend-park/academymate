@@ -262,6 +262,74 @@ footer p{margin:0}
 .cmp tbody td.me{background:#fff3f3;color:var(--ink);font-weight:700}
 .cmp tbody tr:last-child td.me{border-radius:0 0 8px 8px}
 @media(min-width:768px){.why{flex-direction:row;align-items:stretch;gap:14px}.wcard{flex:1;max-width:none;padding:26px 20px}.wcard b{font-size:22px}.wcard span{font-size:15px}.why i{align-self:center}.cmp{font-size:16px}.cmp thead th{font-size:16px;padding:14px}.cmp tbody th{font-size:15px;padding:14px}.cmp tbody td{padding:14px}}
+
+/* 도식 컴포넌트 */
+.article .sub{font-size:14px;font-weight:700;color:var(--gray2);text-align:center;margin:0 0 12px}
+.article .mid{text-align:center;margin:22px 0}
+.article h4{text-align:center}
+.q3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 6px}
+.q3 div{background:var(--paper2);border-radius:12px;padding:16px 8px;text-align:center;font-size:14px;font-weight:600;line-height:1.45}
+.q3 b{color:var(--red);font-size:18px}
+.fx{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;justify-items:stretch;gap:6px;margin:0 0 12px}
+.fx.v{grid-template-columns:1fr}.fx.v i:last-of-type{transform:rotate(90deg)}
+.fx.w{grid-template-columns:1fr auto .8fr auto 1.7fr}
+.fx i{font-style:normal;font-weight:900;font-size:20px;color:var(--gray);text-align:center}
+.fbox{background:#fff;border:2px solid #e5e5e5;border-radius:10px;padding:10px 8px;text-align:center;font-size:14px;line-height:1.3;display:flex;align-items:center;justify-content:center;min-height:52px}
+.fbox b{font-weight:800}.fbox small{display:block;font-size:11px;font-weight:500;color:var(--gray2);margin-top:2px}
+.fbox.hot{background:var(--red);border-color:var(--red);color:#fff}.fbox.hot small{color:#ffe1e1}
+.fbox.zero{background:#eee;border-color:#eee;color:#777}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 20px}
+.ba .col{border-radius:12px;padding:14px 10px;text-align:center}
+.ba .bad{background:#f1f1f1}.ba .good{background:#fff3f3;border:2px solid var(--coral)}
+.ba em{display:block;font-style:normal;font-size:13px;font-weight:800;margin-bottom:10px;color:var(--gray2)}.ba .good em{color:var(--red)}
+.chain{display:flex;flex-direction:column;align-items:center;gap:4px}
+.chain span{background:#fff;border-radius:8px;padding:8px 10px;font-size:13.5px;font-weight:700;line-height:1.35;width:100%}
+.chain span.hot{background:var(--red);color:#fff}
+.chain i{font-style:normal;color:var(--gray);font-size:14px;line-height:1}
+.ex{background:var(--paper2);border-radius:12px;padding:16px 14px;margin:0 0 20px}
+.ex em{display:block;font-style:normal;font-size:12px;font-weight:800;color:var(--red);margin-bottom:10px}
+.exrow{display:grid;grid-template-columns:56px 1fr;gap:8px;font-size:14px;line-height:1.45;padding:7px 0;border-top:1px solid #e6e6e6}
+.exrow span{font-weight:800;color:var(--gray2)}.exrow b{font-weight:600}
+.steps{display:flex;flex-direction:column;gap:8px;margin:0 0 16px}
+.steps div{display:grid;grid-template-columns:34px 1fr auto;grid-template-areas:"n t d" "n s d";align-items:center;gap:2px 10px;background:var(--paper2);border-radius:10px;padding:12px 14px}
+.steps em{grid-area:n;font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.steps b{grid-area:t;font-size:15px}.steps span{grid-area:s;font-size:12.5px;color:var(--gray2);line-height:1.4}
+.steps small{grid-area:d;font-size:12px;font-weight:800;color:var(--red);white-space:nowrap}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 6px}
+.three div{background:#f1f1f1;border-radius:12px;padding:14px 8px;text-align:center}
+.three em{display:block;font-style:normal;font-size:12px;font-weight:800;color:var(--gray2);margin-bottom:6px}
+.three b{display:block;font-size:15px;line-height:1.3;margin-bottom:4px}.three span{font-size:12px;color:var(--gray2);line-height:1.4}
+.order.dk{justify-content:center;margin:0;gap:4px;font-size:14px}.order.dk span{background:#444;color:#fff;padding:6px 9px}.order.dk span.hot{background:var(--red)}.order.dk i{color:#999}
+.path{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 16px}
+.path div{background:var(--paper2);border-radius:12px;padding:16px 10px;text-align:center}
+.path em{display:block;font-style:normal;font-size:12px;font-weight:800;color:var(--red);margin-bottom:4px}
+.path b{display:block;font-size:19px;font-weight:800;margin-bottom:6px}.path span{font-size:13px;color:var(--gray2);line-height:1.45}
+.give{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 16px}
+.give div{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:14px 12px}
+.give b{display:block;font-size:15px;line-height:1.3;margin-bottom:5px}.give span{font-size:12.5px;color:var(--gray2);line-height:1.4}
+.sub2{font-size:15px;font-weight:700;margin:0 0 12px}
+.no{display:flex;flex-direction:column;gap:8px}
+.no div{display:grid;grid-template-columns:30px 1fr;grid-template-areas:"n t" "n s";gap:2px 10px;background:#fff;border-radius:10px;padding:12px 14px;border:1px solid #e5e5e5}
+.no em{grid-area:n;font-style:normal;width:26px;height:26px;border-radius:50%;background:#555;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.no.team em{background:var(--red)}
+.no b{grid-area:t;font-size:15px}.no span{grid-area:s;font-size:13px;color:var(--gray2);line-height:1.45}
+@media(min-width:768px){
+  .q3 div{font-size:17px;padding:22px 12px}.q3 b{font-size:22px}
+  .fbox{font-size:17px;padding:14px 18px}.fx i{font-size:24px}.fx.v{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr}.fx.v i:last-of-type{transform:none}
+  .ba{gap:16px}.ba .col{padding:22px 18px}.chain span{font-size:15px;padding:10px 12px}
+  .exrow{font-size:16px;grid-template-columns:72px 1fr}
+  .steps b{font-size:17px}.steps span{font-size:14px}
+  .three b{font-size:18px}.three span{font-size:14px}
+  .path{grid-template-columns:repeat(4,1fr)}.path b{font-size:22px}.path span{font-size:14px}
+  .give{grid-template-columns:repeat(4,1fr)}.give b{font-size:16px}.give span{font-size:13.5px}
+  .no b{font-size:17px}.no span{font-size:14.5px}
+  .article h4{font-size:22px;border-left:0;padding-left:0;text-align:center}
+}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 16px}
+.stats div{background:#fff;border-radius:12px;padding:16px 10px;text-align:center;border:1px solid #e5e5e5}
+.stats b{display:block;font-size:34px;font-weight:800;color:var(--red);line-height:1;letter-spacing:-.02em}
+.stats span{display:block;font-size:15px;font-weight:800;margin:6px 0 4px}.stats small{font-size:12px;color:var(--gray2);line-height:1.4;display:block}
+@media(min-width:768px){.stats{grid-template-columns:repeat(4,1fr)}.stats b{font-size:44px}}
 </style>
 </head>
 <body>
@@ -285,7 +353,7 @@ footer p{margin:0}
 <section class="hero" id="top">
   <div class="wrap">
     <div>
-      <h2>조용히 원생 채우는<br>원장님들의<br>‘원생이 오는 순서’</h2>
+      <h2>1년 내내<br>원생이 줄서는 학원이<br>되는 방법</h2>
       <p class="who">친절한 마케팅 · 학원 원장님 전용 8주 마케팅 과정</p>
     </div>
     <div class="photo"></div>
@@ -294,27 +362,55 @@ footer p{margin:0}
 
 <div class="article" id="story">
   <div class="wrap">
-    <h3 class="t">15년 마케팅 교육, 1,000명 넘는 원장님을 만나며 알게 된 문의가 안 오는 ‘단 하나의 이유’</h3>
-
-    <p>원장님들을 만나면 첫 질문이 거의 같습니다. “블로그 몇 개 써야 문의가 와요?”, “인스타 팔로워 얼마나 있어야 돼요?”, “전단지 몇 장 돌려야 돼요?”</p>
-    <p>전부 ‘양’을 묻는 질문입니다. 그런데 학부모는 원장님 블로그 글 개수를 세지 않습니다. 검색창에 ‘동네 이름 + 과목’을 치고, 맨 위에 나온 학원 세 곳을 눌러봅니다. 100개를 써도 검색이 안 되면 0개와 같고, 5개를 써도 검색되면 문의가 옵니다.</p>
-
-
-    <p>인스타도 마찬가지입니다. 팔로워 천 명인 학원과 80명인 학원 중 어디가 원생이 많을까요. 상관없습니다. 인스타의 진짜 역할은 상담 예약을 한 학부모가 “여기 믿어도 되나” 확인하러 들어오는 것입니다. 그때 수업 사진 세 장에 원장 얼굴 없고 마지막 글이 6개월 전이면, 그 학부모는 상담 오기 전에 이미 마음이 반은 떠나 있습니다.</p>
-    <p>전단지도 그렇습니다. 전단지를 받은 학부모는 전화를 하지 않습니다. 검색을 합니다. 거기서 플레이스가 비어 있고 리뷰가 두 개면, 전단지 5천 장은 거기서 끝납니다.</p>
-
-    <h4>세 질문의 공통점은 하나입니다. 원생모집은 양의 문제가 아니라 ‘순서’의 문제라는 것.</h4>
+    <h3 class="t">15년 마케팅 교육, 1,000명 넘는 원장님을 만나며 알게 된<br>문의가 안 오는 ‘단 하나의 이유’</h3>
+    <p class="sub">원장님들이 저희에게 가장 많이 하는 질문</p>
+    <div class="q3">
+      <div>“블로그<br><b>몇 개</b> 써야<br>문의가 와요?”</div>
+      <div>“인스타 팔로워<br><b>몇 명</b>이어야<br>돼요?”</div>
+      <div>“전단지<br><b>몇 장</b> 돌려야<br>돼요?”</div>
+    </div>
+    <p class="mid">전부 <b>‘양’</b>을 묻는 질문입니다.<br>그런데 학부모는 글 개수를 세지 않습니다. <b>검색</b>합니다.</p>
+    <div class="fx">
+      <div class="fbox"><b>글 100개</b></div><i>×</i><div class="fbox"><b>검색 안 됨</b></div><i>=</i><div class="fbox zero"><b>문의 0</b></div>
+    </div>
+    <div class="fx">
+      <div class="fbox"><b>글 5개</b></div><i>×</i><div class="fbox"><b>검색됨</b></div><i>=</i><div class="fbox hot"><b>문의 옴</b></div>
+    </div>
+    <div class="fx">
+      <div class="fbox"><b>팔로워 1,000명</b></div><i>×</i><div class="fbox"><b>원장 얼굴 없음<br><small>마지막 글 6개월 전</small></b></div><i>=</i><div class="fbox zero"><b>상담 전 이탈</b></div>
+    </div>
+    <div class="fx">
+      <div class="fbox"><b>전단지 5,000장</b></div><i>×</i><div class="fbox"><b>플레이스 비어 있음<br><small>리뷰 2개</small></b></div><i>=</i><div class="fbox zero"><b>거기서 끝</b></div>
+    </div>
+    <h4>원생모집은 <span class="red">양</span>의 문제가 아니라 <span class="red">순서</span>의 문제입니다.</h4>
 
     <h3 class="t">잘 되는 학원은 채널부터 고르지 않습니다</h3>
-    <p>대부분 원장님은 맨 뒤에서 시작합니다. “인스타를 해야 하나, 블로그를 해야 하나.” 채널부터 고르니 뭘 올려야 할지 모르겠고, 올려도 반응이 없습니다. 잘 되는 학원은 이 순서로 움직입니다.</p>
-    <div class="order"><span>수업</span><i>→</i><span>우리 학부모</span><i>→</i><span>그 학부모의 고민</span><i>→</i><span class="hot">학원의 정체성</span><i>→</i><span>콘텐츠 컨셉</span><i>→</i><span>플레이스·블로그·인스타</span></div>
-    <p>초등 영어학원이라고 해보겠습니다. 타겟은 ‘애들’이 아닙니다. 애들은 결제하지 않습니다. 타겟은 ‘초등 1~2학년 자녀를 둔, 영어를 처음 시키는 엄마’입니다. 이 엄마의 고민은 “어디서 시작해야 하지”, “학습지로 되나”, “대형 학원 보내면 우리 애가 따라갈 수 있나”입니다.</p>
-    <p>그러면 정체성이 나옵니다. ‘영어 처음 시작하는 아이를 3년 안에 원서 읽게 만드는 학원’. 이 한 줄이 나오면 콘텐츠는 저절로 나옵니다. “학습지 vs 학원”, “파닉스 끝나고 뭐 해야 하나”, “우리 아이 첫 원서 읽은 날”. 학부모가 검색하는 말이면서 우리 학원만 답할 수 있는 이야기입니다. 그다음에야 이걸 플레이스 소개글에 넣고, 블로그 제목으로 쓰고, 릴스로 찍습니다.</p>
-    <h4>원장님, 지금 우리 학원 정체성 한 줄이 바로 나오시나요? 안 나온다면 그게 문의가 안 오는 이유입니다. 채널 문제가 아니었습니다.</h4>
+    <div class="ba">
+      <div class="col bad"><em>대부분의 학원</em>
+        <div class="chain"><span>인스타? 블로그?</span><i>↓</i><span>뭘 올릴지 모름</span><i>↓</i><span>올려도 반응 없음</span></div>
+      </div>
+      <div class="col good"><em>잘 되는 학원</em>
+        <div class="chain"><span>수업</span><i>↓</i><span>우리 학부모</span><i>↓</i><span>그 학부모의 고민</span><i>↓</i><span class="hot">학원의 정체성 한 줄</span><i>↓</i><span>콘텐츠 컨셉</span><i>↓</i><span>플레이스 · 블로그 · 인스타</span></div>
+      </div>
+    </div>
+    <div class="ex">
+      <em>예 · 초등 영어학원</em>
+      <div class="exrow"><span>타겟</span><b>초1~2 자녀, 영어를 처음 시키는 엄마</b></div>
+      <div class="exrow"><span>고민</span><b>“어디서 시작하지” “학습지로 되나” “대형 학원 따라갈까”</b></div>
+      <div class="exrow"><span>정체성</span><b>영어 처음 시작하는 아이를 3년 안에 원서 읽게 만드는 학원</b></div>
+      <div class="exrow"><span>콘텐츠</span><b>학습지 vs 학원 · 파닉스 끝나고 뭐 하나 · 우리 아이 첫 원서 읽은 날</b></div>
+    </div>
+    <h4>원장님, 지금 우리 학원 정체성 한 줄이 바로 나오시나요?<br>안 나온다면 그게 문의가 안 오는 이유입니다.</h4>
 
     <h3 class="t">저희도 처음엔 틀렸습니다</h3>
-    <p>친절한 마케팅 초반에는 원장님들께 “블로그 매일 쓰세요, 인스타 매일 올리세요”라고만 했습니다. 채널을 먼저 가르친 것입니다. 열심히 하시는 분들은 정말 열심히 하셨습니다. 그런데 석 달쯤 지나면 지쳐서 멈추는 분이 나왔고, 끝까지 하신 분도 글은 쌓였는데 문의는 그대로인 경우가 있었습니다. 그때 알았습니다. 방법을 알려준 게 아니라 숙제만 준 것이었습니다.</p>
-    <p>그래서 순서를 통째로 바꿨습니다. 채널을 먼저 가르치지 않고, 정체성부터 잡고, 검색됐을 때 보이는 화면부터 정리하고, 그다음에 글을 쓰게 했습니다. 그랬더니 결과가 달라졌습니다. 9월 1일 정식 오픈을 앞두고 세팅부터 잡은 원장님은 문을 열기 전에 47명이 등록했고, 수업 한 달 만에 신입생 22명이 들어온 원장님은 “정비 안 해놨으면 어땠을까, 가슴이 철렁하다”고 하셨습니다. 같은 원장님, 같은 학원인데 순서만 바꿨더니 달라졌습니다.</p>
+    <div class="ba">
+      <div class="col bad"><em>예전 친절한 마케팅</em>
+        <div class="chain"><span>“블로그 매일, 인스타 매일”</span><i>↓</i><span>채널부터 숙제</span><i>↓</i><span>석 달 뒤 지쳐서 멈춤</span><i>↓</i><span>글은 쌓였는데 문의는 그대로</span></div>
+      </div>
+      <div class="col good"><em>순서를 바꾼 뒤</em>
+        <div class="chain"><span>정체성부터</span><i>↓</i><span>검색됐을 때 보이는 화면 정리</span><i>↓</i><span>그다음에 글</span><i>↓</i><span class="hot">오픈 전 47명 등록<br>한 달 신규 22명</span></div>
+      </div>
+    </div>
     <div class="proof">
       <img src="cases-2.jpg" alt="이전 기수 원장님 카톡 원문: 8~9월에 60명 학원생 등록, 수업 후 원생 60명 증가" class="caseimg">
       <img src="cases-3.jpg" alt="이전 기수 원장님 카톡 원문: 목표 원생 수 100명 돌파, 블로그 보고 왔다는 학부모가 늘고 네이버 예약도 처음 잡힘" class="caseimg">
@@ -322,56 +418,72 @@ footer p{margin:0}
     </div>
 
     <h3 class="t">혼자 하면 이만큼 걸립니다</h3>
-    <p>숨기는 것 없이 다 말씀드리겠습니다. 첫째, 검색됐을 때 보이는 화면 정리. 플레이스 업체 정보·대표 사진·소개글·예약·스마트콜·쿠폰·영수증 리뷰 이벤트를 빈칸 없이 채우는 것. 처음 하시면 이것만으로 며칠이 갑니다. 둘째, 우리 동네 같은 과목 학원 20~30곳의 플레이스와 블로그 조사, 그리고 매주 키워드 순위 기록. 셋째, 키워드 3~5회·1,000자·사진 10장 공식으로 쓰는 상위노출 글. 넷째, 상담 전 문자와 상담 후 문자. 다섯째, 여기까지 해놓고 그다음에 인스타.</p>
-    <p>혼자 다 하면 매일 한두 시간씩 잡아도 몇 달이 걸립니다. 그런데 원장님은 오후 2시부터 밤 10시까지 수업을 하십니다.</p>
-    <h4>진짜 문제는 시간이 아닙니다. 혼자 하면 내가 지금 맞게 하고 있는지 확인할 방법이 없다는 것입니다. 그래서 3주 하다 멈춥니다. 안 돼서가 아니라, 되고 있는지 몰라서.</h4>
-    <p>강의를 들으면 ‘아는 것’까지는 됩니다. 대행사에 맡기면 우리 학원 수업을 모르니 글이 다 비슷하고 계약이 끝나면 아무것도 남지 않습니다. 세 가지의 공통점은 하나입니다. 실행을 확인해 주는 사람이 없다는 것. 그래서 저희는 강의가 아니라 ‘확인’을 파는 프로그램으로 만들었습니다.</p>
-    <p>이 글에서 원생이 오는 순서를 이해하셨다면, 이제 그 순서를 원장님 학원에 대입해 볼 차례입니다. 순서는 저희가 8주로 잡아 두었습니다. 원장님은 따라 하기만 하시면 됩니다.</p>
+    <div class="steps">
+      <div><em>1</em><b>검색 화면 정리</b><span>플레이스 정보·사진·소개글·예약·쿠폰·리뷰 이벤트</span><small>며칠</small></div>
+      <div><em>2</em><b>동네 조사</b><span>같은 과목 학원 20~30곳 플레이스·블로그 + 매주 순위 기록</span><small>매주</small></div>
+      <div><em>3</em><b>상위노출 글</b><span>키워드 3~5회 · 1,000자 · 사진 10장 공식</span><small>매주</small></div>
+      <div><em>4</em><b>상담 문자</b><span>상담 전 문자 · 상담 후 문자</span><small>며칠</small></div>
+      <div><em>5</em><b>그다음 인스타</b><span>프로필 · 하이라이트 · 릴스</span><small>몇 주</small></div>
+    </div>
+    <div class="fx v">
+      <div class="fbox"><b>혼자</b></div><i>=</i><div class="fbox"><b>매일 1~2시간<br><small>수업은 오후 2시~밤 10시</small></b></div><i>+</i><div class="fbox"><b>맞게 하는지<br>확인 못 함</b></div><i>→</i><div class="fbox zero"><b>3주 하다 멈춤</b></div>
+    </div>
+    <h4>안 돼서가 아니라, 되고 있는지 몰라서 멈춥니다.</h4>
+    <div class="three">
+      <div><em>강의</em><b>‘아는 것’까지</b><span>실행은 혼자</span></div>
+      <div><em>대행</em><b>글이 다 비슷</b><span>계약 끝나면 아무것도 안 남음</span></div>
+      <div><em>혼자</em><b>확인할 사람 없음</b><span>3주 뒤 멈춤</span></div>
+    </div>
+    <p class="mid">세 가지의 공통점은 하나. <b>실행을 확인해 주는 사람이 없다</b>는 것.<br>그래서 저희는 강의가 아니라 <b class="red">‘확인’</b>을 파는 프로그램으로 만들었습니다.</p>
   </div>
 </div>
 
 <div class="cta">
   <div class="wrap">
-    <p>대기 신청만 하셔도, ‘원생이 오는 순서’ 오리엔테이션 강의를 받아보실 수 있습니다.<br>직접 확인해 보세요.</p>
+    <p>순서는 저희가 8주로 잡아 두었습니다.<br>원장님은 따라 하기만 하시면 됩니다.</p>
     <button class="btn" data-open>원생 줄 세우는 학원 만들기 신청</button>
   </div>
 </div>
 
-<!-- ───────── 2. 탑시크릿 소개 ───────── -->
+<!-- ───────── 2. 탑시크릿 클래스 소개 ───────── -->
 <section class="dark" id="intro">
   <div class="wrap">
     <h2>8주, 순서대로 따라만 하면<br>신규 등록이 이어집니다</h2>
-    <p>저희는 이 구조를 열 기수에 걸쳐 다듬었습니다.<br>비결은 특별한 기술이 아닙니다.</p>
-    <p>학부모가 학원을 고르는 순서<br>‘검색 → 선택 → 확인 → 상담 → 등록’을<br>그대로 8주에 넣었을 뿐입니다.</p>
-    <p>그래서 매주 과제 하나를 따라 하면<br>학부모가 지나가는 길목에 하나씩 우리 학원이 놓입니다.</p>
-    <p class="red">지금부터 보여드리는 것이 그 구조입니다.</p>
+    <p>학부모가 학원을 고르는 순서를<br>그대로 8주에 넣었습니다.</p>
+    <div class="order dk"><span>검색</span><i>→</i><span>선택</span><i>→</i><span>확인</span><i>→</i><span>상담</span><i>→</i><span class="hot">등록</span></div>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <p>학부모는 전단지를 받아도 전화하지 않습니다. 검색합니다.<br>검색해서 나온 학원 중 플레이스가 채워진 곳을 누릅니다.<br>상담 예약을 하고 나면 인스타를 확인합니다.<br>상담을 받고 나서 문자 한 통에 등록을 결정합니다.</p>
-    <p>이 길목 어디 하나가 비어 있으면<br>앞에서 한 노력이 거기서 새어 나갑니다.</p>
-    <p>탑시크릿 클래스 8주는 이 길목을 앞에서부터 하나씩 채웁니다.</p>
-    <div class="order" style="justify-content:center"><span class="hot">1~2주 검색됨</span><i>→</i><span class="hot">3~4주 선택받음</span><i>→</i><span class="hot">5~6주 확인됨</span><i>→</i><span class="hot">7~8주 상담·등록</span></div>
-    <p>매주 과제는 딱 하나씩입니다. 플레이스 빈칸 채우기, 리뷰 이벤트, 소개글 한 편, 순위 기록, 상담 문자 템플릿, 인스타 프로필, 하이라이트, 릴스 한 편. 하나를 끝내면 그 하나가 원장님 것으로 남습니다. 8주가 끝나면 여덟 개가 쌓여 있고, 학부모는 어느 길목에서 들어와도 우리 학원을 만납니다.</p>
+    <h3 class="c">학부모가 지나가는 길목, 8주로 하나씩 채웁니다</h3>
+    <div class="path">
+      <div><em>1~2주</em><b>검색됨</b><span>플레이스 빈칸 채우기<br>리뷰 이벤트</span></div>
+      <div><em>3~4주</em><b>선택받음</b><span>소개글 한 편<br>순위 기록 · 상담 문자</span></div>
+      <div><em>5~6주</em><b>확인됨</b><span>인스타 프로필<br>하이라이트</span></div>
+      <div><em>7~8주</em><b>상담 · 등록</b><span>릴스 한 편<br>혼자 굴리는 루틴</span></div>
+    </div>
+    <div class="fx w">
+      <div class="fbox"><b>매주 과제 1개</b></div><i>×</i><div class="fbox"><b>8주</b></div><i>=</i><div class="fbox hot"><b>어느 길목에서 들어와도<br>우리 학원을 만남</b></div>
+    </div>
     <p class="lead">그래서 따라만 하면 됩니다. 순서를 저희가 잡아 두었으니까요.</p>
   </div>
 </section>
 
 <section class="sec g2">
   <div class="wrap">
-    <p>“정말 따라만 하면 되나요?”<br>많은 원장님이 이렇게 묻습니다.</p>
-    <p>말로 설명하지 않겠습니다.<br>바로 이전 기수 원장님들이 단톡방에 남긴<br><span class="red">카톡 원문</span>을 그대로 보여드립니다.</p>
+    <p>“정말 따라만 하면 되나요?”<br>말로 설명하지 않겠습니다.<br>이전 기수 원장님들이 단톡방에 남긴 <span class="red">카톡 원문</span>입니다.</p>
     <img src="cases-1.jpg" alt="이전 기수 원장님들의 성과 인증 카톡 캡처: 학원 오픈 전 47명 등록, 수업 한 달 만에 신규 22명, 신규 한 달 만에 20명, 수업 이후 원생 85명" class="caseimg">
-    <p>이분들의 팔로워 수와 블로그 글 개수를 알게 되신다면 놀라실 수 있습니다.<br>많지 않습니다. 순서대로 놓였을 뿐입니다.</p>
-    <div class="cases"><div class="case"><b>학원 오픈 전 47명 등록</b><p>9월 1일 정식 오픈을 앞두고 플레이스·블로그 세팅부터 잡았습니다. 문을 열기도 전에 47명이 등록했고, 목표로 잡았던 50명은 오픈 첫 주 상담으로 채워졌습니다.</p></div>
-    <div class="case"><b>수업 한 달 만에 신규 22명</b><p>7월 한 달 신입생 22명. 원장님 말 그대로 옮기면 “정비 안 해놨으면 어땠을까, 가슴이 철렁합니다.” 잘해서가 아니라 검색됐을 때 보이는 화면을 먼저 정비했기 때문입니다.</p></div></div>
-    <p style="margin-top:30px">아직도 팔로워를 늘리기 위해 애를 쓰고 계신가요?<br>여전히 조회수를 올리기 위해 릴스에서 춤을 추고 계신가요?</p>
-    <div class="cases"><div class="case"><b>신규 한 달 만에 20명</b><p>블로그까지는 큰 변화가 없었습니다. 릴스를 시작하고 자료 나눔을 하면서부터 문의가 몰렸습니다. 얼굴을 내걸고 춤을 춘 게 아니라, 학부모가 확인하러 왔을 때 보이는 화면을 채운 것뿐입니다.</p></div>
-    <div class="case"><b>수업 이후 원생 85명</b><p>상담 전화가 오면 블로그 글을 먼저 보내드리고, 그 글을 보고 오는 학부모가 많아졌습니다. 정기공연 소식도 블로그에 적어 소개하니 참여율까지 올랐습니다. 세팅 이후 지금 원생 85명.</p></div></div>
-    <p style="margin-top:30px">“그 원장님들은 원래 잘하던 분들 아닌가요?”<br><span class="red" style="font-size:20px">아닙니다. 따라 했을 뿐입니다.</span></p>
-    <p>네 분 다 대형 학원이 아닙니다. 원장님 혼자 운영하는 동네 학원이고,<br>마케팅을 배운 적이 없던 분들입니다.<br>다른 게 하나 있다면, 매주 과제를 순서대로 냈다는 것입니다.</p>
+    <div class="stats">
+      <div><b>47명</b><span>오픈 전 등록</span><small>플레이스·블로그 세팅 후 개원</small></div>
+      <div><b>22명</b><span>한 달 신규</span><small>검색 화면 정비 후 7월</small></div>
+      <div><b>20명</b><span>한 달 신규</span><small>릴스 시작 후</small></div>
+      <div><b>85명</b><span>세팅 후 원생</span><small>상담 전 블로그 글 전송</small></div>
+    </div>
+    <div class="fx">
+      <div class="fbox"><b>동네 학원<br><small>원장님 혼자 운영</small></b></div><i>+</i><div class="fbox"><b>마케팅<br>배운 적 없음</b></div><i>+</i><div class="fbox hot"><b>매주 과제를<br>순서대로</b></div>
+    </div>
+    <p class="lead">원래 잘하던 분들이 아닙니다. 따라 했을 뿐입니다.</p>
   </div>
 </section>
 
@@ -386,9 +498,7 @@ footer p{margin:0}
       <i>=</i>
       <div class="wcard hot"><b>신규 등록이<br>이어지는 구조</b><span>8주 뒤 원장님 것으로 남음</span></div>
     </div>
-    <p>탑시크릿 클래스의 목표는<br>8주 뒤 원장님 학원에 신규 등록이 이어지는 구조가 남는 것이고,<br>그 목표에 도달하도록 매주 과제와 확인을 제공합니다.</p>
-    <p>2026년 9월 현재 10기가 진행 중이고,<br>여전히 매주 원장님 화면을 띄워놓고 “어디서 막혔는지”를 묻고 있습니다.</p>
-    <p>친절한 마케팅이 15년 동안 마케팅 교육을 하며<br>1,000명 넘는 원장님을 만나 쌓은 경험을 넣어 준비했습니다.</p>
+    <p>2026년 9월 현재 10기 진행 중.<br>15년 마케팅 교육, 1,000명 넘는 원장님을 만나 쌓은 경험을 넣었습니다.</p>
   </div>
 </section>
 
@@ -413,40 +523,45 @@ footer p{margin:0}
 <section class="sec left">
   <div class="wrap">
     <h3 class="c">탑시크릿 클래스는 무엇을 제공하나요?</h3>
-    <ul class="list">
-      <li>매주 라이브 수업 약 3시간 (원장님 학원 화면을 띄워놓고 그 자리에서 세팅)</li>
-      <li>이틀에 한 번 구간별 진도 안내 (하루 30분 분량)</li>
-      <li>매주 과제 하나 (플레이스 캡처 · 리뷰 인증 · 블로그 글 · 순위 엑셀)</li>
-      <li>매주 과제 1:1 맞춤 피드백 수업 (과제를 못 냈어도 들어오면 막힌 곳을 같이 봄)</li>
-      <li>매주 1:1 피드백 리포트 (우리 학원 대표 키워드 순위를 숫자로)</li>
-      <li>기수 단톡방 · 영수증 리뷰 협업</li>
-      <li>ChatGPT·AI 도구 세팅 (소개글 · 리뷰 답글 · 소식 글)</li>
-    </ul>
-    <p class="note">*온라인(Zoom)으로 진행되며 녹화 영상이 제공됩니다. 지역과 상관없이 참여하실 수 있습니다. 수업 요일·시간은 기수마다 정해지며, 수강료와 함께 대기 신청 후 개별 안내드립니다.</p>
+    <div class="give">
+      <div><b>매주 라이브 수업 3시간</b><span>원장님 학원 화면을 띄워놓고 그 자리에서 세팅</span></div>
+      <div><b>매주 과제 1개</b><span>플레이스 캡처 · 리뷰 인증 · 블로그 글 · 순위 엑셀</span></div>
+      <div><b>과제 1:1 맞춤 피드백 수업</b><span>과제를 못 냈어도 막힌 곳을 같이 봄</span></div>
+      <div><b>1:1 피드백 리포트</b><span>우리 학원 대표 키워드 순위를 숫자로</span></div>
+      <div><b>이틀에 한 번 진도 안내</b><span>하루 30분 분량</span></div>
+      <div><b>기수 단톡방</b><span>영수증 리뷰 협업 · 막힌 질문 그날 답</span></div>
+      <div><b>AI 도구 세팅</b><span>소개글 · 리뷰 답글 · 소식 글</span></div>
+      <div><b>녹화 영상 제공</b><span>온라인(Zoom) · 지역 상관없음</span></div>
+    </div>
+    <p class="note">*수업 요일·시간은 기수마다 정해지며, 수강료와 함께 대기 신청 후 개별 안내드립니다.</p>
   </div>
 </section>
 
-
-<section class="sec left">
+<section class="sec left g">
   <div class="wrap">
     <h3 class="c">누구나 할 수 있나요?</h3>
-    <p>네, 따라만 하면 됩니다. 컴퓨터가 서툴러도, 마케팅을 한 번도 안 해봤어도 기수마다 완주하신 분들이 있습니다. 다만 ‘따라 하는 것’ 자체가 어려운 상황이라면 8주가 서로에게 아깝습니다. 아래 다섯 가지에 해당된다면 다음 기회에 오시는 게 맞습니다.</p>
-    <p><strong>1.</strong> 과제를 낼 시간이 없는 원장님. 매주 과제가 있고 마감이 있습니다. 수업만 듣고 실행하지 않으실 거면 수강료가 아깝습니다. 8주 동안 매주 두세 시간은 확보하셔야 합니다.</p>
-    <p><strong>2.</strong> 대신 해주기를 바라는 원장님. 탑시크릿 클래스는 대행이 아닙니다. 플레이스도 블로그도 원장님이 직접 세팅하고, 저희는 그걸 보고 고칩니다. 그래야 8주 뒤에 혼자 굴릴 수 있습니다.</p>
-    <p><strong>3.</strong> 몇 주 만에 정원이 차기를 기대하는 원장님. 검색 순위는 세팅 후 올라오는 데 시간이 걸리고, 문의가 등록이 되는 데는 상담이 필요합니다. 빠른 결과가 나오는 분도 있지만 그걸 기준으로 오시면 안 됩니다.</p>
-    <p><strong>4.</strong> 이미 검색·인스타가 모두 잘 굴러가는 학원. 플레이스 상위, 블로그 문의, 인스타 신뢰까지 이미 돌아가고 있다면 저희가 드릴 게 많지 않습니다. 그 자리는 이제 시작하는 원장님께 양보해 주세요.</p>
-    <p><strong>5.</strong> 학원 정보를 공개하고 싶지 않은 원장님. 피드백은 원장님 학원 화면을 같은 기수 원장님들 앞에서 띄워놓고 진행합니다. 학원명·플레이스·블로그를 공개하기 어렵다면 맞지 않습니다.</p>
+    <p class="lead">네, 따라만 하면 됩니다. 컴퓨터가 서툴러도, 마케팅을 한 번도 안 해봤어도 기수마다 완주하신 분들이 있습니다.</p>
+    <p class="sub2">다만 아래 다섯 분은 다음 기회에 오시는 게 맞습니다.</p>
+    <div class="no">
+      <div><em>1</em><b>과제 낼 시간이 없는 분</b><span>매주 과제와 마감이 있습니다. 주 2~3시간은 필요합니다.</span></div>
+      <div><em>2</em><b>대신 해주기를 바라는 분</b><span>대행이 아닙니다. 직접 세팅하고, 저희는 보고 고칩니다.</span></div>
+      <div><em>3</em><b>몇 주 만에 정원이 차길 바라는 분</b><span>순위는 세팅 후 시간이 걸리고, 등록에는 상담이 필요합니다.</span></div>
+      <div><em>4</em><b>이미 다 잘 굴러가는 학원</b><span>플레이스·블로그·인스타가 이미 돌아가면 드릴 게 많지 않습니다.</span></div>
+      <div><em>5</em><b>학원 정보를 공개하기 어려운 분</b><span>피드백은 같은 기수 원장님들 앞에서 화면을 띄워놓고 합니다.</span></div>
+    </div>
   </div>
 </section>
 
 <section class="sec left g2">
   <div class="wrap">
     <h3 class="c">탑시크릿 클래스 팀과 함께하면 무엇이 좋나요?</h3>
-    <p><strong>1.</strong> 15년 동안 마케팅 교육을 하며 1,000명 넘는 학원 원장님을 만났습니다. 일반 마케팅 강의를 학원에 끼워 맞추는 게 아니라, 학원 플레이스·학원 블로그·학원 인스타에서 실제로 문의가 오는 것만 남겨 커리큘럼을 만들었습니다.</p>
-    <p><strong>2.</strong> 라이브로 가르치고, 매주 과제를 1:1로 봅니다. 원장님 화면을 직접 띄워놓고 “이 문장 때문에 노출이 안 되는 거예요”까지 짚어드리고, 다음 주에 고쳐졌는지 다시 봅니다. 과제 체크리스트로 빠진 것이 없는지 매주 확인합니다.</p>
-    <p><strong>3.</strong> 순위를 숫자로 보여드립니다. 매주 1:1 피드백 리포트에 우리 학원 대표 키워드가 몇 위에서 몇 위가 됐는지 적어 드립니다. 되고 있는지 몰라서 멈추는 일이 없도록.</p>
-    <p><strong>4.</strong> 8주가 끝나면 혼자 굴릴 수 있는 주간 루틴을 손에 쥡니다. 대행처럼 계약이 끝나면 사라지는 게 아니라, 플레이스·블로그·인스타가 원장님 것으로 남습니다.</p>
-    <p><strong>5.</strong> 같은 기수 원장님들과 단톡방에서 영수증 리뷰를 서로 채워주고, 막힌 질문은 그날 바로 답을 받습니다.</p>
+    <div class="no team">
+      <div><em>1</em><b>학원에서 문의가 오는 것만</b><span>15년 마케팅 교육 · 1,000명 넘는 원장님을 만나며 남긴 커리큘럼</span></div>
+      <div><em>2</em><b>라이브 + 매주 1:1 피드백</b><span>“이 문장 때문에 노출이 안 돼요”까지 짚고, 다음 주에 고쳐졌는지 다시 봄</span></div>
+      <div><em>3</em><b>순위를 숫자로</b><span>대표 키워드가 몇 위에서 몇 위가 됐는지 매주 리포트</span></div>
+      <div><em>4</em><b>8주 뒤 원장님 것으로</b><span>대행처럼 사라지지 않고 플레이스·블로그·인스타가 남음</span></div>
+      <div><em>5</em><b>같은 기수 단톡방</b><span>영수증 리뷰를 서로 채워주고, 막힌 질문은 그날 답</span></div>
+    </div>
   </div>
 </section>
 
