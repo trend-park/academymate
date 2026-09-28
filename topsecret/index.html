@@ -41,7 +41,7 @@ strong{font-weight:700}
 .logo .brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;letter-spacing:-.02em}
 .logo .brand i{display:inline-flex;width:26px;height:26px;background:var(--red);color:#fff;border-radius:5px;align-items:center;justify-content:center;font-style:normal;font-weight:900;font-size:15px}
 .logo .brand small{font-weight:500;font-size:12px;color:var(--gray);letter-spacing:0;margin-left:2px}
-.logo .mini{font-size:12px;font-weight:600;color:var(--dark4);background:var(--red);color:#fff;padding:8px 18px;border-radius:6px;border:0;cursor:pointer;font-family:inherit}
+.logo .mini{font-size:12px;font-weight:600;white-space:nowrap;color:var(--dark4);background:var(--red);color:#fff;padding:8px 18px;border-radius:6px;border:0;cursor:pointer;font-family:inherit}
 
 /* 탭 내비 (다크 36px, 붙어 다님) */
 .tabs{position:sticky;top:50px;z-index:29;background:var(--dark2);height:36px}
@@ -353,13 +353,15 @@ footer p{margin:0}
 @media(min-width:768px){.punch{font-size:44px}}
 .sec h3 .pre{display:block;font-size:17px;font-weight:600;color:var(--gray2);margin-bottom:4px}.sec h3 .strong{font-size:28px;font-weight:900;letter-spacing:-.02em}
 @media(min-width:768px){.sec h3 .pre{font-size:20px}.sec h3 .strong{font-size:38px}}
+.logo .brand svg{width:30px;height:27px;flex:none}
+@media(min-width:768px){.logo .brand svg{width:38px;height:34px}}
 </style>
 </head>
 <body>
 
 <header class="logo">
   <div class="wrap">
-    <a class="brand" href="#top"><i>친</i>친절한 마케팅 <small>TOP SECRET</small></a>
+    <a class="brand" href="#top"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#9db7ff"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>학원메이트 <small>TOP SECRET</small></a>
     <button class="mini" data-open>무료 특강</button>
   </div>
 </header>
