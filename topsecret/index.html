@@ -42,7 +42,7 @@ h3 .red,h4 .red,.mid .red,.lead .red{font-size:1.12em;font-weight:800}
 .logo .brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;letter-spacing:-.02em}
 .logo .brand i{display:inline-flex;width:26px;height:26px;background:var(--red);color:#fff;border-radius:5px;align-items:center;justify-content:center;font-style:normal;font-weight:900;font-size:15px}
 .logo .brand small{font-weight:500;font-size:12px;color:var(--gray);letter-spacing:0;margin-left:2px}
-.logo .mini{font-size:14px;font-weight:600;white-space:nowrap;color:var(--dark4);background:var(--red);color:#fff;padding:8px 18px;border-radius:6px;border:0;cursor:pointer;font-family:inherit}
+.logo .mini{text-decoration:none;display:inline-flex;align-items:center;font-size:14px;font-weight:600;white-space:nowrap;color:var(--dark4);background:var(--red);color:#fff;padding:8px 18px;border-radius:6px;border:0;cursor:pointer;font-family:inherit}
 
 /* 탭 내비 (다크 36px, 붙어 다님) */
 .tabs{position:sticky;top:50px;z-index:29;background:var(--dark2);height:36px}
@@ -146,7 +146,8 @@ footer p{margin:0}
 .bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:82px}
 .bar .t{font-size:16px;font-weight:700;line-height:1.4}
 .bar .t small{display:block;font-weight:500;font-size:14px;color:#dadada}
-.bar button{flex:0 0 auto;background:var(--red);color:#fff;border:0;border-radius:6px;font-size:14px;font-weight:600;padding:8px 24px;cursor:pointer;font-family:inherit}
+.bar button,.bar a{flex:0 0 auto;background:var(--red);color:#fff;border:0;border-radius:6px;font-size:14px;font-weight:600;padding:8px 24px;cursor:pointer;font-family:inherit}
+.bar a{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 
 /* 모달 폼 */
 .modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.7)}
@@ -249,7 +250,7 @@ footer p{margin:0}
   .bar .wrap{height:66px;padding:0 30px;max-width:none}
   .bar .t{font-size:20px}
   .bar .t small{display:inline;font-size:16px;color:#dadada;margin-left:8px}
-  .bar button{font-size:18px;padding:10px 28px}
+  .bar button,.bar a{font-size:18px;padding:10px 28px}
 }
 .fmsg{margin:0 0 12px;padding:12px 14px;border-radius:10px;background:#fff3c4;color:#7a5a00;font-size:14px;line-height:1.5}
 .fhelp{font-size:14px;color:#888;line-height:1.55;margin:12px 0 0;text-align:center}
@@ -363,7 +364,7 @@ footer p{margin:0}
 <header class="logo">
   <div class="wrap">
     <a class="brand" href="#top"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#9db7ff"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>학원메이트 <small>TOP SECRET</small></a>
-    <button class="mini" data-open>무료 특강</button>
+    <a class="mini" href="https://k-marketingacademy.liveklass.com/classes/320133" target="_blank" rel="noopener">무료 특강</a>
   </div>
 </header>
 
@@ -467,7 +468,7 @@ footer p{margin:0}
 <div class="cta">
   <div class="wrap">
     <p>이 순서를 우리 학원에 어떻게 대입하는지,<br>더 자세한 방법은 <b>무료 특강</b>에서 알려드립니다.</p>
-    <button class="btn" data-open>무료 특강 일정 · 자료 받기</button>
+    <a class="btn" href="https://k-marketingacademy.liveklass.com/classes/320133" target="_blank" rel="noopener">무료 특강 일정 · 자료 받기</a>
   </div>
 </div>
 
@@ -492,7 +493,7 @@ footer p{margin:0}
     <div class="fx w">
       <div class="fbox"><b>매주 과제 1개</b></div><i>×</i><div class="fbox"><b>8주</b></div><i>=</i><div class="fbox hot"><b>어느 길목에서 들어와도<br>우리 학원을 만남</b></div>
     </div>
-    <p class="lead">그래서 따라만 하면 됩니다. 순서를 저희가 잡아 두었으니까요.</p>
+    <p class="lead">따라만 하면 됩니다. 순서를 저희가 잡아 두었으니까요.</p>
   </div>
 </section>
 
@@ -531,11 +532,11 @@ footer p{margin:0}
 
 <section class="sec left g">
   <div class="wrap">
-    <h3 class="c"><span class="pre">플레이스 강의, 블로그 강의, 인스타 강의</span><br><span class="strong"><span class="red">따로 들으면</span> 안 되는 이유</span></h3>
+    <h3 class="c"><span class="pre">플레이스 · 블로그 · 인스타 · 릴스 · 당근 · 카페 강의</span><br><span class="strong"><span class="red">따로 들으면</span> 안 되는 이유</span></h3>
     <table class="cmp">
       <thead><tr><th></th><th>강의를 따로따로 들으면</th><th class="me">탑시크릿 클래스</th></tr></thead>
       <tbody>
-        <tr><th>강의 수</th><td>플레이스 · 블로그 · 인스타 · 릴스<br>강의 3~4개를 각각</td><td class="me">8주 한 과정</td></tr>
+        <tr><th>강의 수</th><td>플레이스 · 블로그 · 인스타 · 릴스 · 당근 · 카페<br>6가지를 전부 따로 배워야 함</td><td class="me">8주 한 과정</td></tr>
         <tr><th>수강료</th><td>강의마다 따로 결제</td><td class="me">한 번</td></tr>
         <tr><th>기간</th><td>다 들으면 몇 달</td><td class="me">8주</td></tr>
         <tr><th>내용</th><td>쇼핑몰 · 카페 · 병원이 섞인<br>일반 마케팅 강의</td><td class="me">학원 마케팅에 문의를 만드는<br>핵심만 추림</td></tr>
@@ -584,7 +585,7 @@ footer p{margin:0}
         </ul>
       </div>
     </div>
-    <button class="btn" data-open>무료 특강 일정 · 자료 받기</button>
+    <a class="btn" href="https://k-marketingacademy.liveklass.com/classes/320133" target="_blank" rel="noopener">무료 특강 일정 · 자료 받기</a>
     <p class="note c">신청은 무료이고, 비용이나 의무가 없습니다.</p>
   </div>
 </section>
@@ -592,7 +593,7 @@ footer p{margin:0}
 <section class="contact">
   <div class="wrap">
     <p>무료 특강 일정과 자료를 받고 싶은 분은<br>아래 버튼을 눌러 주세요.</p>
-    <button class="btn" data-open>무료 특강 일정 · 자료 받기</button>
+    <a class="btn" href="https://k-marketingacademy.liveklass.com/classes/320133" target="_blank" rel="noopener">무료 특강 일정 · 자료 받기</a>
     <p class="agree">※ 신청 시 알림톡과 문자메시지 수신에 동의합니다.</p>
     <p class="lbl">기타 문의</p>
     <p class="tel"><a class="kakao" href="https://open.kakao.com/o/gd8vOUhh" target="_blank" rel="noopener">원장님 단톡방 <b>바로 입장</b></a><small>카카오톡 오픈채팅으로 열립니다. 단톡방에서 질문하시면 순서대로 답변드립니다.</small></p>
@@ -603,8 +604,8 @@ footer p{margin:0}
 <div class="faqh" id="faq">자주 묻는 질문</div>
 <section class="faq">
   <div class="wrap">
-    <details open><summary>신청하면 어떻게 되나요?</summary><div class="a"><p>신청 완료 화면에서 바로 원장님 단톡방에 들어오실 수 있고, 특강 일정과 ‘원생이 오는 순서’ 자료를 단톡방·문자·이메일로 보내드립니다. 신청 자체에 비용이나 의무는 없습니다.</p></div></details>
-    <details><summary>무료 특강은 어떻게 진행되나요?</summary><div class="a"><p>온라인으로 진행되며 지역과 상관없이 참여하실 수 있습니다. 특강 링크와 일정은 아래 버튼을 눌러 신청하시면 알려드립니다.</p></div></details>
+    <details open><summary>신청하면 어떻게 되나요?</summary><div class="a"><p>버튼을 누르면 신청 페이지가 열립니다. 성함·연락처를 남기시면 특강 일정과 ‘원생이 오는 순서’ 자료를 문자·이메일로 보내드리고, <a href="https://open.kakao.com/o/gd8vOUhh" target="_blank" rel="noopener" style="color:var(--red);font-weight:700">원장님 단톡방</a>에서도 가장 먼저 안내드립니다. 신청 자체에 비용이나 의무는 없습니다.</p></div></details>
+    <details><summary>무료 특강은 어떻게 진행되나요?</summary><div class="a"><p>온라인으로 진행되며 지역과 상관없이 참여하실 수 있습니다. 특강 링크와 일정은 아래 버튼을 눌러 신청 페이지에서 신청하시면 알려드립니다.</p></div></details>
     <details><summary>탑시크릿 클래스는 무엇인가요?</summary><div class="a"><p>학원 원장님 전용 8주 마케팅 과정입니다. 매주 라이브 수업과 과제 1:1 맞춤 피드백으로 진행되며, 구성·일정·수강료는 무료 특강에서 자세히 안내드립니다.</p></div></details>
     <details><summary>컴퓨터를 잘 못 다루는데 가능할까요?</summary><div class="a"><p>플레이스 세팅부터 화면을 띄워놓고 클릭 단위로 같이 진행합니다. 기수마다 컴퓨터가 익숙하지 않은 원장님이 계셨고, 대부분 과제를 완료하셨습니다.</p></div></details>
     <details><summary>학원 마케팅 대행인가요?</summary><div class="a"><p>아닙니다. 원장님이 직접 하실 수 있게 만드는 과정입니다. 8주 뒤 저희 없이 혼자 매주 루틴을 굴리는 것이 목표이고, 저희는 과제를 확인하고 고쳐드리는 역할입니다.</p></div></details>
@@ -614,7 +615,7 @@ footer p{margin:0}
 <section class="contact">
   <div class="wrap">
     <p>무료 특강 일정과 자료를 받고 싶은 분은<br>아래 버튼을 눌러 주세요.</p>
-    <button class="btn" data-open>무료 특강 일정 · 자료 받기</button>
+    <a class="btn" href="https://k-marketingacademy.liveklass.com/classes/320133" target="_blank" rel="noopener">무료 특강 일정 · 자료 받기</a>
     <p class="agree">※ 신청 시 알림톡과 문자메시지 수신에 동의합니다.</p>
   </div>
 </section>
@@ -629,7 +630,7 @@ footer p{margin:0}
 <div class="bar" id="bar">
   <div class="wrap">
     <div class="t">더 자세한 방법은 무료 특강에서!<small>(특강 일정 · 자료 · 비용 없음)</small></div>
-    <button data-open>일정 · 자료 받기</button>
+    <a href="https://k-marketingacademy.liveklass.com/classes/320133" target="_blank" rel="noopener">일정 · 자료 받기</a>
   </div>
 </div>
 
