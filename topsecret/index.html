@@ -52,12 +52,15 @@ strong{font-weight:700}
 
 /* 히어로 (검정 그라데이션, 흰 큰 제목, 오른쪽 사진) */
 .hero{background:linear-gradient(90deg,#0b0b0b 0%,#151515 55%,#2a2a2a 100%);color:#fff;overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:1fr;align-items:center;min-height:260px;padding:40px 24px}
-.hero h2{font-size:28px;font-weight:800;line-height:1.3;margin:0 0 16px}
+.hero .wrap{display:grid;grid-template-columns:1.45fr .85fr;align-items:end;min-height:280px;padding:36px 0 0 24px;gap:6px}
+.hero h2{font-size:34px;font-weight:900;line-height:1.22;margin:0 0 14px;letter-spacing:-.02em}
+.hero h2 .em{color:var(--coral)}
+.hero>.wrap>div:first-child{padding-bottom:34px}
 .hero .who{font-size:13px;color:#bbb;margin:0;letter-spacing:.02em}
-.hero .photo{align-self:stretch;display:flex;align-items:flex-end;justify-content:center}
+.hero .photo{align-self:end;display:flex;align-items:flex-end;justify-content:flex-end;line-height:0}
+.hero .photo img{display:block;width:100%;max-width:190px;height:auto}
 .hero .photo .ph{width:100%;max-width:250px;height:280px;border:1px dashed #666;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;text-align:center;padding:12px;line-height:1.5}
-@media(max-width:560px){.hero .wrap{grid-template-columns:1fr}.hero .photo .ph{height:200px;max-width:200px}.hero h2{font-size:24px;padding-bottom:16px}}
+@media(max-width:400px){.hero h2{font-size:29px}}
 
 /* 본문(글) */
 .article{padding:40px 0 10px}
@@ -182,8 +185,10 @@ footer p{margin:0}
   .tabs{top:80px;height:52px}
   .tabs ul{height:52px}
   .tabs a{height:52px;font-size:20px;border-bottom-width:3px}
-  .hero .wrap{grid-template-columns:1fr;min-height:340px;padding:0}
-  .hero h2{font-size:52px;line-height:1.25;padding:0;margin-bottom:22px;letter-spacing:-.01em}
+  .hero .wrap{grid-template-columns:1.3fr .7fr;min-height:420px;padding:0;gap:20px}
+  .hero>.wrap>div:first-child{padding-bottom:70px;padding-top:40px}
+  .hero h2{font-size:64px;line-height:1.18;padding:0;margin-bottom:22px;letter-spacing:-.02em}
+  .hero .photo img{max-width:340px}
   .hero .who{font-size:15px;margin:0}
   .hero .photo .ph{max-width:420px;height:340px;border-radius:0;font-size:14px}
   .article{padding:56px 0 20px}
@@ -365,10 +370,10 @@ footer p{margin:0}
 <section class="hero" id="top">
   <div class="wrap">
     <div>
-      <h2>1년 내내<br>원생이 줄서는 학원이<br>되는 방법</h2>
+      <h2>1년 내내<br><span class="em">원생이 줄서는</span><br>학원이 되는 방법</h2>
       <p class="who">친절한 마케팅 · 학원 원장님 전용 8주 마케팅 과정</p>
     </div>
-    <div class="photo"></div>
+    <div class="photo"><img src="hero.png" alt="친절한 마케팅 대표 강사"></div>
   </div>
 </section>
 
