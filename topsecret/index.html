@@ -53,15 +53,16 @@ h3 .red,h4 .red,.mid .red,.lead .red{font-size:1.12em;font-weight:800}
 
 /* 히어로 (검정 그라데이션, 흰 큰 제목, 오른쪽 사진) */
 .hero{background:linear-gradient(90deg,#0b0b0b 0%,#151515 55%,#2a2a2a 100%);color:#fff;overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:1.45fr .85fr;align-items:stretch;min-height:280px;padding:0 0 0 24px;gap:6px}
-.hero h2{font-size:34px;font-weight:900;line-height:1.22;margin:0 0 14px;letter-spacing:-.02em}
+.hero .wrap{display:grid;grid-template-columns:1.4fr .9fr;align-items:stretch;min-height:300px;padding:0 0 0 24px;gap:4px}
+.hero h2{font-size:30px;font-weight:900;line-height:1.22;margin:0 0 14px;letter-spacing:-.02em}
 .hero h2 .em{color:var(--coral)}
 .hero>.wrap>div:first-child{padding:38px 0 34px}
 .hero .who{font-size:17px;color:#bbb;margin:0;letter-spacing:.02em}
 .hero .photo{align-self:stretch;position:relative;overflow:hidden;padding-top:26px}
-.hero .photo img{position:absolute;top:26px;right:0;height:calc(100% - 26px + 40px);width:auto;max-width:none;display:block}
+.hero .photo img{position:absolute;top:26px;right:0;height:calc(100% - 26px + 90px);width:auto;max-width:none;display:block;filter:drop-shadow(0 0 28px rgba(255,120,130,.38)) drop-shadow(0 12px 24px rgba(0,0,0,.55))}
+.hero .photo::before{content:"";position:absolute;right:-10%;top:10%;width:110%;height:90%;background:radial-gradient(ellipse at 60% 45%,rgba(255,110,120,.22),rgba(255,110,120,0) 65%);pointer-events:none}
 .hero .photo .ph{width:100%;max-width:250px;height:280px;border:1px dashed #666;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;text-align:center;padding:12px;line-height:1.5}
-@media(max-width:400px){.hero h2{font-size:29px}}
+@media(max-width:400px){.hero h2{font-size:27px}}
 
 /* 본문(글) */
 .article{padding:40px 0 10px}
@@ -187,10 +188,10 @@ footer p{margin:0}
   .tabs{top:80px;height:52px}
   .tabs ul{height:52px}
   .tabs a{height:52px;font-size:20px;border-bottom-width:3px}
-  .hero .wrap{grid-template-columns:1.3fr .7fr;min-height:420px;padding:0;gap:20px}
+  .hero .wrap{grid-template-columns:1.15fr .85fr;min-height:440px;padding:0;gap:20px}
   .hero>.wrap>div:first-child{padding:60px 0 60px}
   .hero .photo{padding-top:40px}
-  .hero .photo img{top:40px;height:calc(100% - 40px + 90px)}
+  .hero .photo img{top:40px;height:calc(100% - 40px + 190px)}
   .hero h2{font-size:64px;line-height:1.18;padding:0;margin-bottom:22px;letter-spacing:-.02em}
 
   .hero .who{font-size:19px;margin:0}
