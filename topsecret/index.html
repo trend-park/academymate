@@ -120,7 +120,7 @@ h3 .red,h4 .red,.mid .red,.lead .red{font-size:1.12em;font-weight:800}
 .contact .agree{font-size:16px;font-weight:400;color:#ddd;margin:14px 0 40px}
 .contact .lbl{font-size:16px;color:#bbb;margin:0 0 4px}
 .contact .tel{font-size:18px;font-weight:500;line-height:1.2;margin:0}
-.contact .tel .kakao{display:inline-block;background:#FEE500;color:#111;font-size:18px;font-weight:600;padding:12px 26px;border-radius:999px}
+.contact .tel .kakao{display:inline-block;text-decoration:none;background:#FEE500;color:#111;font-size:18px;font-weight:600;padding:12px 26px;border-radius:999px}
 .contact .tel .kakao b{font-weight:800}
 .contact .tel small{display:block;font-size:16px;font-weight:400;color:#bbb;margin-top:12px}
 
@@ -595,7 +595,7 @@ footer p{margin:0}
     <button class="btn" data-open>무료 특강 일정 · 자료 받기</button>
     <p class="agree">※ 신청 시 알림톡과 문자메시지 수신에 동의합니다.</p>
     <p class="lbl">기타 문의</p>
-    <p class="tel"><span class="kakao">카카오톡에서 <b>친절한미녀강사</b> 검색</span><small>카카오톡 채널로 문의하시면 순서대로 답변드립니다.</small></p>
+    <p class="tel"><a class="kakao" href="https://open.kakao.com/o/gd8vOUhh" target="_blank" rel="noopener">원장님 단톡방 <b>바로 입장</b></a><small>카카오톡 오픈채팅으로 열립니다. 단톡방에서 질문하시면 순서대로 답변드립니다.</small></p>
   </div>
 </section>
 
@@ -603,7 +603,7 @@ footer p{margin:0}
 <div class="faqh" id="faq">자주 묻는 질문</div>
 <section class="faq">
   <div class="wrap">
-    <details open><summary>신청하면 어떻게 되나요?</summary><div class="a"><p>남겨주신 번호로 무료 특강 일정과 ‘원생이 오는 순서’ 자료를 문자 또는 카카오톡으로 보내드립니다. 신청 자체에 비용이나 의무는 없습니다.</p></div></details>
+    <details open><summary>신청하면 어떻게 되나요?</summary><div class="a"><p>신청 완료 화면에서 바로 원장님 단톡방에 들어오실 수 있고, 특강 일정과 ‘원생이 오는 순서’ 자료를 단톡방·문자·이메일로 보내드립니다. 신청 자체에 비용이나 의무는 없습니다.</p></div></details>
     <details><summary>무료 특강은 어떻게 진행되나요?</summary><div class="a"><p>온라인으로 진행되며 지역과 상관없이 참여하실 수 있습니다. 특강 링크와 일정은 아래 버튼을 눌러 신청하시면 알려드립니다.</p></div></details>
     <details><summary>탑시크릿 클래스는 무엇인가요?</summary><div class="a"><p>학원 원장님 전용 8주 마케팅 과정입니다. 매주 라이브 수업과 과제 1:1 맞춤 피드백으로 진행되며, 구성·일정·수강료는 무료 특강에서 자세히 안내드립니다.</p></div></details>
     <details><summary>컴퓨터를 잘 못 다루는데 가능할까요?</summary><div class="a"><p>플레이스 세팅부터 화면을 띄워놓고 클릭 단위로 같이 진행합니다. 기수마다 컴퓨터가 익숙하지 않은 원장님이 계셨고, 대부분 과제를 완료하셨습니다.</p></div></details>
@@ -639,19 +639,21 @@ footer p{margin:0}
     <div class="head">
       <h3 id="mtitle">무료 특강 일정 · 자료 받기</h3>
       <p id="cntline" hidden>현재 다음 기수 대기 중인 원장님은<br><span class="cnt" id="cnt">0</span>분입니다.</p>
-      <p>남겨주신 번호로 무료 특강 일정과<br>‘원생이 오는 순서’ 자료를 보내드립니다.</p>
+      <p>신청 즉시 원장님 단톡방 입장 링크를 드리고,<br>특강 일정과 ‘원생이 오는 순서’ 자료를 보내드립니다.</p>
     </div>
     <form action="https://formsubmit.co/2cedafb7765d6a4c377e740040620172" method="POST" id="wform" novalidate>
       <input type="hidden" name="_subject" value="[탑시크릿 클래스 무료특강 신청] 새 신청이 들어왔습니다">
       <input type="hidden" name="_next" value="https://hakwonmate.co.kr/topsecret/thanks/">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_autoresponse" value="[탑시크릿 클래스] 무료 특강 신청이 접수되었습니다. 원장님 단톡방 https://open.kakao.com/o/gd8vOUhh 에 들어오시면 특강 일정과 자료를 가장 먼저 안내드립니다. - 친절한 마케팅">
       <input type="hidden" name="유입경로" id="src" value="direct">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
       <div class="f"><label for="name">이름</label><input id="name" name="이름" type="text" placeholder="원장님 성함" required autocomplete="name"></div>
       <div class="f"><label for="phone">휴대전화 번호</label><input id="phone" name="휴대전화" type="tel" placeholder="안내 받을 번호 (- 없이)" required inputmode="numeric" pattern="[0-9]{10,11}" autocomplete="tel"></div>
-      <div class="fnote">* 입력하신 휴대전화 번호로 특강 일정과 자료를 보내드립니다.</div>
+      <div class="f"><label for="email">이메일</label><input id="email" name="email" type="email" placeholder="자료 받을 이메일" required autocomplete="email" inputmode="email"></div>
+      <div class="fnote">* 휴대전화와 이메일로 특강 일정과 자료를 보내드립니다.</div>
       <div class="f"><label for="ac">학원명 · 과목 <span class="opt">(선택)</span></label><input id="ac" name="학원명_과목" type="text" placeholder="예: ○○영어학원 · 초등 영어"></div>
       <div class="f"><label for="cnt2">현재 원생 수 <span class="opt">(선택)</span></label>
         <select id="cnt2" name="현재_원생수">
@@ -661,10 +663,10 @@ footer p{margin:0}
         <select id="tried" name="해본_마케팅">
           <option value="">선택</option><option>아직 아무것도 안 해봤다</option><option>전단지·현수막 위주</option><option>블로그를 쓰는데 문의가 없다</option><option>인스타를 하는데 문의가 없다</option><option>대행사에 맡겨봤다</option>
         </select></div>
-      <label class="agreef"><input type="checkbox" name="개인정보수집동의" value="동의" required> <span>개인정보 수집·이용에 동의합니다. (수집 항목: 이름, 휴대전화, 학원 정보 · 이용 목적: 무료 특강 일정·자료 안내 및 탑시크릿 클래스 기수 안내 · 보유 기간: 안내 종료 후 1년) <a href="/privacy/" target="_blank" rel="noopener">자세히</a></span></label>
+      <label class="agreef"><input type="checkbox" name="개인정보수집동의" value="동의" required> <span>개인정보 수집·이용에 동의합니다. (수집 항목: 이름, 휴대전화, 이메일, 학원 정보 · 이용 목적: 무료 특강 일정·자료 안내 및 탑시크릿 클래스 기수 안내 · 보유 기간: 안내 종료 후 1년) <a href="/privacy/" target="_blank" rel="noopener">자세히</a></span></label>
       <div class="fmsg" id="fmsg" hidden></div>
       <button class="btn" type="submit" id="wbtn">무료 특강 일정 · 자료 받기</button>
-      <p class="fhelp">버튼을 누르면 "신청이 접수되었습니다" 화면으로 바뀝니다. 화면이 바뀌지 않으면 카카오톡에서 <b>친절한미녀강사</b>를 검색해 이름과 번호를 남겨 주세요.</p>
+      <p class="fhelp">버튼을 누르면 "신청이 접수되었습니다" 화면으로 바뀝니다. 화면이 바뀌지 않으면 <a href="https://open.kakao.com/o/gd8vOUhh" target="_blank" rel="noopener" style="color:var(--red);font-weight:700">원장님 단톡방</a>에 들어와 이름과 번호를 남겨 주세요.</p>
     </form>
   </div>
 </div>
@@ -715,6 +717,8 @@ footer p{margin:0}
     var name = document.getElementById('name'), agree = f.querySelector('input[name="개인정보수집동의"]');
     if (!name.value.trim()) { name.classList.add('err'); name.focus(); say('원장님 성함을 적어 주세요.'); return; }
     if (!/^01[016789][0-9]{7,8}$/.test(ph.value)) { ph.classList.add('err'); ph.focus(); say('휴대전화 번호를 다시 확인해 주세요. 예: 01012345678'); return; }
+    var em = document.getElementById('email');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value.trim())) { em.classList.add('err'); em.focus(); say('이메일 주소를 다시 확인해 주세요.'); return; }
     if (!agree.checked) { say('개인정보 수집·이용에 동의해 주셔야 접수됩니다.'); agree.focus(); return; }
     btn.disabled = true; btn.textContent = '보내는 중…';
     var fd = new FormData(f); fd.delete('_next');
