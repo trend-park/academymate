@@ -247,6 +247,21 @@ footer p{margin:0}
 .fhelp{font-size:12.5px;color:#888;line-height:1.55;margin:12px 0 0;text-align:center}
 .f input.err,.f select.err{border-color:#e5484d;background:#fff6f6}
 .proof{margin:0 0 30px}.proof .caseimg{margin:0 auto 10px;display:block;max-width:100%}
+.why{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 0 30px}
+.why i{font-style:normal;font-weight:900;font-size:26px;color:var(--gray)}
+.wcard{width:100%;max-width:340px;background:#fff;border:2px solid #e5e5e5;border-radius:10px;padding:18px 16px;text-align:center}
+.wcard em{display:block;font-style:normal;font-size:12px;font-weight:800;color:var(--red);letter-spacing:.1em;margin-bottom:4px}
+.wcard b{display:block;font-size:20px;font-weight:800;line-height:1.3;margin-bottom:8px}
+.wcard span{display:block;font-size:14px;line-height:1.55;color:var(--gray2);font-weight:500}
+.wcard.hot{background:var(--red);border-color:var(--red);color:#fff}.wcard.hot span{color:#ffe1e1}
+.cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;line-height:1.45;margin:0 0 22px;text-align:center}
+.cmp thead th{padding:12px 6px;font-size:14px;font-weight:800;background:var(--paper2);color:var(--gray2)}
+.cmp thead th.me{background:var(--red);color:#fff;border-radius:8px 8px 0 0}
+.cmp tbody th{width:20%;text-align:left;padding:12px 8px;font-size:13px;font-weight:800;color:var(--gray2);border-bottom:1px solid #e9e9e9;background:var(--paper3)}
+.cmp tbody td{padding:12px 6px;border-bottom:1px solid #e9e9e9;font-weight:500;color:var(--gray2)}
+.cmp tbody td.me{background:#fff3f3;color:var(--ink);font-weight:700}
+.cmp tbody tr:last-child td.me{border-radius:0 0 8px 8px}
+@media(min-width:768px){.why{flex-direction:row;align-items:stretch;gap:14px}.wcard{flex:1;max-width:none;padding:26px 20px}.wcard b{font-size:22px}.wcard span{font-size:15px}.why i{align-self:center}.cmp{font-size:16px}.cmp thead th{font-size:16px;padding:14px}.cmp tbody th{font-size:15px;padding:14px}.cmp tbody td{padding:14px}}
 </style>
 </head>
 <body>
@@ -284,8 +299,6 @@ footer p{margin:0}
     <p>원장님들을 만나면 첫 질문이 거의 같습니다. “블로그 몇 개 써야 문의가 와요?”, “인스타 팔로워 얼마나 있어야 돼요?”, “전단지 몇 장 돌려야 돼요?”</p>
     <p>전부 ‘양’을 묻는 질문입니다. 그런데 학부모는 원장님 블로그 글 개수를 세지 않습니다. 검색창에 ‘동네 이름 + 과목’을 치고, 맨 위에 나온 학원 세 곳을 눌러봅니다. 100개를 써도 검색이 안 되면 0개와 같고, 5개를 써도 검색되면 문의가 옵니다.</p>
 
-    <img src="search-1.jpg" alt="네이버에서 ‘중계동 태권도’를 검색했을 때 보이는 플레이스 상단 화면" class="searchimg">
-    <p class="cap">사진: 학부모가 실제로 보는 화면. ‘중계동 태권도’를 검색하면 지도와 함께 플레이스 상단 학원부터 보입니다. 글 개수가 아니라 여기에 뜨느냐가 전부입니다.</p>
 
     <p>인스타도 마찬가지입니다. 팔로워 천 명인 학원과 80명인 학원 중 어디가 원생이 많을까요. 상관없습니다. 인스타의 진짜 역할은 상담 예약을 한 학부모가 “여기 믿어도 되나” 확인하러 들어오는 것입니다. 그때 수업 사진 세 장에 원장 얼굴 없고 마지막 글이 6개월 전이면, 그 학부모는 상담 오기 전에 이미 마음이 반은 떠나 있습니다.</p>
     <p>전단지도 그렇습니다. 전단지를 받은 학부모는 전화를 하지 않습니다. 검색을 합니다. 거기서 플레이스가 비어 있고 리뷰가 두 개면, 전단지 5천 장은 거기서 끝납니다.</p>
@@ -365,8 +378,14 @@ footer p{margin:0}
 <section class="sec">
   <div class="wrap">
     <p>탑시크릿 클래스는 8주간 이어지는 <span class="red">온라인 라이브 수업 + 매주 과제 1:1 맞춤 피드백</span>입니다.</p>
-    <p>녹화 강의를 틀어드리는 게 아닙니다.<br>매주 라이브로 원장님 학원 화면을 띄워놓고 그 자리에서 세팅하고,<br>그 주에 낸 과제를 원장님 학원에 맞춰 1:1로 고쳐드립니다.</p>
-    <p class="lead">성과가 나오는 이유는 이 둘입니다.<br>라이브로 배우고, 내가 한 것을 매주 확인받는 것.</p>
+    <p class="lead" style="margin-bottom:14px">성과가 나오는 이유는 이 둘입니다</p>
+    <div class="why">
+      <div class="wcard"><em>01</em><b>매주 라이브 수업</b><span>녹화 강의가 아닙니다.<br>원장님 학원 화면을 띄워놓고<br>그 자리에서 같이 세팅</span></div>
+      <i>+</i>
+      <div class="wcard"><em>02</em><b>과제 1:1 맞춤 피드백</b><span>그 주에 낸 과제를<br>우리 학원에 맞춰<br>매주 직접 고쳐드림</span></div>
+      <i>=</i>
+      <div class="wcard hot"><b>신규 등록이<br>이어지는 구조</b><span>8주 뒤 원장님 것으로 남음</span></div>
+    </div>
     <p>탑시크릿 클래스의 목표는<br>8주 뒤 원장님 학원에 신규 등록이 이어지는 구조가 남는 것이고,<br>그 목표에 도달하도록 매주 과제와 확인을 제공합니다.</p>
     <p>2026년 9월 현재 10기가 진행 중이고,<br>여전히 매주 원장님 화면을 띄워놓고 “어디서 막혔는지”를 묻고 있습니다.</p>
     <p>친절한 마케팅이 15년 동안 마케팅 교육을 하며<br>1,000명 넘는 원장님을 만나 쌓은 경험을 넣어 준비했습니다.</p>
@@ -376,8 +395,17 @@ footer p{margin:0}
 <section class="sec left g">
   <div class="wrap">
     <h3 class="c">플레이스 강의, 블로그 강의, 인스타 강의를 따로 들으면 안 되는 이유</h3>
-    <p>플레이스 강의 따로, 블로그 상위노출 강의 따로, 인스타·릴스 강의 따로. 하나씩 들으면 수강료는 그만큼 겹쳐서 나가고, 시간은 몇 달이 걸립니다. 그런데 다 듣고 나도 문제가 남습니다. 그 강의들은 학원을 위해 만든 것이 아닙니다. 쇼핑몰, 카페, 병원까지 섞인 일반 강의라서, 배운 것을 우리 학원 플레이스에 어떻게 넣어야 하는지는 결국 원장님이 혼자 알아내야 합니다.</p>
-    <p>탑시크릿 클래스는 반대로 갑니다. 플레이스·블로그·인스타 각 플랫폼에서 <span class="red">학원 마케팅에 실제로 문의를 만드는 것만</span> 추려서 8주에 넣었습니다. 리뷰 이벤트는 학원 학부모가 남기는 방식으로, 블로그 글은 학부모가 검색하는 말로, 인스타는 상담 예약한 학부모가 확인하러 왔을 때 보이는 화면으로. 배운 다음에 적용하는 게 아니라, 수업 시간에 원장님 학원에 바로 적용합니다.</p>
+    <table class="cmp">
+      <thead><tr><th></th><th>강의를 따로따로 들으면</th><th class="me">탑시크릿 클래스</th></tr></thead>
+      <tbody>
+        <tr><th>강의 수</th><td>플레이스 · 블로그 · 인스타 · 릴스<br>강의 3~4개를 각각</td><td class="me">8주 한 과정</td></tr>
+        <tr><th>수강료</th><td>강의마다 따로 결제</td><td class="me">한 번</td></tr>
+        <tr><th>기간</th><td>다 들으면 몇 달</td><td class="me">8주</td></tr>
+        <tr><th>내용</th><td>쇼핑몰 · 카페 · 병원이 섞인<br>일반 마케팅 강의</td><td class="me">학원 마케팅에 문의를 만드는<br>핵심만 추림</td></tr>
+        <tr><th>적용</th><td>배운 뒤 우리 학원에<br>혼자 끼워 맞춰야 함</td><td class="me">수업 시간에 원장님 학원에<br>바로 적용</td></tr>
+        <tr><th>확인</th><td>없음</td><td class="me">매주 과제 1:1 피드백</td></tr>
+      </tbody>
+    </table>
     <p class="lead">따로따로 배우는 대신, 학원에 필요한 핵심만 한 번에.</p>
   </div>
 </section>
