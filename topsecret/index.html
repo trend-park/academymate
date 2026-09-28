@@ -52,13 +52,13 @@ strong{font-weight:700}
 
 /* 히어로 (검정 그라데이션, 흰 큰 제목, 오른쪽 사진) */
 .hero{background:linear-gradient(90deg,#0b0b0b 0%,#151515 55%,#2a2a2a 100%);color:#fff;overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:1.45fr .85fr;align-items:end;min-height:280px;padding:36px 0 0 24px;gap:6px}
+.hero .wrap{display:grid;grid-template-columns:1.45fr .85fr;align-items:stretch;min-height:280px;padding:0 0 0 24px;gap:6px}
 .hero h2{font-size:34px;font-weight:900;line-height:1.22;margin:0 0 14px;letter-spacing:-.02em}
 .hero h2 .em{color:var(--coral)}
-.hero>.wrap>div:first-child{padding-bottom:34px}
+.hero>.wrap>div:first-child{padding:38px 0 34px}
 .hero .who{font-size:13px;color:#bbb;margin:0;letter-spacing:.02em}
-.hero .photo{align-self:end;display:flex;align-items:flex-end;justify-content:flex-end;line-height:0}
-.hero .photo img{display:block;width:100%;max-width:190px;height:auto}
+.hero .photo{align-self:stretch;position:relative;overflow:hidden;padding-top:26px}
+.hero .photo img{position:absolute;top:26px;right:0;height:calc(100% - 26px + 40px);width:auto;max-width:none;display:block}
 .hero .photo .ph{width:100%;max-width:250px;height:280px;border:1px dashed #666;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;text-align:center;padding:12px;line-height:1.5}
 @media(max-width:400px){.hero h2{font-size:29px}}
 
@@ -186,9 +186,11 @@ footer p{margin:0}
   .tabs ul{height:52px}
   .tabs a{height:52px;font-size:20px;border-bottom-width:3px}
   .hero .wrap{grid-template-columns:1.3fr .7fr;min-height:420px;padding:0;gap:20px}
-  .hero>.wrap>div:first-child{padding-bottom:70px;padding-top:40px}
+  .hero>.wrap>div:first-child{padding:60px 0 60px}
+  .hero .photo{padding-top:40px}
+  .hero .photo img{top:40px;height:calc(100% - 40px + 90px)}
   .hero h2{font-size:64px;line-height:1.18;padding:0;margin-bottom:22px;letter-spacing:-.02em}
-  .hero .photo img{max-width:340px}
+
   .hero .who{font-size:15px;margin:0}
   .hero .photo .ph{max-width:420px;height:340px;border-radius:0;font-size:14px}
   .article{padding:56px 0 20px}
@@ -347,6 +349,8 @@ footer p{margin:0}
 .sec.free .btn{background:#fff;color:var(--red)}.sec.free .btn:hover{background:#ffecec}
 .note.c{text-align:center;color:#bbb;margin-top:12px}
 @media(min-width:768px){.freebox{grid-template-columns:1fr 1fr;gap:16px}.freebox>div{padding:24px 28px}.freebox li{font-size:17px}.sec.free h3{font-size:34px}}
+.punch{font-size:30px;font-weight:900;color:var(--ink);letter-spacing:-.02em;line-height:1.2;margin:0}
+@media(min-width:768px){.punch{font-size:44px}}
 </style>
 </head>
 <body>
@@ -394,10 +398,10 @@ footer p{margin:0}
       <div class="fbox"><b>글 5개</b></div><i>×</i><div class="fbox"><b>검색됨</b></div><i>=</i><div class="fbox hot"><b>문의 옴</b></div>
     </div>
     <div class="fx">
-      <div class="fbox"><b>팔로워 1,000명</b></div><i>×</i><div class="fbox"><b>원장 얼굴 없음<br><small>마지막 글 6개월 전</small></b></div><i>=</i><div class="fbox zero"><b>상담 전 이탈</b></div>
+      <div class="fbox"><b>팔로워 1,000명</b></div><i>×</i><div class="fbox"><b>순서 없음</b></div><i>=</i><div class="fbox zero"><b>상담 전 이탈</b></div>
     </div>
     <div class="fx">
-      <div class="fbox"><b>전단지 5,000장</b></div><i>×</i><div class="fbox"><b>플레이스 비어 있음<br><small>리뷰 2개</small></b></div><i>=</i><div class="fbox zero"><b>거기서 끝</b></div>
+      <div class="fbox"><b>전단지 5,000장</b></div><i>×</i><div class="fbox"><b>순서 없음</b></div><i>=</i><div class="fbox zero"><b>거기서 끝</b></div>
     </div>
     <h4>원생모집은 <span class="red">양</span>의 문제가 아니라 <span class="red">순서</span>의 문제입니다.</h4>
 
@@ -436,14 +440,14 @@ footer p{margin:0}
 
     <h3 class="t">혼자 하면 이만큼 걸립니다</h3>
     <div class="steps">
-      <div><em>1</em><b>검색 화면 정리</b><span>플레이스 정보·사진·소개글·예약·쿠폰·리뷰 이벤트</span><small>며칠</small></div>
-      <div><em>2</em><b>동네 조사</b><span>같은 과목 학원 20~30곳 플레이스·블로그 + 매주 순위 기록</span><small>매주</small></div>
-      <div><em>3</em><b>상위노출 글</b><span>키워드 3~5회 · 1,000자 · 사진 10장 공식</span><small>매주</small></div>
-      <div><em>4</em><b>상담 문자</b><span>상담 전 문자 · 상담 후 문자</span><small>며칠</small></div>
-      <div><em>5</em><b>그다음 인스타</b><span>프로필 · 하이라이트 · 릴스</span><small>몇 주</small></div>
+      <div><em>1</em><b>검색 화면 정리</b><span>학부모가 검색했을 때 보이는 화면부터</span><small>5일</small></div>
+      <div><em>2</em><b>동네 조사</b><span>같은 과목 학원 조사 + 매주 순위 기록</span><small>2주</small></div>
+      <div><em>3</em><b>검색되는 글</b><span>학부모가 검색하는 말로 쓰는 글</span><small>4주</small></div>
+      <div><em>4</em><b>상담 흐름</b><span>문의가 등록으로 이어지는 흐름</span><small>3일</small></div>
+      <div><em>5</em><b>그다음 인스타</b><span>확인하러 왔을 때 보이는 화면</span><small>4주</small></div>
     </div>
     <div class="fx v">
-      <div class="fbox"><b>혼자</b></div><i>=</i><div class="fbox"><b>매일 1~2시간<br><small>수업은 오후 2시~밤 10시</small></b></div><i>+</i><div class="fbox"><b>맞게 하는지<br>확인 못 함</b></div><i>→</i><div class="fbox zero"><b>3주 하다 멈춤</b></div>
+      <div class="fbox"><b>혼자</b></div><i>=</i><div class="fbox"><b>매일 1~2시간 × 3개월<br><small>수업은 오후 2시~밤 10시</small></b></div><i>+</i><div class="fbox"><b>맞게 하는지<br>확인 못 함</b></div><i>→</i><div class="fbox zero"><b>3주 하다 멈춤</b></div>
     </div>
     <h4>안 돼서가 아니라, 되고 있는지 몰라서 멈춥니다.</h4>
     <div class="three">
@@ -475,10 +479,10 @@ footer p{margin:0}
   <div class="wrap">
     <h3 class="c">학부모가 지나가는 길목, 8주로 하나씩 채웁니다</h3>
     <div class="path">
-      <div><em>1~2주</em><b>검색됨</b><span>플레이스 빈칸 채우기<br>리뷰 이벤트</span></div>
-      <div><em>3~4주</em><b>선택받음</b><span>소개글 한 편<br>순위 기록 · 상담 문자</span></div>
-      <div><em>5~6주</em><b>확인됨</b><span>인스타 프로필<br>하이라이트</span></div>
-      <div><em>7~8주</em><b>상담 · 등록</b><span>릴스 한 편<br>혼자 굴리는 루틴</span></div>
+      <div><em>1~2주</em><b>검색됨</b><span>학부모가 검색했을 때<br>우리 학원이 보이게</span></div>
+      <div><em>3~4주</em><b>선택받음</b><span>나온 학원 중<br>우리 학원을 누르게</span></div>
+      <div><em>5~6주</em><b>확인됨</b><span>확인하러 왔을 때<br>믿을 수 있게</span></div>
+      <div><em>7~8주</em><b>상담 · 등록</b><span>문의가 등록으로<br>이어지게</span></div>
     </div>
     <div class="fx w">
       <div class="fbox"><b>매주 과제 1개</b></div><i>×</i><div class="fbox"><b>8주</b></div><i>=</i><div class="fbox hot"><b>어느 길목에서 들어와도<br>우리 학원을 만남</b></div>
@@ -500,7 +504,8 @@ footer p{margin:0}
     <div class="fx">
       <div class="fbox"><b>동네 학원<br><small>원장님 혼자 운영</small></b></div><i>+</i><div class="fbox"><b>마케팅<br>배운 적 없음</b></div><i>+</i><div class="fbox hot"><b>매주 과제를<br>순서대로</b></div>
     </div>
-    <p class="lead">원래 잘하던 분들이 아닙니다. 따라 했을 뿐입니다.</p>
+    <p class="lead" style="margin-bottom:6px">원래 잘하던 분들이 아닙니다.</p>
+    <p class="punch">따라 했을 뿐입니다.</p>
   </div>
 </section>
 
