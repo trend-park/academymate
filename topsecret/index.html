@@ -243,6 +243,9 @@ footer p{margin:0}
   .bar .t small{display:inline;font-size:14px;color:#dadada;margin-left:8px}
   .bar button{font-size:16px;padding:10px 28px}
 }
+.fmsg{margin:0 0 12px;padding:12px 14px;border-radius:10px;background:#fff3c4;color:#7a5a00;font-size:14px;line-height:1.5}
+.fhelp{font-size:12.5px;color:#888;line-height:1.55;margin:12px 0 0;text-align:center}
+.f input.err,.f select.err{border-color:#e5484d;background:#fff6f6}
 </style>
 </head>
 <body>
@@ -482,12 +485,13 @@ footer p{margin:0}
       <p id="cntline" hidden>현재 다음 기수 대기 중인 원장님은<br><span class="cnt" id="cnt">0</span>분입니다.</p>
       <p>지금 대기하시고 오리엔테이션 강의를 받아보세요.</p>
     </div>
-    <form action="https://formsubmit.co/2cedafb7765d6a4c377e740040620172" method="POST">
+    <form action="https://formsubmit.co/2cedafb7765d6a4c377e740040620172" method="POST" id="wform" novalidate>
       <input type="hidden" name="_subject" value="[탑시크릿 대기신청] 새 신청이 들어왔습니다">
       <input type="hidden" name="_next" value="https://hakwonmate.co.kr/topsecret/thanks/">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="유입경로" id="src" value="direct">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
       <div class="f"><label for="name">이름</label><input id="name" name="이름" type="text" placeholder="원장님 성함" required autocomplete="name"></div>
       <div class="f"><label for="phone">휴대전화 번호</label><input id="phone" name="휴대전화" type="tel" placeholder="안내 받을 번호 (- 없이)" required inputmode="numeric" pattern="[0-9]{10,11}" autocomplete="tel"></div>
@@ -502,7 +506,9 @@ footer p{margin:0}
           <option value="">선택</option><option>아직 아무것도 안 해봤다</option><option>전단지·현수막 위주</option><option>블로그를 쓰는데 문의가 없다</option><option>인스타를 하는데 문의가 없다</option><option>대행사에 맡겨봤다</option>
         </select></div>
       <label class="agreef"><input type="checkbox" name="개인정보수집동의" value="동의" required> <span>개인정보 수집·이용에 동의합니다. (수집 항목: 이름, 휴대전화, 학원 정보 · 이용 목적: 탑시크릿 기수 안내 및 오리엔테이션 강의 전달 · 보유 기간: 안내 종료 후 1년) <a href="/privacy/" target="_blank" rel="noopener">자세히</a></span></label>
-      <button class="btn" type="submit">대기 신청 완료하기</button>
+      <div class="fmsg" id="fmsg" hidden></div>
+      <button class="btn" type="submit" id="wbtn">대기 신청 완료하기</button>
+      <p class="fhelp">버튼을 누르면 "대기 신청이 접수되었습니다" 화면으로 바뀝니다. 화면이 바뀌지 않으면 카카오톡에서 <b>친절한미녀강사</b>를 검색해 이름과 번호를 남겨 주세요.</p>
     </form>
   </div>
 </div>
@@ -542,7 +548,28 @@ footer p{margin:0}
   } catch(e){}
 
   var ph = document.getElementById('phone');
-  ph.addEventListener('input', function(){ ph.value = ph.value.replace(/[^0-9]/g,'').slice(0,11); });
+  ph.addEventListener('input', function(){ ph.value = ph.value.replace(/[^0-9]/g,'').slice(0,11); ph.classList.remove('err'); });
+
+  // 전송: AJAX로 보내고, 실패하거나 12초 안에 응답이 없으면 기본 전송으로 넘어감
+  var f = document.getElementById('wform'), btn = document.getElementById('wbtn'), msg = document.getElementById('fmsg');
+  function say(t){ msg.hidden = false; msg.textContent = t; msg.scrollIntoView({behavior:'smooth', block:'center'}); }
+  f.querySelectorAll('input,select').forEach(function(el){ el.addEventListener('input', function(){ el.classList.remove('err'); }); el.addEventListener('change', function(){ el.classList.remove('err'); }); });
+  f.addEventListener('submit', function(e){
+    e.preventDefault(); msg.hidden = true;
+    var name = document.getElementById('name'), agree = f.querySelector('input[name="개인정보수집동의"]');
+    if (!name.value.trim()) { name.classList.add('err'); name.focus(); say('원장님 성함을 적어 주세요.'); return; }
+    if (!/^01[016789][0-9]{7,8}$/.test(ph.value)) { ph.classList.add('err'); ph.focus(); say('휴대전화 번호를 다시 확인해 주세요. 예: 01012345678'); return; }
+    if (!agree.checked) { say('개인정보 수집·이용에 동의해 주셔야 접수됩니다.'); agree.focus(); return; }
+    btn.disabled = true; btn.textContent = '보내는 중…';
+    var fd = new FormData(f); fd.delete('_next');
+    var done = false;
+    var native = function(){ if (done) return; done = true; f.submit(); };
+    var t = setTimeout(native, 12000);
+    fetch('https://formsubmit.co/ajax/2cedafb7765d6a4c377e740040620172', {method:'POST', body:fd, headers:{'Accept':'application/json'}})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ clearTimeout(t); if (j && (j.success === 'true' || j.success === true)) { done = true; location.href = 'https://hakwonmate.co.kr/topsecret/thanks/'; } else { native(); } })
+      .catch(function(){ clearTimeout(t); native(); });
+  });
 })();
 </script>
 </body>
