@@ -72,11 +72,17 @@ ul.plain li{margin:4px 0}
 .grid.director{align-items:stretch}
 .grid.director figure{display:flex;flex-direction:column}
 .grid.director .ph{position:relative;flex:1;min-height:220px;border-radius:10px;overflow:hidden}
-.grid.director img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center top}
+.grid.director img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:10px}
+.grid.director .ph{flex:none;min-height:0}
+.grid.one{grid-template-columns:1fr}
+.grid.one img{aspect-ratio:auto;height:auto}
+.grid.one.portrait{grid-template-columns:1fr 1fr}
+.grid.one.portrait img{aspect-ratio:4/3}
 .grid.director p{margin-bottom:18px}
 .grid.director figcaption{flex:none}
-@media (max-width:640px){.grid.director .ph{min-height:0;aspect-ratio:3/4}}
+@media (max-width:640px){.grid.director .ph{position:relative;min-height:0;aspect-ratio:3/4}.grid.director img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:center top}}
 figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+.btn .ic{vertical-align:-3px;margin-right:4px;flex:none}
 .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);margin:0 0 var(--s2)}
 /* academy card */
 .card{border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s4);margin:var(--s3) 0 var(--s4);background:#fff;box-shadow:0 1px 2px rgba(31,42,68,.04)}
@@ -337,11 +343,11 @@ body.dark .band .mag a .cat{color:#e6007e}
 
 
 <h2>서천동 수학학원을 고를 때 살펴보면 좋은 것</h2>
-<div class="grid"><figure><img src="/images/seocheon-math-class1.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>막힌 단원을 찾아 주는지</h3><p>첫 상담에서 아이가 어느 단원에서 막혔는지 확인하고 시작점을 정하는지, 학년표대로 반에 넣는지 물어보세요.</p><div class="grid"><figure><img src="/images/seocheon-math-class2.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>매일 하는 양이 정해져 있는지</h3><p>한 번에 많이 하는 것보다 매일 꾸준히 하는 양이 수학 실력을 만듭니다. 하루 학습량과 확인 방식을 확인하세요.</p><div class="grid"><figure><img src="/images/seocheon-math-class3.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>교습비 게시표와 신고번호</h3><p>교습소 안에 게시된 교습비와 교육청 신고번호를 확인하세요. 이 교습소는 신고번호를 공개하고 있습니다.</p>
+<div class="grid one"><figure><img src="/images/seocheon-math-class1.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>막힌 단원을 찾아 주는지</h3><p>첫 상담에서 아이가 어느 단원에서 막혔는지 확인하고 시작점을 정하는지, 학년표대로 반에 넣는지 물어보세요.</p><div class="grid one portrait"><figure><img src="/images/seocheon-math-class2.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>매일 하는 양이 정해져 있는지</h3><p>한 번에 많이 하는 것보다 매일 꾸준히 하는 양이 수학 실력을 만듭니다. 하루 학습량과 확인 방식을 확인하세요.</p><div class="grid one portrait"><figure><img src="/images/seocheon-math-class3.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>교습비 게시표와 신고번호</h3><p>교습소 안에 게시된 교습비와 교육청 신고번호를 확인하세요. 이 교습소는 신고번호를 공개하고 있습니다.</p>
 
 <h2>딱풀리는수학 서농초점는 이렇게 수업합니다</h2>
 <div class="tbl"><table class="kv"><tbody><tr><th>대상</th><td>초등 1학년 ~ 중등 3학년</td></tr><tr><th>과목</th><td>수학</td></tr><tr><th>방향</th><td>막힌 단원부터 채우기, 매일 꾸준히</td></tr><tr><th>신고</th><td>신고 제3229호</td></tr></tbody></table></div>
-<div class="grid"><figure><img src="/images/seocheon-math-class4.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>막힌 곳부터 시작합니다</h3><p>진도보다 먼저 아이가 어디에서 막혔는지 확인합니다. 그 단원부터 다시 채운 뒤 다음으로 넘어갑니다.</p><div class="grid"><figure><img src="/images/seocheon-math-class5.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>매일 두 뼘씩</h3><p>한꺼번에 많이 하지 않습니다. 매일 정해진 양을 꾸준히 풀고 확인하면서 실력을 쌓아 갑니다.</p><div class="grid"><figure><img src="/images/seocheon-math-class6.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>초등에서 중등까지</h3><p>초1부터 중3까지 한 곳에서 이어 가며, 학년이 바뀌어도 아이의 흐름이 끊기지 않게 봅니다.</p>
+<div class="grid one"><figure><img src="/images/seocheon-math-class4.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>막힌 곳부터 시작합니다</h3><p>진도보다 먼저 아이가 어디에서 막혔는지 확인합니다. 그 단원부터 다시 채운 뒤 다음으로 넘어갑니다.</p><div class="grid one portrait"><figure><img src="/images/seocheon-math-class5.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>매일 두 뼘씩</h3><p>한꺼번에 많이 하지 않습니다. 매일 정해진 양을 꾸준히 풀고 확인하면서 실력을 쌓아 갑니다.</p><div class="grid one"><figure><img src="/images/seocheon-math-class6.jpg" alt="서천동 수학학원 딱풀리는수학 서농초점" loading="lazy"></figure></div><h3>초등에서 중등까지</h3><p>초1부터 중3까지 한 곳에서 이어 가며, 학년이 바뀌어도 아이의 흐름이 끊기지 않게 봅니다.</p>
 
 
 <h2>원장님 소개</h2>
@@ -363,12 +369,12 @@ body.dark .band .mag a .cat{color:#e6007e}
 <div class="cta" id="contact">
   <h2>서천동 수학학원, 상담부터 편하게 시작하세요</h2>
   <p>아이 학년과 지금 어려워하는 단원을 말씀해 주시면 시작 단계를 안내해 드립니다.</p>
-  <div class="btns"><a class="btn" href="tel:050713981343" data-track="tel">📞 0507-1398-1343</a><a class="btn ghost" href="https://blog.naver.com/ddaksoo_seonong" target="_blank" rel="noopener" data-track="blog">네이버 블로그</a></div>
+  <div class="btns"><a class="btn" href="tel:050713981343" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 0507-1398-1343</a><a class="btn ghost" href="https://blog.naver.com/ddaksoo_seonong" target="_blank" rel="noopener" data-track="blog">네이버 블로그</a></div>
 </div>
 <p style="font-size:13px;color:var(--muted)">딱풀리는수학서농초점 수학교습소 · 경기도 용인시 기흥구 서천동로21번길 6-18, 1층 · 신고 제3229호 · 교습과목: 수학 · 전화 0507-1398-1343<br>서천동 수학학원 · 서천동 초등 수학학원 · 서천동 중등 수학 · 서농초 수학학원 · 기흥 서천동 수학 · 서천동 수학교습소</p>
 </article><aside class="col-side"><div class="side pc"><p class="nm">딱풀리는수학 서농초점</p><p class="kw">서천동 수학학원 · 용인시 기흥구 서천동 · 초등 1학년 ~ 중등 3학년 · 초·중등 수학</p>
 <a class="tel" href="tel:050713981343" data-track="tel">0507-1398-1343</a>
-<div class="btns"><a class="btn" href="tel:050713981343" data-track="tel">📞 전화</a><a class="btn ghost" href="https://blog.naver.com/ddaksoo_seonong" target="_blank" rel="noopener" data-track="blog">블로그</a><a class="btn ghost" href="https://map.naver.com/p/entry/place/1050777564" target="_blank" rel="noopener" data-track="place">네이버 플레이스</a></div>
+<div class="btns"><a class="btn" href="tel:050713981343" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 전화</a><a class="btn ghost" href="https://blog.naver.com/ddaksoo_seonong" target="_blank" rel="noopener" data-track="blog">블로그</a><a class="btn ghost" href="https://map.naver.com/p/entry/place/1050777564" target="_blank" rel="noopener" data-track="place">네이버 플레이스</a></div>
 <div class="badges" style="margin-top:14px"><span class="reg">교육청 신고번호 확인</span><span class="">원장 소개</span></div>
 <dl><dt>주소</dt><dd>경기도 용인시 기흥구 서천동로21번길 6-18, 1층</dd><dt>교육청 등록</dt><dd>신고 제3229호</dd><dt>등록 상호</dt><dd>딱풀리는수학서농초점 수학교습소</dd></dl></div>
 <div class="side pc"><h3>함께 읽으면 좋은 글</h3><div class="links"><a href="/가이드/초등-수학학원-고르는-법/">초등 수학학원 고르는 법<small>연산·교과·사고력, 진도보다 먼저 볼 것</small></a><a href="/가이드/초6-중1-영어학원/">초6·중1 영어학원, 무엇이 달라지나<small>중학교 영어 전환기에 확인할 것</small></a><a href="/가이드/피아노-학원-고르는-법/">유아·초등 피아노 학원 고르는 법<small>첫 악기, 레슨 방식과 연습 환경 확인</small></a><a href="/가이드/초등-미술학원-고르는-법/">초등 미술학원 고르는 법<small>창의 미술과 입시 미술은 다릅니다</small></a></div></div></aside></div>

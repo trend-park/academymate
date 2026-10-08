@@ -72,11 +72,17 @@ ul.plain li{margin:4px 0}
 .grid.director{align-items:stretch}
 .grid.director figure{display:flex;flex-direction:column}
 .grid.director .ph{position:relative;flex:1;min-height:220px;border-radius:10px;overflow:hidden}
-.grid.director img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center top}
+.grid.director img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:10px}
+.grid.director .ph{flex:none;min-height:0}
+.grid.one{grid-template-columns:1fr}
+.grid.one img{aspect-ratio:auto;height:auto}
+.grid.one.portrait{grid-template-columns:1fr 1fr}
+.grid.one.portrait img{aspect-ratio:4/3}
 .grid.director p{margin-bottom:18px}
 .grid.director figcaption{flex:none}
-@media (max-width:640px){.grid.director .ph{min-height:0;aspect-ratio:3/4}}
+@media (max-width:640px){.grid.director .ph{position:relative;min-height:0;aspect-ratio:3/4}.grid.director img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:center top}}
 figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+.btn .ic{vertical-align:-3px;margin-right:4px;flex:none}
 .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);margin:0 0 var(--s2)}
 /* academy card */
 .card{border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s4);margin:var(--s3) 0 var(--s4);background:#fff;box-shadow:0 1px 2px rgba(31,42,68,.04)}
@@ -331,6 +337,7 @@ body.dark .band .mag a .cat{color:#e6007e}
 <div class="chips"><span>📍 서울특별시 강남구 영동대로 210, 쌍용종합상가 111호</span><span>🎒 4~7세</span><span>📞 010-8003-9187</span></div>
 <img class="hero-img" src="/images/daechi-kidsmusic-group.jpg" alt="대치동 유아 음악 음이담 뮤지토리 대치점" loading="lazy">
 
+
 <h2>피아노를 시작하기엔 이른데, 음악은 접해 주고 싶어요</h2>
 <p>4~7세는 악기를 배우기엔 이르지만 소리와 리듬을 몸으로 느끼기에는 좋은 시기입니다. 학부모님은 &quot;놀이처럼 음악을 만나게 해 주고 싶다&quot;는 마음이 큽니다.</p><p>음이담 뮤지토리 대치점은 4~7세를 위한 놀이 음악 수업입니다. 클래식 피아노 음원을 사용해 동화와 함께 음악을 경험합니다.</p>
 
@@ -358,12 +365,12 @@ body.dark .band .mag a .cat{color:#e6007e}
 <div class="cta" id="contact">
   <h2>대치동 유아 음악, 상담부터 편하게 시작하세요</h2>
   <p>아이 연령에 맞는 수업 시간과 구성을 상담에서 안내해 드립니다.</p>
-  <div class="btns"><a class="btn" href="tel:01080039187" data-track="tel">📞 010-8003-9187</a><a class="btn ghost" href="https://blog.naver.com/sempre_piano" target="_blank" rel="noopener" data-track="blog">네이버 블로그</a></div>
+  <div class="btns"><a class="btn" href="tel:01080039187" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 010-8003-9187</a><a class="btn ghost" href="https://blog.naver.com/sempre_piano" target="_blank" rel="noopener" data-track="blog">네이버 블로그</a></div>
 </div>
 <p style="font-size:13px;color:var(--muted)">음이담 · 서울특별시 강남구 영동대로 210, 쌍용종합상가 111호 · 전화 010-8003-9187<br>대치동 유아 음악 · 대치동 유아 음악수업 · 강남 유아 놀이음악 · 음이담 뮤지토리</p>
 </article><aside class="col-side"><div class="side pc"><p class="nm">음이담 뮤지토리 대치점</p><p class="kw">대치동 유아 음악 · 강남구 대치동 · 4~7세 · 유아 음악</p>
 <a class="tel" href="tel:01080039187" data-track="tel">010-8003-9187</a>
-<div class="btns"><a class="btn" href="tel:01080039187" data-track="tel">📞 전화</a><a class="btn ghost" href="https://blog.naver.com/sempre_piano" target="_blank" rel="noopener" data-track="blog">블로그</a></div>
+<div class="btns"><a class="btn" href="tel:01080039187" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 전화</a><a class="btn ghost" href="https://blog.naver.com/sempre_piano" target="_blank" rel="noopener" data-track="blog">블로그</a></div>
 <div class="badges" style="margin-top:14px"><span class="">원장 소개</span></div>
 <dl><dt>주소</dt><dd>서울특별시 강남구 영동대로 210, 쌍용종합상가 111호</dd><dt>등록 상호</dt><dd>음이담</dd></dl></div>
 <div class="side pc"><h3>함께 읽으면 좋은 글</h3><div class="links"><a href="/가이드/피아노-학원-고르는-법/">유아·초등 피아노 학원 고르는 법<small>첫 악기, 레슨 방식과 연습 환경 확인</small></a><a href="/가이드/초등-수학학원-고르는-법/">초등 수학학원 고르는 법<small>연산·교과·사고력, 진도보다 먼저 볼 것</small></a><a href="/가이드/초6-중1-영어학원/">초6·중1 영어학원, 무엇이 달라지나<small>중학교 영어 전환기에 확인할 것</small></a><a href="/가이드/초등-미술학원-고르는-법/">초등 미술학원 고르는 법<small>창의 미술과 입시 미술은 다릅니다</small></a></div></div></aside></div>

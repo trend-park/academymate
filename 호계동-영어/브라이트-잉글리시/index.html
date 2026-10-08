@@ -72,11 +72,17 @@ ul.plain li{margin:4px 0}
 .grid.director{align-items:stretch}
 .grid.director figure{display:flex;flex-direction:column}
 .grid.director .ph{position:relative;flex:1;min-height:220px;border-radius:10px;overflow:hidden}
-.grid.director img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center top}
+.grid.director img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:10px}
+.grid.director .ph{flex:none;min-height:0}
+.grid.one{grid-template-columns:1fr}
+.grid.one img{aspect-ratio:auto;height:auto}
+.grid.one.portrait{grid-template-columns:1fr 1fr}
+.grid.one.portrait img{aspect-ratio:4/3}
 .grid.director p{margin-bottom:18px}
 .grid.director figcaption{flex:none}
-@media (max-width:640px){.grid.director .ph{min-height:0;aspect-ratio:3/4}}
+@media (max-width:640px){.grid.director .ph{position:relative;min-height:0;aspect-ratio:3/4}.grid.director img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:center top}}
 figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+.btn .ic{vertical-align:-3px;margin-right:4px;flex:none}
 .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);margin:0 0 var(--s2)}
 /* academy card */
 .card{border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s4);margin:var(--s3) 0 var(--s4);background:#fff;box-shadow:0 1px 2px rgba(31,42,68,.04)}
@@ -331,6 +337,7 @@ body.dark .band .mag a .cat{color:#e6007e}
 <div class="chips"><span>📍 경기도 안양시 동안구 귀인로 110, 평촌트리지아 204동</span><span>🎒 초등 1~6학년 · 중등 1~3학년</span><span>📞 010-6491-6510</span><span>🏫 안양교육지원청 신고 제2024-063호 브라이트 잉글리시</span></div>
 <img class="hero-img" src="/images/hogye-english-group.jpg" alt="호계동 영어 브라이트 잉글리시" loading="lazy">
 
+
 <h2>문제는 푸는데, 영어책 한 권을 끝까지 읽어 본 적이 있나요</h2>
 <p>학원을 오래 다녀도 원서 한 권을 스스로 읽고, 읽은 것을 말과 글로 옮기는 경험이 없으면 영어는 계속 시험 과목으로만 남습니다. 학년이 오르면 그 차이가 자신감 차이로 나타납니다.</p><p>브라이트 잉글리시는 평촌 트리지아 단지 안에서 초등·중등 학생을 소수로 지도하는 영어 공부방입니다. 원서를 읽고, 쓰고, 말하는 과정을 수업의 중심에 두어 영어를 실제로 쓰는 힘을 키웁니다.</p>
 
@@ -358,12 +365,12 @@ body.dark .band .mag a .cat{color:#e6007e}
 <div class="cta" id="contact">
   <h2>호계동 영어, 상담부터 편하게 시작하세요</h2>
   <p>아이 학년과 지금 영어 상태를 말씀해 주시면 시작 단계를 안내해 드립니다.</p>
-  <div class="btns"><a class="btn" href="tel:01064916510" data-track="tel">📞 010-6491-6510</a><a class="btn ghost" href="https://blog.naver.com/hannnah419" target="_blank" rel="noopener" data-track="blog">네이버 블로그</a></div>
+  <div class="btns"><a class="btn" href="tel:01064916510" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 010-6491-6510</a><a class="btn ghost" href="https://blog.naver.com/hannnah419" target="_blank" rel="noopener" data-track="blog">네이버 블로그</a></div>
 </div>
 <p style="font-size:13px;color:var(--muted)">브라이트 잉글리시 · 경기도 안양시 동안구 귀인로 110, 평촌트리지아 204동 · 안양교육지원청 신고 제2024-063호 · 교습과목: 영어 · 전화 010-6491-6510<br>호계동 영어 · 호계동 영어과외 · 평촌 트리지아 영어 · 호계동 초등영어 · 호계동 중등영어 · 평촌 원서 영어 · 호계동 영어 공부방</p>
 </article><aside class="col-side"><div class="side pc"><p class="nm">브라이트 잉글리시</p><p class="kw">호계동 영어 · 안양시 동안구 호계동 · 초등 1~6학년 · 중등 1~3학년 · 초등·중등 영어</p>
 <a class="tel" href="tel:01064916510" data-track="tel">010-6491-6510</a>
-<div class="btns"><a class="btn" href="tel:01064916510" data-track="tel">📞 전화</a><a class="btn ghost" href="https://blog.naver.com/hannnah419" target="_blank" rel="noopener" data-track="blog">블로그</a></div>
+<div class="btns"><a class="btn" href="tel:01064916510" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 전화</a><a class="btn ghost" href="https://blog.naver.com/hannnah419" target="_blank" rel="noopener" data-track="blog">블로그</a></div>
 <div class="badges" style="margin-top:14px"><span class="reg">교육청 신고번호 확인</span><span class="">원장 소개</span></div>
 <dl><dt>주소</dt><dd>경기도 안양시 동안구 귀인로 110, 평촌트리지아 204동</dd><dt>교육청 등록</dt><dd>안양교육지원청 신고 제2024-063호</dd><dt>등록 상호</dt><dd>브라이트 잉글리시</dd></dl></div>
 <div class="side pc"><h3>함께 읽으면 좋은 글</h3><div class="links"><a href="/가이드/초등-수학학원-고르는-법/">초등 수학학원 고르는 법<small>연산·교과·사고력, 진도보다 먼저 볼 것</small></a><a href="/가이드/피아노-학원-고르는-법/">유아·초등 피아노 학원 고르는 법<small>첫 악기, 레슨 방식과 연습 환경 확인</small></a><a href="/가이드/초등-미술학원-고르는-법/">초등 미술학원 고르는 법<small>창의 미술과 입시 미술은 다릅니다</small></a><a href="/가이드/초6-중1-영어학원/">초6·중1 영어학원, 무엇이 달라지나<small>중학교 영어 전환기에 확인할 것</small></a></div></div></aside></div>

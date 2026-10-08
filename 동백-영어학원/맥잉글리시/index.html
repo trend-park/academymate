@@ -72,11 +72,17 @@ ul.plain li{margin:4px 0}
 .grid.director{align-items:stretch}
 .grid.director figure{display:flex;flex-direction:column}
 .grid.director .ph{position:relative;flex:1;min-height:220px;border-radius:10px;overflow:hidden}
-.grid.director img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center top}
+.grid.director img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:10px}
+.grid.director .ph{flex:none;min-height:0}
+.grid.one{grid-template-columns:1fr}
+.grid.one img{aspect-ratio:auto;height:auto}
+.grid.one.portrait{grid-template-columns:1fr 1fr}
+.grid.one.portrait img{aspect-ratio:4/3}
 .grid.director p{margin-bottom:18px}
 .grid.director figcaption{flex:none}
-@media (max-width:640px){.grid.director .ph{min-height:0;aspect-ratio:3/4}}
+@media (max-width:640px){.grid.director .ph{position:relative;min-height:0;aspect-ratio:3/4}.grid.director img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:center top}}
 figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+.btn .ic{vertical-align:-3px;margin-right:4px;flex:none}
 .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);margin:0 0 var(--s2)}
 /* academy card */
 .card{border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s4);margin:var(--s3) 0 var(--s4);background:#fff;box-shadow:0 1px 2px rgba(31,42,68,.04)}
@@ -331,6 +337,7 @@ body.dark .band .mag a .cat{color:#e6007e}
 <div class="chips"><span>📍 경기도 용인시 기흥구 동백중앙로 358-19, 4층</span><span>🎒 초등 1~6학년 · 중등 1~3학년</span><span>📞 010-4339-2257</span><span>🏫 교육지원청 등록 제4911호 맥잉글리시어학원</span></div>
 <img class="hero-img" src="/images/dongbaek-english-group.jpg" alt="동백 영어학원 맥잉글리시" loading="lazy">
 
+
 <h2>말하기 학원과 내신 학원, 둘 다 보내야 하나요</h2>
 <p>초등 때는 원어민 회화 학원, 중등이 되면 문법·내신 학원으로 옮기는 집이 많습니다. 그 사이에 아이는 두 번 적응해야 하고, 말하기는 끊깁니다.</p><p>맥잉글리시는 원어민·한국인 부부 원장이 함께 운영하며, 원어민 말하기 수업부터 읽기·쓰기·문법, 중등 내신까지 한곳에서 균형 있게 지도합니다.</p>
 
@@ -341,7 +348,7 @@ body.dark .band .mag a .cat{color:#e6007e}
 <h2>맥잉글리시는 이렇게 수업합니다</h2>
 <div class="tbl"><table class="kv"><tbody><tr><th>대상</th><td>초등 1~6학년, 중등 1~3학년</td></tr><tr><th>수업 형태</th><td>레벨별 그룹 수업</td></tr><tr><th>지도</th><td>원어민·한국인 부부 원장 + 지도 경험이 있는 선생님</td></tr><tr><th>초등부</th><td>파닉스 → 읽기 · 문장 만들기 → 원어민 말하기</td></tr><tr><th>중등부</th><td>독해 · 문법 · 학교별 내신 · 서술형·말하기 수행평가</td></tr></tbody></table></div>
 <h3>초등부: 기초와 표현력</h3><p>파닉스부터 읽기와 문장 만들기, 원어민과의 말하기를 통해 영어의 기초와 표현력을 쌓습니다.</p><div class="grid"><figure><img src="/images/dongbaek-english-class1.jpg" alt="동백 영어학원 맥잉글리시" loading="lazy"></figure><figure><img src="/images/dongbaek-english-class2.jpg" alt="동백 영어학원 맥잉글리시" loading="lazy"></figure></div><h3>중등부: 독해·문법과 내신</h3><p>독해와 문법을 체계적으로 다지고, 학교별 내신과 서술형·말하기 수행평가를 준비합니다.</p><h3>레벨별 그룹, 반마다 다른 보완</h3><p>레벨별 그룹 수업을 바탕으로 각 반의 이해도와 성장 속도를 살피며 필요한 학습을 보완합니다.</p><h3>출석이 아니라 이해와 사용</h3><p>단어 학습, 오답 확인, 수업 참여를 꾸준히 관리해 배운 내용을 이해하고 실제로 사용할 수 있도록 돕습니다.</p>
-<div class="grid"><figure><img src="/images/dongbaek-english-facility1.jpg" alt="동백 영어학원 맥잉글리시" loading="lazy"></figure></div>
+<div class="grid one portrait"><figure><img src="/images/dongbaek-english-facility1.jpg" alt="동백 영어학원 맥잉글리시" loading="lazy"></figure></div>
 
 <h2>원장님 소개</h2>
 <div class="grid director">
@@ -362,12 +369,12 @@ body.dark .band .mag a .cat{color:#e6007e}
 <div class="cta" id="contact">
   <h2>동백 영어학원, 상담부터 편하게 시작하세요</h2>
   <p>아이가 지금 어느 단계인지, 어떤 반이 맞을지 상담에서 함께 봐 드립니다.</p>
-  <div class="btns"><a class="btn" href="tel:01043392257" data-track="tel">📞 010-4339-2257</a></div>
+  <div class="btns"><a class="btn" href="tel:01043392257" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 010-4339-2257</a></div>
 </div>
 <p style="font-size:13px;color:var(--muted)">맥잉글리시어학원 · 경기도 용인시 기흥구 동백중앙로 358-19, 4층 · 교육지원청 등록 제4911호 · 교습과목: 영어 · 전화 010-4339-2257<br>동백 영어학원 · 백현마을 영어학원 · 동백 초등영어 · 동백 중등영어 · 용인 동백동 영어학원</p>
 </article><aside class="col-side"><div class="side pc"><p class="nm">맥잉글리시</p><p class="kw">동백 영어학원 · 용인시 기흥구 동백동 · 초등 1~6학년 · 중등 1~3학년 · 초등·중등 영어</p>
 <a class="tel" href="tel:01043392257" data-track="tel">010-4339-2257</a>
-<div class="btns"><a class="btn" href="tel:01043392257" data-track="tel">📞 전화</a><a class="btn ghost" href="https://naver.me/xumwY2ql" target="_blank" rel="noopener" data-track="place">네이버 플레이스</a></div>
+<div class="btns"><a class="btn" href="tel:01043392257" data-track="tel"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg> 전화</a><a class="btn ghost" href="https://naver.me/xumwY2ql" target="_blank" rel="noopener" data-track="place">네이버 플레이스</a></div>
 <div class="badges" style="margin-top:14px"><span class="reg">교육청 등록번호 확인</span><span class="">원장 소개</span></div>
 <dl><dt>주소</dt><dd>경기도 용인시 기흥구 동백중앙로 358-19, 4층</dd><dt>교육청 등록</dt><dd>교육지원청 등록 제4911호</dd><dt>등록 상호</dt><dd>맥잉글리시어학원</dd></dl></div>
 <div class="side pc"><h3>함께 읽으면 좋은 글</h3><div class="links"><a href="/가이드/초등-수학학원-고르는-법/">초등 수학학원 고르는 법<small>연산·교과·사고력, 진도보다 먼저 볼 것</small></a><a href="/가이드/피아노-학원-고르는-법/">유아·초등 피아노 학원 고르는 법<small>첫 악기, 레슨 방식과 연습 환경 확인</small></a><a href="/가이드/초등-미술학원-고르는-법/">초등 미술학원 고르는 법<small>창의 미술과 입시 미술은 다릅니다</small></a><a href="/가이드/초6-중1-영어학원/">초6·중1 영어학원, 무엇이 달라지나<small>중학교 영어 전환기에 확인할 것</small></a></div></div></aside></div>
