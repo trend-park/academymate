@@ -255,18 +255,19 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
   var CH_VERB = {"블로그":"꾸준히 써도", "인스타그램":"꾸준히 올려도", "릴스":"꾸준히 올려도", "유튜브":"꾸준히 올려도",
     "네이버 플레이스":"열심히 관리해도", "당근":"꾸준히 올려도", "맘카페":"꾸준히 올려도", "전단지":"계속 돌려도", "광고":"계속 돌려도"};
   var GOALS = [
-    [/재등록|퇴원|이탈/, {ch:"학부모 소통", lead:"수업은 열심히 하는데", kw:"학원 재등록", noun:"재등록", come:"재등록이 잘 되는", none:"퇴원이 이어지는", ifnone:"퇴원이 이어진다면", get:"재등록을 지키는"}],
+    [/재등록|퇴원|이탈/, {trap:["성적만 이야기하면","연락을 미루면"], ch:"학부모 소통", lead:"수업은 열심히 하는데", kw:"학원 재등록", noun:"재등록", come:"재등록이 잘 되는", none:"퇴원이 이어지는", ifnone:"퇴원이 이어진다면", get:"재등록을 지키는"}],
     [/상위\s?노출|노출|키워드|검색/, {kw:"학원 검색 노출", noun:"상위 노출", come:"상위에 뜨는", none:"검색에 안 걸리는", ifnone:"검색에 안 걸린다면", get:"상위 노출을 만드는"}],
-    [/상담/, {lead:"문의는 오는데", kw:"학원 상담 등록", noun:"상담 등록", come:"상담이 등록으로 이어지는", none:"상담이 등록으로 안 이어지는", ifnone:"상담이 등록으로 안 이어진다면", get:"등록 상담을 만드는"}],
-    [/후기|리뷰/, {ch:"학부모 소통", lead:"만족한다는데", kw:"학원 후기", noun:"후기", come:"후기가 쌓이는", none:"후기가 쌓이지 않는", ifnone:"후기가 쌓이지 않는다면", get:"후기를 모으는"}],
-    [/체험/, {kw:"학원 체험 신청", noun:"체험 신청", come:"체험 신청이 오는", none:"체험 신청이 없는", ifnone:"체험 신청이 없다면", get:"체험 신청을 받는"}],
+    [/상담/, {trap:["가격부터 말하면","설명만 길게 하면"], lead:"문의는 오는데", kw:"학원 상담 등록", noun:"상담 등록", come:"상담이 등록으로 이어지는", none:"상담이 등록으로 안 이어지는", ifnone:"상담이 등록으로 안 이어진다면", get:"등록 상담을 만드는"}],
+    [/후기|리뷰/, {trap:["부탁만 하고 끝내면"], ch:"학부모 소통", lead:"만족한다는데", kw:"학원 후기", noun:"후기", come:"후기가 쌓이는", none:"후기가 쌓이지 않는", ifnone:"후기가 쌓이지 않는다면", get:"후기를 모으는"}],
+    [/체험/, {trap:["체험만 하고 끝내면"], kw:"학원 체험 신청", noun:"체험 신청", come:"체험 신청이 오는", none:"체험 신청이 없는", ifnone:"체험 신청이 없다면", get:"체험 신청을 받는"}],
     [/설명회/, {kw:"학원 설명회 신청", noun:"설명회 신청", come:"설명회 신청이 차는", none:"설명회 신청이 적은", ifnone:"설명회 신청이 적다면", get:"설명회 신청을 받는"}],
     [/원생|모집|신규|등록/, {kw:"학원 신규 원생", noun:"신규 등록", come:"신규 등록이 느는", none:"신규 등록이 늘지 않는", ifnone:"신규 등록이 늘지 않는다면", get:"신규 원생을 모으는"}],
     [/./, {kw:"학원 문의", noun:"문의", come:"문의가 오는", none:"문의가 없는", ifnone:"문의가 없다면", get:"문의를 받는"}]
   ];
 
   function parse(raw){
-    var s = (raw||"").trim().replace(/[?!.]+$/,"");
+    raw = (raw||"").trim().replace(/공부\s?방법|공부\s?방식/g, "공부법");
+    var s = raw.replace(/[?!.]+$/,"");
     var r = {raw: s, target: "", region: "", subject: "", topic: "", problem: "", choose: false, count: ((s.match(/(\d+)\s?가지/) || [])[1] || "")};
     var g = s.match(GRADE);
     if (g){ r.target = g[0].replace(/\s/g,""); s = s.replace(g[0], " "); }
@@ -358,7 +359,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     var K;
     if (c.owner){
       var ch = c.channel || "", g = c.goal ? c.goal.noun : "문의";
-      var biz = (c.raw.match(/공부방|교습소|과외|태권도장|도장|학원/) || [/태권도/.test(c.raw) ? "태권도장" : "학원"])[0];
+      var biz = (c.raw.match(/공부방(?!법)|교습소|과외|태권도장|도장|학원/) || [/태권도/.test(c.raw) ? "태권도장" : "학원"])[0];
       if (ch === "블로그"){ K = biz + " 블로그"; tags.push("블로그", "문의"); }
       else if (ch === "인스타그램" || ch === "릴스"){ K = biz + " 인스타"; tags.push("인스타", "문의"); }
       else if (ch === "광고"){ K = biz + " 광고"; tags.push("광고"); }
@@ -407,11 +408,12 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
         if (SHORT_PREFIX.test(t)) texts.push(t.replace(SHORT_PREFIX, ""));
         Object.keys(SHORT_K).forEach(function(k){ if (t.indexOf(k) >= 0) texts.push(t.split(k).join(SHORT_K[k])); });
       });
+      texts = texts.filter(function(t){ var w = t.split(" "); return !w.some(function(a, i){ return a.length >= 2 && w.some(function(b, j){ return i !== j && b.indexOf(a) === 0; }); }); });
       for (var i = 0; i < texts.length; i++){
         var hit = null;
         [it.quote, ""].forEach(function(q){
           if (hit) return;
-          var v = {type: it.type, level: it.level, hl: it.hl, src: it.src, key: it.key, text: texts[i], quote: q};
+          var v = {type: it.type, level: it.level, hl: it.hl, src: it.src, key: it.key, text: texts[i], quote: q, fam: it.fam || famOf(texts[i]), anchor: it.anchor || []};
           var n = reelsLen(v);
           if (n >= 15 && n <= 20 && !usedText[v.text] && !usedSkel[skel(v.text)]) hit = v;
         });
@@ -423,26 +425,26 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
 
   /* 주제별 맥락: '무엇을 해도(act) → 무엇이 안 되는(fail)' + 그 대상(who) */
   var FRAMES_OWNER = [
-    [/블로그/, {act:["블로그를 매일 써도","블로그를 써도"], fail:["문의가 없는","문의가 안 오는"], who:"블로그", own:["문의가 없는 블로그"]}],
-    [/인스타|릴스/, {act:["릴스를 올려도","인스타를 해도"], fail:["문의가 없는","반응이 없는"], who:"계정", own:["반응이 없는 계정","문의가 없는 인스타"]}],
-    [/광고/, {act:["광고비를 써도","광고를 돌려도"], fail:["문의가 없는","등록이 안 되는"], who:"학원", own:["문의가 없는 광고"]}],
-    [/플레이스|노출|키워드/, {act:["플레이스를 관리해도"], fail:["검색에 안 뜨는","문의가 없는"], who:"학원", own:["검색에 안 뜨는 플레이스"]}],
-    [/재등록|퇴원|이탈/, {act:["수업을 잘해도","열심히 가르쳐도"], fail:["재등록을 안 하는","그만두는"], who:"학부모", own:["재등록이 안 되는 {biz}","퇴원이 이어지는 {biz}"]}],
-    [/상담/, {act:["상담을 해도","상담을 잘해도"], fail:["등록을 안 하는","등록으로 안 이어지는"], who:"학부모", own:["등록이 안 되는 상담","상담만 하고 끝나는 {biz}"]}],
-    [/후기|리뷰/, {act:["만족한다면서"], fail:["후기를 안 남기는"], who:"학부모", own:["후기가 없는 {biz}"]}],
-    [/설명회|특강|방학/, {act:["설명회를 열어도","공지를 올려도"], fail:["신청이 없는"], who:"설명회", own:["신청이 없는 설명회"]}],
-    [/체험/, {act:["체험수업을 해도"], fail:["등록을 안 하는"], who:"학부모", own:["등록이 안 되는 체험수업"]}],
-    [/./, {act:["{biz} 홍보해도","홍보를 열심히 해도"], fail:["원생이 안 느는","등록으로 안 이어지는","원생 등록이 없는"], who:"{biz}", own:["원생이 안 느는 {biz}","등록이 없는 {biz}"]}]
+    [/블로그/, {trap:["후기만 올리면","같은 글만 반복하면"], act:["블로그를 매일 써도","블로그를 써도"], fail:["문의가 없는","문의가 안 오는"], who:"블로그", own:["문의가 없는 블로그"]}],
+    [/인스타|릴스/, {trap:["수업 사진만 올리면","유행만 따라 하면"], act:["릴스를 올려도","인스타를 해도"], fail:["문의가 없는","반응이 없는"], who:"계정", own:["반응이 없는 계정","문의가 없는 인스타"]}],
+    [/광고/, {trap:["광고비만 늘리면","할인부터 내세우면"], act:["광고비를 써도","광고를 돌려도"], fail:["문의가 없는","등록이 안 되는"], who:"학원", own:["문의가 없는 광고"]}],
+    [/플레이스|노출|키워드/, {trap:["사진만 바꾸면","리뷰만 모으면"], act:["플레이스를 관리해도"], fail:["검색에 안 뜨는","문의가 없는"], who:"학원", own:["검색에 안 뜨는 플레이스"]}],
+    [/재등록|퇴원|이탈/, {trap:["성적만 이야기하면","연락을 미루면"], act:["수업을 잘해도","열심히 가르쳐도"], fail:["재등록을 안 하는","그만두는"], who:"학부모", own:["재등록이 안 되는 {biz}","퇴원이 이어지는 {biz}"]}],
+    [/상담/, {trap:["가격부터 말하면","설명만 길게 하면"], act:["상담을 해도","상담을 잘해도"], fail:["등록을 안 하는","등록으로 안 이어지는"], who:"학부모", own:["등록이 안 되는 상담","상담만 하고 끝나는 {biz}"]}],
+    [/후기|리뷰/, {trap:["부탁만 하고 끝내면"], act:["만족한다면서"], fail:["후기를 안 남기는"], who:"학부모", own:["후기가 없는 {biz}"]}],
+    [/설명회|특강|방학/, {trap:["공지만 올리면"], act:["설명회를 열어도","공지를 올려도"], fail:["신청이 없는"], who:"설명회", own:["신청이 없는 설명회"]}],
+    [/체험/, {trap:["체험만 하고 끝내면"], act:["체험수업을 해도"], fail:["등록을 안 하는"], who:"학부모", own:["등록이 안 되는 체험수업"]}],
+    [/./, {trap:["광고비만 늘리면","할인부터 하면"], act:["{biz} 홍보해도","홍보를 열심히 해도"], fail:["원생이 안 느는","등록으로 안 이어지는","원생 등록이 없는"], who:"{biz}", own:["원생이 안 느는 {biz}","등록이 없는 {biz}"]}]
   ];
   var FRAMES_PARENT = [
-    [/오답/, {act:["오답노트를 써도","오답 정리를 해도"], fail:["또 틀리는","같은 문제를 또 틀리는"]}],
+    [/오답/, {good:"오답노트를 잘 쓰는 아이들의 공통점", act:["오답노트를 써도","오답 정리를 해도"], fail:["또 틀리는","같은 문제를 또 틀리는"]}],
     [/파닉스/, {act:["파닉스를 끝내도","파닉스를 배워도"], fail:["문장을 못 읽는","읽기가 막히는"]}],
     [/단어|어휘|암기/, {act:["단어를 외워도","매일 외워도"], fail:["금방 잊어버리는","문장을 못 읽는"]}],
     [/리딩|원서/, {act:["원서를 읽어도","매일 읽어도"], fail:["내용을 모르는","설명을 못 하는"]}],
     [/독해|독서|문해력|국어|책/, {act:["책을 읽어도","매일 읽어도"], fail:["내용을 설명 못 하는","문제를 못 푸는"]}],
     [/선행/, {act:["선행을 해도","진도를 나가도"], fail:["풀이가 흔들리는","시험에서 틀리는"]}],
     [/글쓰기|논술|작문|일기/, {act:["매일 써도","첨삭을 받아도"], fail:["첫 문장이 막히는","글이 안 느는"]}],
-    [/피아노|악기|바이올린/, {act:["매일 연습해도"], fail:["같은 곳에서 막히는","실력이 안 느는"]}],
+    [/피아노|악기|바이올린/, {good:"피아노 실력이 느는 아이들의 공통점", act:["매일 연습해도"], fail:["같은 곳에서 막히는","실력이 안 느는"]}],
     [/줄넘기/, {act:["매일 연습해도"], fail:["자꾸 줄에 걸리는"]}],
     [/미술|그림|창의/, {act:["매일 그려도"], fail:["시작을 못 하는","실력이 안 느는"]}],
     [/코딩|프로그래밍/, {act:["코딩을 배워도"], fail:["혼자 못 만드는","설명을 못 하는"]}],
@@ -458,10 +460,101 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     var b = biz || "학원";
     function r(s){ return s.split("{biz}").join(b); }
     var who = r(f.who || "아이");
-    return {act: f.act.map(r), fail: f.fail.map(r), who: who, own: (f.own || f.fail.map(function(x){ return x + " " + who; })).map(r)};
+    return {trap: (f.trap || []).map(r), act: f.act.map(r), fail: f.fail.map(r), who: who, own: (f.own || f.fail.map(function(x){ return x + " " + who; })).map(r)};
+  }
+
+  /* ---------- 학부모·학생용 주제표: 검색 의도별 상황(sit)·함정(trap)·먼저 할 것(first) ---------- */
+  // sit: '○○인데 △△하는' 대비 상황 (자료집 학부모 예시 문장에서 가져옴)
+  var PT = [
+    [/오답/, {good:"오답노트를 잘 쓰는 아이들의 공통점", an:"오답노트", how:"이렇게 쓰면", sit:["오답노트를 써도 또 틀리는","다시 풀면 맞는데 시험에서 틀리는","같은 문제를 계속 틀리는"], trap:["답만 옮겨 적으면","틀린 문제를 그냥 넘기면","예쁘게 정리만 하면"], first:["틀린 이유 쓰기","다시 풀기"]}],
+    [/서술형|문장제/, {an:"수학 서술형", how:"이렇게 공부하면", sit:["답은 맞는데 풀이를 못 쓰는","식은 아는데 서술형에서 막히는","문제를 읽고도 뭘 묻는지 모르는"], trap:["답만 맞히고 넘어가면","풀이를 안 쓰고 넘어가면","유형만 외우면"], first:["문제 읽기","풀이 말로 설명하기"]}],
+    [/선행/, {an:"선행", subjAn:true, how:"이렇게 시키면", sit:["진도는 빠른데 풀이가 흔들리는","선행을 해도 시험에서 틀리는","앞서 배웠는데 현행이 무너지는"], trap:["진도만 빨리 빼면","현행을 건너뛰면","남들 따라 시작하면"], first:["현행 점검","개념 설명"]}],
+    [/연산|계산/, {an:"연산", how:"이렇게 시키면", sit:["연산은 빠른데 실수가 많은","계산은 되는데 문장제에서 막히는"], trap:["속도만 재촉하면","학습지 양만 늘리면"], first:["정확도","풀이 과정"]}],
+    [/파닉스/, {an:"파닉스", how:"이렇게 배우면", sit:["파닉스를 끝내도 못 읽는","소리는 아는데 단어를 못 읽는"], trap:["규칙만 외우게 하면","읽기 연습 없이 넘어가면"], first:["소리 내어 읽기","쉬운 책 읽기"]}],
+    [/단어|어휘|암기/, {an:"영어 단어", how:"이렇게 외우면", sit:["외운 단어를 금방 잊는","단어는 아는데 문장이 안 읽히는","매일 외워도 시험에서 틀리는"], trap:["뜻만 외우게 하면","하루에 몰아서 외우면","복습 없이 진도만 나가면"], first:["복습 주기","문장으로 외우기"]}],
+    [/문법/, {an:"영어 문법", how:"이렇게 공부하면", sit:["문법은 아는데 문장을 못 쓰는","규칙은 외웠는데 문제에서 틀리는"], trap:["규칙만 외우면","문제집만 반복하면"], first:["문장 만들기","예문 외우기"]}],
+    [/리딩|원서/, {an:"영어 원서", how:"이렇게 읽히면", sit:["끝까지 읽었는데 내용을 모르는","매일 읽어도 독해가 그대로인"], trap:["권수만 늘리면","확인 질문 없이 넘어가면"], first:["내용 말로 설명하기","쉬운 책 반복"]}],
+    [/회화|말하기|스피킹/, {an:"영어 말하기", how:"이렇게 배우면", sit:["오래 배워도 말이 안 나오는","알아듣는데 대답을 못 하는"], trap:["듣기만 시키면","틀릴 때마다 고쳐주면"], first:["따라 말하기","짧은 대답"]}],
+    [/독해|문해력/, {an:"독해력", how:"이렇게 키우면", sit:["글을 읽고도 내용을 모르는","책은 읽는데 문제를 못 푸는","읽어도 핵심을 못 찾는"], trap:["문제집만 풀리면","읽기만 시키고 끝내면"], first:["읽고 말로 설명하기","핵심 문장 찾기"]}],
+    [/독서|책/, {good:"책을 좋아하는 아이들의 공통점", an:"독서 습관", how:"이렇게 읽히면", sit:["책은 읽는데 설명을 못 하는","많이 읽어도 글을 못 쓰는"], trap:["권수만 늘리면","읽기만 하고 끝내면"], first:["읽은 내용 말하기","질문 하나"]}],
+    [/글쓰기|논술|작문|일기/, {an:"글쓰기", how:"이렇게 지도하면", sit:["첫 문장 앞에서 멈추는","매일 써도 글이 안 느는"], trap:["고쳐주기만 하면","분량만 채우게 하면"], first:["질문으로 시작하기","말로 먼저 하기"]}],
+    [/자신감|칭찬/, {good:"자신감 있는 아이들의 공통점", an:"아이 자신감", how:"이렇게 칭찬하면", sit:["칭찬해도 자신감이 없는","도전 앞에서 자꾸 주저하는"], trap:["결과만 칭찬하면","대신 해주면"], first:["과정 칭찬","작은 성공"]}],
+    [/줄넘기/, {an:"줄넘기", how:"이렇게 연습하면", sit:["연습해도 자꾸 줄에 걸리는","매일 해도 횟수가 그대로인"], trap:["횟수만 늘리면","속도만 재촉하면"], first:["자세 점검","손목 연습"]}],
+    [/태권도|품새|겨루기/, {an:"태권도", how:"이렇게 보내면", sit:["열심히 다녀도 자신감이 안 생기는","운동은 하는데 집중력이 그대로인"], trap:["승급만 서두르면","억지로 보내면"], first:["기본 동작","칭찬 한마디"]}],
+    [/피아노|악기|바이올린/, {good:"피아노 실력이 느는 아이들의 공통점", an:"피아노 연습", how:"이렇게 시키면", sit:["매일 쳐도 같은 곳에서 막히는","반복해도 어려운 구간이 그대로인"], trap:["처음부터 반복만 하면","시간만 채우게 하면"], first:["구간 나눠 연습","느리게 치기"]}],
+    [/미술|그림|창의/, {an:"미술", how:"이렇게 가르치면", sit:["뭘 그릴지 몰라 망설이는","잘 그려도 설명을 못 하는"], trap:["잘 그렸다고만 하면","따라 그리기만 하면"], first:["질문으로 시작하기","이야기 만들기"]}],
+    [/코딩|프로그래밍/, {an:"코딩", how:"이렇게 배우면", sit:["작품은 만들었는데 설명을 못 하는","따라 하면 되는데 혼자 못 만드는"], trap:["따라 만들기만 하면","게임으로만 접하면"], first:["설명하기","작게 바꿔 보기"]}],
+    [/방학/, {good:"방학을 잘 보내는 아이들의 공통점", an:"방학 계획", how:"이렇게 보내면", sit:["계획은 세웠는데 지키지 못하는","방학 내내 바빴는데 남는 게 없는"], trap:["진도만 욕심내면","계획만 빽빽하게 짜면"], first:["복습 계획","하루 루틴"]}],
+    [/학원\s?(선택|고르|찾|추천|비교)|선택|고르/, {good:"학원 잘 고르는 부모들의 공통점", an:"학원 선택", how:"이렇게 고르면", sit:["학원을 옮겨도 성적이 그대로인","유명 학원에 보내도 제자리인"], trap:["결과물만 보고 고르면","소문만 듣고 보내면"], first:["수업 과정 확인","상담 질문"]}],
+    [/습관|집중|공부\s?시간|숙제|스스로/, {good:"공부 습관이 잡힌 아이들의 공통점", an:"공부 습관", how:"이렇게 잡으면", sit:["오래 앉아 있어도 성적이 그대로인","공부 시간을 늘려도 제자리인","숙제를 늘렸는데 집중이 줄어든"], trap:["시간만 늘리면","숙제만 늘리면","잔소리로 시키면"], first:["공부 순서","짧게 끝내기"]}],
+    [/수학/, {an:"수학", subj:true, how:"이렇게 공부하면", sit:["다시 풀면 맞는데 시험에서 틀리는","문제집을 풀어도 점수가 그대로인","진도는 빠른데 풀이가 막히는","답은 맞는데 설명을 못 하는"], trap:["문제집 권수만 늘리면","계산만 반복하면","틀린 문제를 그냥 넘기면","진도만 빨리 빼면"], first:["오답 복습","개념 설명","문장제 읽기"]}],
+    [/영어/, {an:"영어", subj:true, how:"이렇게 공부하면", sit:["단어는 아는데 문장을 못 읽는","오래 배워도 말이 안 나오는","단어를 외워도 독해에서 막히는","학원을 다녀도 실력이 제자리인"], trap:["단어만 외우게 하면","진도만 빨리 나가면","문제집만 반복하면"], first:["소리 내어 읽기","문장 읽기"]}],
+    [/국어/, {an:"국어", subj:true, how:"이렇게 공부하면", sit:["글을 읽고도 내용을 모르는","문제는 푸는데 서술형에서 막히는"], trap:["문제집만 풀리면","어휘를 그냥 넘기면"], first:["읽고 요약하기","어휘 정리"]}],
+    [/과학|사회|한국사|역사/, {an:"", subj:true, how:"이렇게 공부하면", sit:["외웠는데 시험에서 틀리는","개념은 아는데 설명을 못 하는"], trap:["암기만 시키면","요약만 하면"], first:["개념 설명","흐름 정리"]}],
+    [/./, {an:"공부", how:"이렇게 하면", sit:["열심히 하는데 성적이 그대로인","공부 시간을 늘려도 제자리인"], trap:["시간만 늘리면","문제집만 늘리면"], first:["공부 순서","복습 습관"]}]
+  ];
+  function ptFor(raw, subject){
+    for (var i = 0; i < PT.length; i++) if (PT[i][0].test(raw)){
+      var f = PT[i][1], an = f.an;
+      if (f.subjAn && subject) an = subject + " " + f.an;
+      if (!an) an = subject || "공부";
+      return {good: f.good, an: an, subj: !!f.subj, how: f.how, sit: f.sit, trap: f.trap, first: f.first};
+    }
+  }
+  // '다시 풀면 맞는데 시험에서 틀리는' → '시험에서 틀리는'
+  function sitTail(s){ var m = s.match(/(?:는데|해도|어도|아도|도) (.+)$/); return m ? m[1] : s; }
+
+  function buildParent(c){
+    var P = ptFor(c.raw, c.subject), list = [], rnd = seeded(c.raw);
+    var A = c.target ? c.target + " " + P.an : (P.subj ? P.an + " 공부" : P.an);
+    var As = [A, P.subj ? P.an + " 공부" : P.an].filter(function(v, i, a){ return a.indexOf(v) === i; });
+    var anchorWords = (As.join(" ") + " 공부").split(" ");
+    function add(type, fam, alts, level, quote){
+      alts = alts.map(function(t){ return t.replace(/\s+/g, " ").trim(); });
+      list.push({type: type, fam: fam, text: alts[0], alts: alts, quote: quote || "", level: level, hl: [], src: 0, key: type + ":" + fam + ":" + alts[0], anchor: anchorWords});
+    }
+    function ea(fn){ return As.map(fn); }
+    var RN = ["진짜 이유", "숨은 이유", "결정적인 이유"];
+    var tails = P.sit.map(sitTail);
+    function top(k){ return josa(k, "은", "는"); }
+
+    // 궁금증: 끝맺음이 서로 다른 6가지 가족 — 이유 / 생기는 일 / 공통점 / 놓치는 것 / 차이 / 진실
+    P.sit.forEach(function(s, i){
+      add("궁금증", "이유", ea(function(a){ return a + " " + s + " 이유"; }).concat(RN.map(function(r){ return s + " " + r; }), [s + " 이유"]), 3);
+    });
+    P.trap.forEach(function(t){ add("궁금증", "생기는 일", ea(function(a){ return a + " " + t + " 생기는 일"; }).concat([t + " 결국 생기는 일", t + " 생기는 일"]), 3); });
+    add("궁금증", "공통점", P.good ? [P.good, P.good.replace("아이들의", "아이").replace("부모들의", "부모")] : ea(function(a){ return a + " 잘하는 아이들의 공통점"; }).concat(ea(function(a){ return a + " 잘하는 아이 공통점"; })), 3);
+    P.trap.forEach(function(t){ add("궁금증", "놓치는 것", ea(function(a){ return a + " " + t.replace(/면$/, "고 있으면") + " 놓치는 것"; }).concat(ea(function(a){ return a + " " + t + " 놓치는 것"; })), 2); });
+    add("궁금증", "차이", ea(function(a){ return a + " 결국 여기서 갈립니다"; }).concat(ea(function(a){ return a + " 상위권은 여기서 갈립니다"; })), 3);
+    add("궁금증", "진실", ea(function(a){ return a + " 아무도 말해주지 않는 진실"; }).concat(ea(function(a){ return a + " 아무도 말 안 해주는 것"; })), 3);
+    add("궁금증", "반전", ea(function(a){ return a + " 열심히 할수록 꼬이는 이유"; }).concat(ea(function(a){ return a + " 좋은 줄 알았는데 역효과"; })), 3);
+
+    // 문제 강조: 망합니다 / 하지 마세요 / 실수 / 공통점(실패) / 착각 / 최악의 습관
+    P.trap.forEach(function(t, i){
+      var cq = ["망합니다", "격차가 벌어집니다", "시간만 날립니다"][i % 3];
+      add("문제 강조", "망", ea(function(a){ return a + " " + t + " " + cq; }).concat([t + " " + cq, t + " 망합니다"]), 3);
+    });
+    add("문제 강조", "하지마", ea(function(a){ return a + " " + P.how + " 안 됩니다"; }).concat(ea(function(a){ return a + " " + P.how.replace(/면$/, "지 마세요"); })), 3);
+    add("문제 강조", "실수", ea(function(a){ return a + " 부모가 가장 많이 하는 실수"; }).concat(ea(function(a){ return a + " 가장 많이 하는 실수"; })), 3);
+    tails.forEach(function(t){ add("문제 강조", "실패공통", [t + " 아이들의 공통점", t + " 아이 공통점"], 3); });
+    add("문제 강조", "착각", ea(function(a){ return a + " 부모들의 위험한 착각"; }).concat(ea(function(a){ return a + " 잘하고 있다는 착각"; })), 3);
+    add("문제 강조", "습관", ea(function(a){ return josa(a, "을", "를") + " 망치는 " + (/습관$/.test(a) ? "최악의 선택" : "최악의 습관"); }), 3);
+
+    // 행동 유도: 먼저 할 것 / 멈출 것 / 순서 / 늦기 전에 / 이대로 두지 마세요 / 달라짐
+    P.first.forEach(function(f){
+      add("행동 유도", "먼저", (P.subj ? ea(function(a){ return a + " " + f + "부터 하세요"; }) : []).concat([top(P.an) + " " + f + "부터", f + "부터 시작하세요"]), 3);
+    });
+    P.trap.forEach(function(t){ var n = t.replace(/면$/, "는 것"); add("행동 유도", "멈춤", [n + " 이제 멈추세요", n + " 당장 멈추세요"], 3); });
+    tails.forEach(function(t){ add("행동 유도", "아이는", [t + " 아이는 이것부터 하세요", t + " 아이는 여기부터 보세요"], 3); });
+    add("행동 유도", "순서", ea(function(a){ return a + " 이 순서대로 하세요"; }).concat(ea(function(a){ return a + " 순서부터 바꾸세요"; })), 3);
+    add("행동 유도", "늦기전", ea(function(a){ return a + " 늦기 전에 이것부터 잡으세요"; }).concat(ea(function(a){ return a + " 늦기 전에 꼭 잡으세요"; })), 3);
+    add("행동 유도", "두지마", ea(function(a){ return josa(a, "을", "를") + " 이대로 두지 마세요"; }), 3, "늦게할수록 몇배 손해");
+    add("행동 유도", "달라짐", ea(function(a){ return a + " 이것만 바꾸면 달라집니다"; }).concat(ea(function(a){ return a + " 이거 하나로 달라져요"; })), 3);
+    return shuffle(list, rnd);
   }
 
   function build(c){
+    if (!c.owner) return buildParent(c);
     var x = context(c), K = x.Km, Kt = x.Kt, list = [];
     if (!K) return list;
     var F = frameFor(c, x.biz);
@@ -507,6 +600,20 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     add("행동 유도", Ks.map(function(k){ return obj(k) + " 이대로 두지 마세요"; }), [["이대로 두지 마세요", 2]], ["늦게할수록 몇배 손해", 3]);
     TM.forEach(function(t, i){ var a = AN[i % AN.length]; add("행동 유도", Ks.map(function(k){ return t[0] + " " + k + "에서 " + a[0]; }), [t, a], null, a[0]); });
 
+    // 끝맺음이 다른 궁금증·문제 강조·행동 유도 가족 (같은 화면에 비슷한 문장이 안 나오도록)
+    function addF(type, fam, alts){ list.push({type: type, fam: fam, text: alts[0], alts: alts, quote: "", level: 3, hl: [], src: 0, key: type + ":" + fam + ":" + alts[0]}); }
+    F.trap.forEach(function(t){
+      addF("궁금증", "생기는 일", Ks.map(function(k){ return k + " " + t + " 생기는 일"; }).concat([t + " 결국 생기는 일", t + " 생기는 일"]));
+      addF("문제 강조", "망", Ks.map(function(k){ return k + " " + t + " 망합니다"; }).concat([t + " 학부모가 떠납니다", t + " 망합니다"]));
+      var n = t.replace(/면$/, "는 것");
+      addF("행동 유도", "멈춤", [n + " 이제 멈추세요", n + " 당장 멈추세요"]);
+    });
+    F.own.forEach(function(o){ addF("궁금증", "놓치는 것", [josa(o, "이", "가") + " 놓치고 있는 것", josa(o, "이", "가") + " 놓치는 것"]); });
+    addF("궁금증", "차이", Ks.map(function(k){ return k + " 결국 여기서 갈립니다"; }).concat(["잘되는 " + x.biz + "은 여기서 갈립니다"]));
+    addF("궁금증", "진실", Ks.map(function(k){ return k + " 아무도 말해주지 않는 진실"; }).concat(Ks.map(function(k){ return k + " 아무도 말 안 해주는 것"; })));
+    addF("궁금증", "반전", Ks.map(function(k){ return k + " 열심히 할수록 꼬이는 이유"; }).concat(Ks.map(function(k){ return k + " 좋은 줄 알았는데 역효과"; })));
+    var anc = (Ks.join(" ") + " " + x.biz + " 학원").split(" ");
+    list.forEach(function(it){ it.anchor = anc; });
     list.forEach(function(it){ it.alts = it.alts.map(function(t){ return t.replace(/,/g, "").replace(/\s+/g, " ").trim(); }); it.text = it.alts[0]; });
     return shuffle(list, rnd).sort(function(a, b){ return (b.hl.indexOf("하지 마세요") >= 0) - (a.hl.indexOf("하지 마세요") >= 0) || (b.key === "궁금증:" + (x.state ? "" : "x")) - 0; });
   }
@@ -546,15 +653,48 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     if (c.channel) ks.push(c.channel);
     return ks;
   }
+  function famOf(t){
+    if (/하지 마세요$|안 됩니다$/.test(t)) return "하지마";
+    if (/ (시|에서) /.test(t)) return "시-구조";
+    var F = [[/(이유|원인)$/, "이유"], [/생기는 일$/, "생기는 일"], [/공통점$/, "공통점"], [/놓치(는|고 있는) 것$/, "놓치는 것"], [/갈립니다$|차이$/, "차이"], [/진실$|말 안 해주는 것$/, "진실"],
+      [/역효과$|꼬이는 이유$/, "반전"], [/하지 마세요$|안 됩니다$/, "하지마"], [/실수$/, "실수"], [/착각$/, "착각"], [/습관$/, "습관"], [/망합니다$|벌어집니다$|날립니다$|무너집니다$|끊깁니다$|사라집니다$|떠납니다$/, "망"]];
+    for (var i = 0; i < F.length; i++) if (F[i][0].test(t)) return F[i][1];
+    return t.split(" ").slice(-2).join(" ");
+  }
+  var STOP_TOK = /^(이|이것|이것부터|여기부터|아이|아이는|아이의|아이들의|하는|않는|안|못|더|꼭|결국|가장|진짜|숨은|이유|원인|하세요|마세요|있는|없는)$/;
+  function toks(it){
+    var anc = {}; (it.anchor || []).forEach(function(w){ anc[w] = 1; });
+    return ((it.quote ? it.quote + " " : "") + it.text).split(/\s+/).map(function(w){ return w.replace(/(의|은|는|이|가|을|를|에서|부터|도|만|과|와|으로|로)$/, ""); })
+      .filter(function(w){ return w.length >= 2 && !anc[w] && !STOP_TOK.test(w); });
+  }
+  // 한 화면 3개: 끝맺음(가족)이 모두 다르고, 겹치는 핵심 단어가 없도록 묶음
+  function groupDiverse(pool){
+    var rest = pool.slice(), groups = [];
+    while (rest.length){
+      var g = [], used = {}, fams = {};
+      for (var pass = 0; pass < 4 && g.length < 3; pass++){
+        for (var i = 0; i < rest.length && g.length < 3; i++){
+          var it = rest[i], tk = toks(it);
+          if (g.indexOf(it) >= 0) continue;
+          var famOk = !fams[it.fam] || pass >= 3;
+          var wordOk = pass >= 3 ? true : pass >= 1 ? tk.filter(function(w){ return used[w]; }).length <= (pass - 1) : !tk.some(function(w){ return used[w]; });
+          if (famOk && wordOk){ g.push(it); fams[it.fam] = 1; tk.forEach(function(w){ used[w] = 1; }); }
+        }
+      }
+      rest = rest.filter(function(x){ return g.indexOf(x) < 0; });
+      groups.push(g);
+    }
+    return groups;
+  }
   function pickThree(all, page){
     var lv = state.level;
     var pool = all.filter(function(x){ return x.type === state.type && (lv === 3 ? x.level === 3 : true); });
     if (lv === 2) pool.sort(function(a, b){ return a.level - b.level; });
     if (!pool.length) return {items: [], pages: 0};
-    var pages = Math.ceil(pool.length / 3), start = (page % pages) * 3;
-    var items = pool.slice(start, start + 3);
+    var groups = groupDiverse(pool).filter(function(g, i, a){ return g.length === 3 || i === 0 || a.length === 1; });
+    var items = groups[page % groups.length].slice();
     for (var i = 0; items.length < 3 && i < pool.length; i++) if (items.indexOf(pool[i]) < 0) items.push(pool[i]);
-    return {items: items, pages: pages};
+    return {items: items, pages: groups.length};
   }
 
   function splitLines(text){
@@ -574,7 +714,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     if (c.target) tags.push("대상 <b>" + esc(c.target) + "</b>");
     if (c.region) tags.push("지역 <b>" + esc(c.region) + "</b>");
     if (c.subject) tags.push("과목 <b>" + esc(c.subject) + "</b>");
-    if (c.topic && !c.owner) tags.push("주제 <b>" + esc(c.topic) + "</b>");
+    if (!c.owner){ var pt = ptFor(c.raw, c.subject); tags.push("주제 <b>" + esc(pt.an) + "</b>"); }
     $("detected").innerHTML = raw ? "인식: " + tags.join(" · ") + (c.target || c.owner ? "" : " — 앞에 ‘초2’, ‘문정동’을 붙이면 더 구체적으로 나와요") : "";
 
     var built = raw ? build(c) : [];
