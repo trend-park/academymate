@@ -45,10 +45,16 @@ h1 em{font-style:normal;color:var(--primary)}
 .mode button small{font-size:12px;font-weight:500;color:var(--muted);margin-left:4px}
 .mode button[aria-pressed="true"]{border-color:var(--primary);background:var(--soft);color:var(--primary-dark)}
 .mode button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:var(--s5) 0 0;border-bottom:2px solid var(--line)}
-.tabs button{font:inherit;font-size:16px;font-weight:700;padding:12px 4px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
-.tabs button[aria-selected="true"]{color:var(--primary);border-bottom-color:var(--primary)}
-.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.tabs-label{margin:var(--s5) 0 8px;font-size:14px;font-weight:700;color:var(--ink-2)}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
+.tabs button{font:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 6px;border:2px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink);cursor:pointer;box-shadow:0 2px 0 var(--line);transition:transform .08s,border-color .15s,background .15s}
+.tabs button b{font-size:16px;font-weight:800}
+.tabs button span{font-size:12px;color:var(--muted);font-weight:500}
+.tabs button:hover{border-color:var(--primary);transform:translateY(-1px)}
+.tabs button[aria-selected="true"]{background:var(--primary);border-color:var(--primary);color:var(--white);box-shadow:0 2px 0 var(--primary-dark)}
+.tabs button[aria-selected="true"] span{color:#ffe3f1}
+.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (max-width:420px){.tabs button span{display:none}.tabs button b{font-size:15px}}
 .type-note{margin:0;font-size:14px;color:var(--ink-2)}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);flex-wrap:wrap;margin:var(--s3) 0}
 .bar h2{font-size:22px;margin:0;font-weight:800;letter-spacing:-0.02em}
@@ -90,25 +96,21 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
 
   <form class="ask" id="form" autocomplete="off">
     <div class="ask-row">
-      <input type="text" id="q" value="학원 상담 잘하는 방법" placeholder="예: 공부방 상담 잘하는 법, 초3 오답노트" aria-label="제목 또는 키워드">
+      <input type="text" id="q" value="AR 1점 후반대 영어 원서 추천" placeholder="예: 공부방 상담 잘하는 법, 초3 오답노트" aria-label="제목 또는 키워드">
       <button type="submit" class="btn">만들기</button>
     </div>
     <div class="examples" id="examples">
       <span>예시</span>
-      <button type="button" class="ex">학원 상담 잘하는 방법</button>
-      <button type="button" class="ex">공부방 원생 모집</button>
-      <button type="button" class="ex">교습소 블로그 운영</button>
-      <button type="button" class="ex">초3 오답노트 작성법</button>
-      <button type="button" class="ex">독해력 키우기</button>
-      <button type="button" class="ex">태권도 재등록</button>
+      <button type="button" class="ex">AR 1점 후반대 영어 원서 추천</button><button type="button" class="ex">자주 틀리는 영어 문제 풀이</button><button type="button" class="ex">겨울방학 영어공부 체크리스트</button>
     </div>
     <div class="detected" id="detected"></div>
   </form>
 
+  <p class="tabs-label">👇 유형을 눌러 다른 문구를 확인하세요</p>
   <div class="tabs" id="tabs" role="tablist" aria-label="문구 유형">
-    <button type="button" role="tab" data-f="궁금증" aria-selected="true">궁금증</button>
-    <button type="button" role="tab" data-f="문제 강조" aria-selected="false">문제 강조</button>
-    <button type="button" role="tab" data-f="행동 유도" aria-selected="false">행동 유도</button>
+    <button type="button" role="tab" data-f="궁금증" aria-selected="true"><b>궁금증</b><span>숨은 이유·반전</span></button>
+    <button type="button" role="tab" data-f="문제 강조" aria-selected="false"><b>문제 강조</b><span>실수·경고</span></button>
+    <button type="button" role="tab" data-f="행동 유도" aria-selected="false"><b>행동 유도</b><span>이것부터 하세요</span></button>
   </div>
   <div class="bar">
     <p class="type-note" id="typeNote"></p>
@@ -463,6 +465,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
   /* ---------- 학부모·학생용 주제표: 검색 의도별 상황(sit)·함정(trap)·먼저 할 것(first) ---------- */
   // sit: '○○인데 △△하는' 대비 상황 (자료집 학부모 예시 문장에서 가져옴)
   var PT = [
+    [/자주 틀리|틀리는 문제|헷갈리는 문제|실수/, {subjAn:true, an:"문제", good:"실수가 적은 아이들의 공통점", how:"이렇게 풀면", sit:["아는 문제인데 또 틀리는","해설을 봐도 또 틀리는","비슷한 문제만 나오면 틀리는"], trap:["답만 확인하고 넘어가면","해설만 읽고 끝내면","틀린 문제를 그냥 넘기면"], first:["틀린 이유 쓰기","다시 풀기"]}],
     [/오답/, {good:"오답노트를 잘 쓰는 아이들의 공통점", an:"오답노트", how:"이렇게 쓰면", sit:["오답노트를 써도 또 틀리는","다시 풀면 맞는데 시험에서 틀리는","같은 문제를 계속 틀리는"], trap:["답만 옮겨 적으면","틀린 문제를 그냥 넘기면","예쁘게 정리만 하면"], first:["틀린 이유 쓰기","다시 풀기"]}],
     [/서술형|문장제/, {an:"수학 서술형", how:"이렇게 공부하면", sit:["답은 맞는데 풀이를 못 쓰는","식은 아는데 서술형에서 막히는","문제를 읽고도 뭘 묻는지 모르는"], trap:["답만 맞히고 넘어가면","풀이를 안 쓰고 넘어가면","유형만 외우면"], first:["문제 읽기","풀이 말로 설명하기"]}],
     [/선행/, {an:"선행", subjAn:true, how:"이렇게 시키면", sit:["진도는 빠른데 풀이가 흔들리는","선행을 해도 시험에서 틀리는","앞서 배웠는데 현행이 무너지는"], trap:["진도만 빨리 빼면","현행을 건너뛰면","남들 따라 시작하면"], first:["현행 점검","개념 설명"]}],
@@ -470,7 +473,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     [/파닉스/, {an:"파닉스", how:"이렇게 배우면", sit:["파닉스를 끝내도 못 읽는","소리는 아는데 단어를 못 읽는"], trap:["규칙만 외우게 하면","읽기 연습 없이 넘어가면"], first:["소리 내어 읽기","쉬운 책 읽기"]}],
     [/단어|어휘|암기/, {an:"영어 단어", how:"이렇게 외우면", sit:["외운 단어를 금방 잊는","단어는 아는데 문장이 안 읽히는","매일 외워도 시험에서 틀리는"], trap:["뜻만 외우게 하면","하루에 몰아서 외우면","복습 없이 진도만 나가면"], first:["복습 주기","문장으로 외우기"]}],
     [/문법/, {an:"영어 문법", how:"이렇게 공부하면", sit:["문법은 아는데 문장을 못 쓰는","규칙은 외웠는데 문제에서 틀리는"], trap:["규칙만 외우면","문제집만 반복하면"], first:["문장 만들기","예문 외우기"]}],
-    [/리딩|원서/, {an:"영어 원서", how:"이렇게 읽히면", sit:["끝까지 읽었는데 내용을 모르는","매일 읽어도 독해가 그대로인"], trap:["권수만 늘리면","확인 질문 없이 넘어가면"], first:["내용 말로 설명하기","쉬운 책 반복"]}],
+    [/리딩|원서|\bAR\b|렉사일/, {an:"영어 원서", good:"원서를 즐겨 읽는 아이들의 공통점", how:"이렇게 읽히면", sit:["끝까지 읽었는데 내용을 모르는","레벨은 맞는데 끝까지 못 읽는","매일 읽어도 독해가 그대로인"], trap:["레벨만 보고 고르면","권수만 늘리면","확인 질문 없이 넘어가면"], first:["내용 말로 설명하기","쉬운 책 반복"]}],
     [/회화|말하기|스피킹/, {an:"영어 말하기", how:"이렇게 배우면", sit:["오래 배워도 말이 안 나오는","알아듣는데 대답을 못 하는"], trap:["듣기만 시키면","틀릴 때마다 고쳐주면"], first:["따라 말하기","짧은 대답"]}],
     [/독해|문해력/, {an:"독해력", how:"이렇게 키우면", sit:["글을 읽고도 내용을 모르는","책은 읽는데 문제를 못 푸는","읽어도 핵심을 못 찾는"], trap:["문제집만 풀리면","읽기만 시키고 끝내면"], first:["읽고 말로 설명하기","핵심 문장 찾기"]}],
     [/독서|책/, {good:"책을 좋아하는 아이들의 공통점", an:"독서 습관", how:"이렇게 읽히면", sit:["책은 읽는데 설명을 못 하는","많이 읽어도 글을 못 쓰는"], trap:["권수만 늘리면","읽기만 하고 끝내면"], first:["읽은 내용 말하기","질문 하나"]}],
@@ -481,7 +484,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     [/피아노|악기|바이올린/, {good:"피아노 실력이 느는 아이들의 공통점", an:"피아노 연습", how:"이렇게 시키면", sit:["매일 쳐도 같은 곳에서 막히는","반복해도 어려운 구간이 그대로인"], trap:["처음부터 반복만 하면","시간만 채우게 하면"], first:["구간 나눠 연습","느리게 치기"]}],
     [/미술|그림|창의/, {an:"미술", how:"이렇게 가르치면", sit:["뭘 그릴지 몰라 망설이는","잘 그려도 설명을 못 하는"], trap:["잘 그렸다고만 하면","따라 그리기만 하면"], first:["질문으로 시작하기","이야기 만들기"]}],
     [/코딩|프로그래밍/, {an:"코딩", how:"이렇게 배우면", sit:["작품은 만들었는데 설명을 못 하는","따라 하면 되는데 혼자 못 만드는"], trap:["따라 만들기만 하면","게임으로만 접하면"], first:["설명하기","작게 바꿔 보기"]}],
-    [/방학/, {good:"방학을 잘 보내는 아이들의 공통점", an:"방학 계획", how:"이렇게 보내면", sit:["계획은 세웠는데 지키지 못하는","방학 내내 바빴는데 남는 게 없는"], trap:["진도만 욕심내면","계획만 빽빽하게 짜면"], first:["복습 계획","하루 루틴"]}],
+    [/방학/, {vac:true, good:"방학을 잘 보내는 아이들의 공통점", an:"방학 계획", how:"이렇게 보내면", sit:["계획은 세웠는데 지키지 못하는","방학 내내 바빴는데 남는 게 없는"], trap:["진도만 욕심내면","계획만 빽빽하게 짜면"], first:["복습 계획","하루 루틴"]}],
     [/중간고사|기말고사|내신|시험|기출/, {exam:true, subj:true, good:"시험 잘 보는 아이들의 공통점", how:"이렇게 준비하면", sit:["공부는 했는데 시험에서 틀리는","문제집은 다 풀었는데 점수가 그대로인","아는 문제인데 실수로 틀리는","교과서는 봤는데 서술형에서 막히는"], trap:["문제집만 여러 권 풀면","벼락치기로 외우면","틀린 문제를 그냥 넘기면","기출 없이 공부하면"], first:["기출 분석","오답 정리","시험 범위 정리"]}],
     [/학원\s?(선택|고르|찾|추천|비교)|선택|고르/, {good:"학원 잘 고르는 부모들의 공통점", an:"학원 선택", how:"이렇게 고르면", sit:["학원을 옮겨도 성적이 그대로인","유명 학원에 보내도 제자리인"], trap:["결과물만 보고 고르면","소문만 듣고 보내면"], first:["수업 과정 확인","상담 질문"]}],
     [/습관|집중|공부\s?시간|숙제|스스로/, {good:"공부 습관이 잡힌 아이들의 공통점", an:"공부 습관", how:"이렇게 잡으면", sit:["오래 앉아 있어도 성적이 그대로인","공부 시간을 늘려도 제자리인","숙제를 늘렸는데 집중이 줄어든"], trap:["시간만 늘리면","숙제만 늘리면","잔소리로 시키면"], first:["공부 순서","짧게 끝내기"]}],
@@ -495,9 +498,11 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     for (var i = 0; i < PT.length; i++) if (PT[i][0].test(raw)){
       var f = PT[i][1], an = f.an;
       if (f.subjAn && subject) an = subject + " " + f.an;
+      var short = "";
+      if (f.vac){ short = raw.match(/(겨울|여름)?방학/)[0]; an = short + (subject ? " " + subject : " 계획"); }
       if (f.exam) an = (subject ? subject + " " : "") + raw.match(/중간고사|기말고사|내신|시험|기출/)[0].replace("기출", "시험");
       if (!an) an = subject || "공부";
-      return {exam: !!f.exam, good: f.good, an: an, subj: !!f.subj, how: f.how, sit: f.sit, trap: f.trap, first: f.first};
+      return {short: short, exam: !!f.exam, good: f.good, an: an, subj: !!f.subj, how: f.how, sit: f.sit, trap: f.trap, first: f.first};
     }
   }
   // '다시 풀면 맞는데 시험에서 틀리는' → '시험에서 틀리는'
@@ -507,7 +512,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     var P = ptFor(c.raw, c.subject), list = [], rnd = seeded(c.raw);
     var sfx = P.subj && !P.exam ? " 공부" : "";
     var A = c.target ? c.target + " " + P.an : P.an + sfx;
-    var As = [A, P.an + sfx].filter(function(v, i, a){ return a.indexOf(v) === i; });
+    var As = [A, P.an + sfx].concat(P.short ? [P.short] : []).filter(function(v, i, a){ return a.indexOf(v) === i; });
     var anchorWords = (As.join(" ") + " 공부").split(" ");
     function add(type, fam, alts, level, quote){
       alts = alts.map(function(t){ return t.replace(/\s+/g, " ").trim(); });
@@ -690,7 +695,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     var pool = all.filter(function(x){ return x.type === state.type; });
     pool.sort(function(a, b){ return b.level - a.level; });
     if (!pool.length) return {items: [], pages: 0};
-    var groups = groupDiverse(pool).filter(function(g, i, a){ return g.length === 3 || i === 0 || a.length === 1; });
+    var groups = groupDiverse(pool);
     var items = groups[page % groups.length].slice();
     for (var i = 0; items.length < 3 && i < pool.length; i++) if (items.indexOf(pool[i]) < 0) items.push(pool[i]);
     return {items: items, pages: groups.length};
