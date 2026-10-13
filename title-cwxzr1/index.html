@@ -112,10 +112,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
   </div>
   <div class="bar">
     <p class="type-note" id="typeNote"></p>
-    <div class="seg" role="group" aria-label="표현 수위">
-      <button type="button" data-level="2" aria-pressed="false">강조</button>
-      <button type="button" data-level="3" aria-pressed="true">강함</button>
-    </div>
+
   </div>
   <div class="cards" id="cards"></div>
   <button type="button" class="more" id="more">다른 문구 보기</button>
@@ -485,6 +482,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     [/미술|그림|창의/, {an:"미술", how:"이렇게 가르치면", sit:["뭘 그릴지 몰라 망설이는","잘 그려도 설명을 못 하는"], trap:["잘 그렸다고만 하면","따라 그리기만 하면"], first:["질문으로 시작하기","이야기 만들기"]}],
     [/코딩|프로그래밍/, {an:"코딩", how:"이렇게 배우면", sit:["작품은 만들었는데 설명을 못 하는","따라 하면 되는데 혼자 못 만드는"], trap:["따라 만들기만 하면","게임으로만 접하면"], first:["설명하기","작게 바꿔 보기"]}],
     [/방학/, {good:"방학을 잘 보내는 아이들의 공통점", an:"방학 계획", how:"이렇게 보내면", sit:["계획은 세웠는데 지키지 못하는","방학 내내 바빴는데 남는 게 없는"], trap:["진도만 욕심내면","계획만 빽빽하게 짜면"], first:["복습 계획","하루 루틴"]}],
+    [/중간고사|기말고사|내신|시험|기출/, {exam:true, subj:true, good:"시험 잘 보는 아이들의 공통점", how:"이렇게 준비하면", sit:["공부는 했는데 시험에서 틀리는","문제집은 다 풀었는데 점수가 그대로인","아는 문제인데 실수로 틀리는","교과서는 봤는데 서술형에서 막히는"], trap:["문제집만 여러 권 풀면","벼락치기로 외우면","틀린 문제를 그냥 넘기면","기출 없이 공부하면"], first:["기출 분석","오답 정리","시험 범위 정리"]}],
     [/학원\s?(선택|고르|찾|추천|비교)|선택|고르/, {good:"학원 잘 고르는 부모들의 공통점", an:"학원 선택", how:"이렇게 고르면", sit:["학원을 옮겨도 성적이 그대로인","유명 학원에 보내도 제자리인"], trap:["결과물만 보고 고르면","소문만 듣고 보내면"], first:["수업 과정 확인","상담 질문"]}],
     [/습관|집중|공부\s?시간|숙제|스스로/, {good:"공부 습관이 잡힌 아이들의 공통점", an:"공부 습관", how:"이렇게 잡으면", sit:["오래 앉아 있어도 성적이 그대로인","공부 시간을 늘려도 제자리인","숙제를 늘렸는데 집중이 줄어든"], trap:["시간만 늘리면","숙제만 늘리면","잔소리로 시키면"], first:["공부 순서","짧게 끝내기"]}],
     [/수학/, {an:"수학", subj:true, how:"이렇게 공부하면", sit:["다시 풀면 맞는데 시험에서 틀리는","문제집을 풀어도 점수가 그대로인","진도는 빠른데 풀이가 막히는","답은 맞는데 설명을 못 하는"], trap:["문제집 권수만 늘리면","계산만 반복하면","틀린 문제를 그냥 넘기면","진도만 빨리 빼면"], first:["오답 복습","개념 설명","문장제 읽기"]}],
@@ -497,8 +495,9 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     for (var i = 0; i < PT.length; i++) if (PT[i][0].test(raw)){
       var f = PT[i][1], an = f.an;
       if (f.subjAn && subject) an = subject + " " + f.an;
+      if (f.exam) an = (subject ? subject + " " : "") + raw.match(/중간고사|기말고사|내신|시험|기출/)[0].replace("기출", "시험");
       if (!an) an = subject || "공부";
-      return {good: f.good, an: an, subj: !!f.subj, how: f.how, sit: f.sit, trap: f.trap, first: f.first};
+      return {exam: !!f.exam, good: f.good, an: an, subj: !!f.subj, how: f.how, sit: f.sit, trap: f.trap, first: f.first};
     }
   }
   // '다시 풀면 맞는데 시험에서 틀리는' → '시험에서 틀리는'
@@ -506,8 +505,9 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
 
   function buildParent(c){
     var P = ptFor(c.raw, c.subject), list = [], rnd = seeded(c.raw);
-    var A = c.target ? c.target + " " + P.an : (P.subj ? P.an + " 공부" : P.an);
-    var As = [A, P.subj ? P.an + " 공부" : P.an].filter(function(v, i, a){ return a.indexOf(v) === i; });
+    var sfx = P.subj && !P.exam ? " 공부" : "";
+    var A = c.target ? c.target + " " + P.an : P.an + sfx;
+    var As = [A, P.an + sfx].filter(function(v, i, a){ return a.indexOf(v) === i; });
     var anchorWords = (As.join(" ") + " 공부").split(" ");
     function add(type, fam, alts, level, quote){
       alts = alts.map(function(t){ return t.replace(/\s+/g, " ").trim(); });
@@ -687,9 +687,8 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     return groups;
   }
   function pickThree(all, page){
-    var lv = state.level;
-    var pool = all.filter(function(x){ return x.type === state.type && (lv === 3 ? x.level === 3 : true); });
-    if (lv === 2) pool.sort(function(a, b){ return a.level - b.level; });
+    var pool = all.filter(function(x){ return x.type === state.type; });
+    pool.sort(function(a, b){ return b.level - a.level; });
     if (!pool.length) return {items: [], pages: 0};
     var groups = groupDiverse(pool).filter(function(g, i, a){ return g.length === 3 || i === 0 || a.length === 1; });
     var items = groups[page % groups.length].slice();
@@ -729,7 +728,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
         var full = (x.quote ? "\u201C" + x.quote + "\u201D " : "") + x.text;
         var body = esc(x.text);
         x.hl.forEach(function(h){ body = body.split(esc(h)).join("<em>" + esc(h) + "</em>"); });
-        return '<article class="card"><div class="thumb"><div class="thumb-top"><span><span class="tag">' + LV[x.level] + '</span><span class="len">' + reelsLen(x) + '자</span></span>' +
+        return '<article class="card"><div class="thumb"><div class="thumb-top"><span><span class="len">' + reelsLen(x) + '자</span></span>' +
           '<button type="button" class="copy" data-copy="' + esc(full) + '">복사</button></div>' +
           (x.quote ? '<span class="l1">\u201C' + esc(x.quote) + '\u201D</span>' : '') + '<span class="l2">' + body + '</span></div></article>';
       }).join("");
