@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/images/favicon.png">
+<title>후킹 썸네일 메이커</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
+<style>
+/* 학원메이트 디자인 토큰 (메인 사이트와 동일) · 레이아웃: 상단 바 + 입력 1칸 + 결과 카드 3장 */
+:root{--ink:#1e2a5a;--ink-2:#3b4670;--muted:#6b6b6b;--line:#f0dbe7;--bg:#ffffff;--soft:#fdf0f6;--soft-2:#fce4ef;
+--primary:#e6007e;--primary-dark:#b8005f;--accent:#ffd400;--accent-ink:#1e2a5a;--white:#ffffff;
+--s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--r:12px;--r-lg:16px;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.7;word-break:keep-all;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px}
+.top{border-bottom:1px solid var(--line);background:var(--white);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top .wrap{display:flex;align-items:center;height:60px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:900;font-size:20px;letter-spacing:-0.04em;color:var(--ink);text-decoration:none}
+.brand svg{width:30px;height:27px;display:block}
+main{padding-block:32px 72px}
+h1{font-size:30px;line-height:1.3;letter-spacing:-0.02em;margin:0 0 var(--s1);font-weight:800;text-wrap:balance}
+h1 em{font-style:normal;color:var(--primary)}
+.lead{font-size:16px;color:var(--ink-2);margin:0 0 var(--s4)}
+
+.ask{background:var(--soft);border-radius:var(--r-lg);padding:var(--s4)}
+.ask-row{display:flex;gap:var(--s1)}
+#q{flex:1;min-width:0;font:inherit;font-size:18px;font-weight:700;padding:13px 16px;border:2px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink)}
+#q:focus{outline:none;border-color:var(--primary)}
+#q::placeholder{color:var(--muted);font-weight:400}
+.btn{font:inherit;font-weight:700;font-size:16px;padding:0 22px;border-radius:10px;border:0;background:var(--primary);color:var(--white);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--primary-dark)}
+.btn:focus-visible,.ex:focus-visible,.seg button:focus-visible,.copy:focus-visible,.more:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.examples{display:flex;gap:6px;flex-wrap:wrap;margin-top:var(--s2);align-items:center}
+.examples span{font-size:13px;color:var(--muted);margin-right:2px}
+.ex{font:inherit;font-size:13px;padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:var(--white);color:var(--ink-2);cursor:pointer}
+.ex:hover{border-color:var(--primary);color:var(--primary-dark)}
+.detected{margin-top:var(--s2);font-size:13px;color:var(--ink-2)}
+.detected b{color:var(--primary-dark)}
+
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:var(--s1);margin:var(--s5) 0 0}
+.mode button{font:inherit;font-size:16px;font-weight:700;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--white);color:var(--ink-2);cursor:pointer}
+.mode button small{font-size:12px;font-weight:500;color:var(--muted);margin-left:4px}
+.mode button[aria-pressed="true"]{border-color:var(--primary);background:var(--soft);color:var(--primary-dark)}
+.mode button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:var(--s3) 0 0;border-bottom:2px solid var(--line)}
+.tabs button{font:inherit;font-size:16px;font-weight:700;padding:12px 4px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tabs button[aria-selected="true"]{color:var(--primary);border-bottom-color:var(--primary)}
+.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.type-note{margin:0;font-size:14px;color:var(--ink-2)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);flex-wrap:wrap;margin:var(--s3) 0}
+.bar h2{font-size:22px;margin:0;font-weight:800;letter-spacing:-0.02em}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--white)}
+.seg button{font:inherit;font-size:14px;padding:5px 16px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--white);font-weight:700}
+
+.cards{display:grid;gap:var(--s3)}
+.card{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--white);box-shadow:0 1px 2px rgba(31,42,68,.04)}
+.thumb{background:var(--ink);color:var(--white);padding:16px 20px 26px}
+.thumb-top{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);margin-bottom:var(--s2)}
+.thumb .tag{font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--accent);padding:2px 9px;border-radius:6px}
+.thumb .len{font-size:12px;color:var(--soft-2);margin-left:6px}
+.thumb .l1,.thumb .l2{display:block;font-size:24px;line-height:1.4;font-weight:800;letter-spacing:-0.02em;color:var(--white)}
+.thumb .l2 em{font-style:normal;color:var(--accent)}
+.copy{font:inherit;font-size:14px;font-weight:700;padding:6px 16px;border-radius:8px;border:0;background:var(--primary);color:var(--white);cursor:pointer;white-space:nowrap}
+.copy:hover{background:var(--primary-dark)}
+.copy.done{background:var(--accent);color:var(--accent-ink)}
+.empty{color:var(--muted);font-size:15px;margin:0;padding:var(--s4);border:1px dashed var(--line);border-radius:var(--r-lg);text-align:center}
+.more{display:block;margin:var(--s3) auto 0;font:inherit;font-size:14px;font-weight:700;padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:var(--white);color:var(--ink-2);cursor:pointer}
+.more:hover{border-color:var(--primary);color:var(--primary-dark)}
+
+.note{background:var(--soft-2);border-left:4px solid var(--primary);padding:var(--s3) var(--s4);border-radius:0 var(--r) var(--r) 0;margin:var(--s5) 0 0;font-size:14px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.note ul{margin:6px 0 0;padding-left:18px}
+.warn{margin-top:var(--s3);background:#fff7d1;border-left-color:var(--accent)}
+footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
+@media (max-width:520px){.ask-row{flex-direction:column}.btn{padding:12px}.thumb .l1,.thumb .l2{font-size:20px}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#9db7ff"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>후킹 썸네일 메이커</a>
+</div></header>
+
+<main class="wrap">
+  <h1>무난한 제목을 <em>클릭하고 싶은 제목</em>으로</h1>
+  <p class="lead">학원·공부방·교습소·과외·예체능 콘텐츠 주제를 한 줄만 넣으세요. 원장님 홍보 주제인지 학부모용 공부 주제인지 알아서 구분하고, 블로그 제목과 릴스 썸네일 문구를 유형별로 만들어 드립니다.</p>
+
+  <form class="ask" id="form" autocomplete="off">
+    <div class="ask-row">
+      <input type="text" id="q" value="학원 상담 잘하는 방법" placeholder="예: 공부방 상담 잘하는 법, 초3 오답노트" aria-label="제목 또는 키워드">
+      <button type="submit" class="btn">만들기</button>
+    </div>
+    <div class="examples" id="examples">
+      <span>예시</span>
+      <button type="button" class="ex">학원 상담 잘하는 방법</button>
+      <button type="button" class="ex">공부방 원생 모집</button>
+      <button type="button" class="ex">교습소 블로그 운영</button>
+      <button type="button" class="ex">초3 오답노트 작성법</button>
+      <button type="button" class="ex">독해력 키우기</button>
+      <button type="button" class="ex">태권도 재등록</button>
+    </div>
+    <div class="detected" id="detected"></div>
+  </form>
+
+  <div class="mode" id="mode" role="group" aria-label="쓰는 곳">
+    <button type="button" data-mode="blog" aria-pressed="true">블로그 제목</button>
+    <button type="button" data-mode="reels" aria-pressed="false">릴스 썸네일 <small>15~20자</small></button>
+  </div>
+  <div class="tabs" id="tabs" role="tablist" aria-label="문구 유형">
+    <button type="button" role="tab" data-f="궁금증" aria-selected="true">궁금증</button>
+    <button type="button" role="tab" data-f="문제 강조" aria-selected="false">문제 강조</button>
+    <button type="button" role="tab" data-f="행동 유도" aria-selected="false">행동 유도</button>
+    <button type="button" role="tab" data-f="검색형" aria-selected="false">검색형</button>
+  </div>
+  <div class="bar">
+    <p class="type-note" id="typeNote"></p>
+    <div class="seg" role="group" aria-label="표현 수위">
+      <button type="button" data-level="2" aria-pressed="false">강조</button>
+      <button type="button" data-level="3" aria-pressed="true">강함</button>
+    </div>
+  </div>
+  <div class="cards" id="cards"></div>
+  <button type="button" class="more" id="more">다른 문구 보기</button>
+
+  <div class="note" id="warnBox" hidden></div>
+  <div class="note">
+    <b>올리기 전 확인</b>
+    <ul>
+      <li>제목에서 약속한 답(이유·방법·개수)을 본문에서 그대로 설명하세요.</li>
+      <li>아이의 상황 문구가 실제 수업에서 보는 모습과 다르면 고쳐 쓰세요.</li>
+      <li>강한 표현은 아이가 아니라 행동·환경·학습 방법을 가리키게 쓰세요.</li>
+    </ul>
+  </div>
+  <footer>표현 예시는 작성 참고 자료이며 조회수·등록 성과를 보장하지 않습니다. 제목에서 약속한 내용은 본문에서 꼭 설명해 주세요.</footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- 한글 조사 ---------- */
+  function hasJong(s){
+    s = (s||"").trim();
+    var ch = s.charAt(s.length - 1), c = s.charCodeAt(s.length - 1);
+    if (/[0-9]/.test(ch)) return "013678".indexOf(ch) >= 0;
+    if (c >= 0xAC00 && c <= 0xD7A3) return (c - 0xAC00) % 28 !== 0;
+    return false;
+  }
+  function josa(w, a, b){
+    if (a === "으로"){
+      var c = (w||"").charCodeAt(w.length - 1);
+      if (c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 === 8) return w + "로";
+    }
+    return w + (hasJong(w) ? a : b);
+  }
+  function join(){ return Array.prototype.slice.call(arguments).filter(Boolean).join(" ").replace(/\s+/g," ").trim(); }
+  function lead(h){ return h ? h + ", " : ""; }
+
+  /* ---------- 입력 문장 해석 ---------- */
+  var GRADE = /(예비\s?(초|중|고)\d?|초등\s?[1-6]학년|초[1-6]|중[1-3]|고[1-3]|[4-7]세|초등학생|초등|중학생|고등학생)/;
+  var NOT_REGION = ["운동","활동","행동","자동","감동","이동","충동","작동","파동","연동","율동"];
+  var SUBJECTS = [
+    ["영어", ["영어","파닉스","영단어","리딩","문법","회화","스피킹","영작"]],
+    ["수학", ["수학","연산","오답","선행","도형","서술형","사고력"]],
+    ["국어", ["국어","독해","문해력","독서","어휘"]],
+    ["논술", ["논술","글쓰기","작문"]],
+    ["태권도", ["태권도","품새","겨루기"]],
+    ["줄넘기", ["줄넘기"]], ["피아노", ["피아노"]],
+    ["미술", ["미술","그림","창의력"]], ["코딩", ["코딩","프로그래밍"]],
+    ["과학", ["과학","실험"]], ["수영", ["수영"]], ["발레", ["발레"]]
+  ];
+  /* 키워드별 '아이에게 생기는 상황' (자료집 과목별 예시 기반) */
+  var SITUATIONS = [
+    [/파닉스/, "파닉스는 끝났는데 읽기가 막히는"],
+    [/단어|어휘|암기/, "외운 단어가 자꾸 사라지는"],
+    [/리딩|영어\s?읽기|원서/, "단어는 아는데 문장 읽기가 막히는"],
+    [/문법/, "문법 문제는 맞히는데 글로 못 쓰는"],
+    [/회화|스피킹|말하기/, "알아들어도 입이 안 떨어지는"],
+    [/오답/, "오답노트를 써도 또 틀리는"],
+    [/선행/, "진도는 빠른데 풀이가 흔들리는"],
+    [/연산|계산/, "아는 문제에서 계산 실수가 반복되는"],
+    [/서술형/, "답은 아는데 풀이를 못 쓰는"],
+    [/독해|문해력|독서|책/, "책은 읽는데 설명을 못 하는"],
+    [/글쓰기|논술|작문|일기/, "첫 문장 앞에서 멈추는"],
+    [/태권도|자신감|품새|겨루기/, "도전 앞에서 주저하는"],
+    [/줄넘기/, "연습해도 자꾸 줄에 걸리는"],
+    [/피아노|악기|바이올린/, "매일 치는데 같은 곳에서 막히는"],
+    [/미술|그림|창의/, "‘뭘 그려요?’만 묻는"],
+    [/코딩|프로그래밍/, "게임은 잘하는데 코딩은 어려워하는"],
+    [/숙제|복습|예습/, "숙제는 하는데 실력이 그대로인"],
+    [/집중/, "오래 앉아 있어도 집중이 안 되는"],
+    [/수학/, "개념은 아는데 응용에서 막히는"],
+    [/영어/, "열심히 하는데 영어 실력이 제자리인"]
+  ];
+  var SUFFIX = [
+    [/\s*(하는|잘하는)\s*(방법|법)$/, ""],
+    [/\s*(방법|안내|소개|정보|노하우|팁|요령|가이드|정리|주의점|주의사항|이유|차이)$/, ""],
+    [/작성법$/, ""], [/암기법$/, " 암기"], [/공부법$/, " 공부"], [/연습법$/, " 연습"],
+    [/지도법$/, " 지도"], [/선택법$/, " 선택"], [/학습법$/, " 학습"], [/풀이법$/, " 풀이"],
+    [/\s*(키우기|기르기|늘리기|높이기|하기)$/, ""]
+  ];
+
+  /* 단어 대체표 (자료집 A~E): [무난, 기본, 강조, 강함] */
+  var BANK = [
+    ["잘못된 선택","놓치기 쉬운 선택","후회하기 쉬운 선택","치명적인 실수"],
+    ["학습에 안 좋은","학습 흐름을 끊는","학습 흐름을 끊는","학습에 해로운"],
+    ["중요한 차이","결정적인 차이","결정적인 차이","격차를 만드는 차이"],
+    ["중요한 시기","방향을 잡을 시기","방향을 잡을 시기","격차가 벌어지는 시기"],
+    ["경쟁이 심한","치열한","치열한","숨 막히는"],
+    ["도움이 되는","전환점이 되는","전환점이 되는","돌파구가 되는"],
+    ["손해 보는","시간을 날리는","시간을 날리는","돈이 새는"],
+    ["여러 곳에서","곳곳에서","잇따라","줄줄이"],
+    ["확인해 보세요","꼭 점검하세요","놓치고 있는지 확인하세요","놓치고 있는지 확인하세요"],
+    ["준비하면 좋아요","시작 전 확인하세요","늦기 전에 준비하세요","늦기 전에 준비하세요"],
+    ["바꿔보세요","지금 바꿔보세요","지금 바꿔보세요","이대로 두지 마세요"],
+    ["하지 마세요","먼저 점검하세요","이제 멈추세요","이제 멈추세요"],
+    ["다른 이유","숨은 이유","숨은 이유","진짜 이유"],
+    ["빠르게 달라지는","눈에 띄게 달라지는","몰라보게 달라지는","몰라보게 달라지는"],
+    ["잘못된","놓치기 쉬운","놓치기 쉬운","치명적인"],
+    ["안 좋은","놓치기 쉬운","흐름을 끊는","해로운"],
+    ["나쁜","놓치기 쉬운","흐름을 끊는","해로운"],
+    ["어려운","버거운","버거운","혹독한"],
+    ["특이한","묘한","묘한","기이한"],
+    ["새로운","낯선","뜻밖의","심상치 않은"],
+    ["의외의","뜻밖의","뜻밖의","예상 밖의"],
+    ["잘 모르는","놓치기 쉬운","의외로 모르는","의외로 모르는"],
+    ["모르는","놓치기 쉬운","의외로 모르는","의외로 모르는"],
+    ["나빠지는","흔들리는","흔들리는","무너지는"],
+    ["좋아지는","눈에 띄게 달라지는","몰라보게 달라지는","몰라보게 달라지는"],
+    ["잘하는","탄탄한","흔들림 없는","돋보이는"],
+    ["효과적인","핵심을 짚는","흐름을 바꾸는","흐름을 바꾸는"],
+    ["빠르게","눈에 띄게","급속도로","무섭게"],
+    ["많이","눈에 띄게","압도적으로","폭발적으로"],
+    ["늘어나는","눈에 띄게 늘어나는","몰리는","치솟는"],
+    ["줄어드는","눈에 띄게 줄어드는","급감하는","뚝 끊기는"],
+    ["퍼지는","번지는","번지는","휩쓰는"],
+    ["중요한","결정적인","결정적인","결정적인"]
+  ];
+  var NEED_PROOF = ["급속도로","무섭게","압도적으로","폭발적으로","몰리는","치솟는","급감하는","뚝 끊기는","휩쓰는","줄줄이","잇따라"];
+  var RISKY = [
+    [/무조건/, "무조건", "‘먼저 점검할 것’처럼 점검 항목으로 바꿔 쓰세요."],
+    [/100\s?%/, "100%", "결과 보장으로 읽힙니다. 구체적인 점검 항목으로 바꾸세요."],
+    [/반드시/, "반드시", "‘꼭 확인할’ 정도로 낮추세요."],
+    [/성적이?\s*오릅니다|보장/, "성과 보장", "‘성적 향상을 위해 먼저 점검할 것’처럼 바꾸세요."],
+    [/망합니다|망해요|망한다/, "망합니다", "‘계속 놓치면 부담이 커지는 부분’으로 바꾸세요."],
+    [/답이\s*없/, "답이 없다", "‘이런 어려움을 겪는 아이에게 필요한 도움’으로 바꾸세요."],
+    [/최고|최초|유일|No\.?\s?1|1위|1등/i, "최고·최초·1위", "학원 광고 규정상 피해야 하는 최상급 표현입니다."]
+  ];
+
+  /* ---------- 원장님용 마케팅 주제 ---------- */
+  var OWNER = /공부방|교습소|과외|원장|상담|블로그|인스타|릴스|유튜브|쇼츠|플레이스|문의|원생|모집|홍보|마케팅|광고|전단|리뷰|후기|체험|설명회|재등록|퇴원|이탈|신규|등록률|상위\s?노출|노출|키워드|당근|맘카페|카페 글|SNS|콘텐츠|상담 전환|상담률/;
+  var CHANNELS = [
+    [/블로그/, "블로그"], [/릴스/, "릴스"], [/인스타/, "인스타그램"], [/유튜브|쇼츠/, "유튜브"],
+    [/플레이스/, "네이버 플레이스"], [/당근/, "당근"], [/맘카페|카페/, "맘카페"], [/전단/, "전단지"], [/광고/, "광고"]
+  ];
+  var CH_VERB = {"블로그":"꾸준히 써도", "인스타그램":"꾸준히 올려도", "릴스":"꾸준히 올려도", "유튜브":"꾸준히 올려도",
+    "네이버 플레이스":"열심히 관리해도", "당근":"꾸준히 올려도", "맘카페":"꾸준히 올려도", "전단지":"계속 돌려도", "광고":"계속 돌려도"};
+  var GOALS = [
+    [/재등록|퇴원|이탈/, {ch:"학부모 소통", lead:"수업은 열심히 하는데", kw:"학원 재등록", noun:"재등록", come:"재등록이 잘 되는", none:"퇴원이 이어지는", ifnone:"퇴원이 이어진다면", get:"재등록을 지키는"}],
+    [/상위\s?노출|노출|키워드|검색/, {kw:"학원 검색 노출", noun:"상위 노출", come:"상위에 뜨는", none:"검색에 안 걸리는", ifnone:"검색에 안 걸린다면", get:"상위 노출을 만드는"}],
+    [/상담/, {lead:"문의는 오는데", kw:"학원 상담 등록", noun:"상담 등록", come:"상담이 등록으로 이어지는", none:"상담이 등록으로 안 이어지는", ifnone:"상담이 등록으로 안 이어진다면", get:"등록 상담을 만드는"}],
+    [/후기|리뷰/, {ch:"학부모 소통", lead:"만족한다는데", kw:"학원 후기", noun:"후기", come:"후기가 쌓이는", none:"후기가 쌓이지 않는", ifnone:"후기가 쌓이지 않는다면", get:"후기를 모으는"}],
+    [/체험/, {kw:"학원 체험 신청", noun:"체험 신청", come:"체험 신청이 오는", none:"체험 신청이 없는", ifnone:"체험 신청이 없다면", get:"체험 신청을 받는"}],
+    [/설명회/, {kw:"학원 설명회 신청", noun:"설명회 신청", come:"설명회 신청이 차는", none:"설명회 신청이 적은", ifnone:"설명회 신청이 적다면", get:"설명회 신청을 받는"}],
+    [/원생|모집|신규|등록/, {kw:"학원 신규 원생", noun:"신규 등록", come:"신규 등록이 느는", none:"신규 등록이 늘지 않는", ifnone:"신규 등록이 늘지 않는다면", get:"신규 원생을 모으는"}],
+    [/./, {kw:"학원 문의", noun:"문의", come:"문의가 오는", none:"문의가 없는", ifnone:"문의가 없다면", get:"문의를 받는"}]
+  ];
+
+  function parse(raw){
+    var s = (raw||"").trim().replace(/[?!.]+$/,"");
+    var r = {raw: s, target: "", region: "", subject: "", topic: "", problem: "", choose: false, count: ((s.match(/(\d+)\s?가지/) || [])[1] || "")};
+    var g = s.match(GRADE);
+    if (g){ r.target = g[0].replace(/\s/g,""); s = s.replace(g[0], " "); }
+    var words = s.trim().split(/\s+/);
+    for (var i = 0; i < words.length; i++){
+      var w = words[i];
+      if (/^[가-힣]{1,4}(동|구|읍|면)$/.test(w) && NOT_REGION.indexOf(w) < 0 && w.length >= 2){
+        r.region = w; words.splice(i, 1); break;
+      }
+    }
+    s = words.join(" ");
+    var joined = raw;
+    for (var a = 0; a < SUBJECTS.length && !r.subject; a++)
+      for (var b = 0; b < SUBJECTS[a][1].length; b++)
+        if (joined.indexOf(SUBJECTS[a][1][b]) >= 0){ r.subject = SUBJECTS[a][0]; break; }
+    r.choose = /선택|고르|비교|학원 찾|학원 추천/.test(raw);
+    r.owner = !r.choose && OWNER.test(raw);
+    if (r.owner){
+      for (var x = 0; x < CHANNELS.length; x++) if (CHANNELS[x][0].test(raw)){ r.channel = CHANNELS[x][1]; break; }
+      for (var y = 0; y < GOALS.length; y++) if (GOALS[y][0].test(raw)){ r.goal = GOALS[y][1]; break; }
+      r.topic = (r.channel || r.goal.ch || "학원 홍보") + " " + r.goal.noun;
+      return r;
+    }
+
+    // 핵심 주제: 대체표 단어·꾸밈말·끝말 제거
+    var t = s;
+    BANK.forEach(function(row){ t = t.split(row[0]).join(" "); });
+    for (var k = 0; k < 3; k++){
+      for (var j = 0; j < SUFFIX.length; j++) t = t.replace(SUFFIX[j][0], SUFFIX[j][1]);
+      t = t.replace(/\s+/g," ").trim();
+    }
+    t = t.split(" ").filter(function(x){ return !/^[가-힣]+(에|의|을|를|은|는)$/.test(x) || x.length > 4; }).join(" ").trim();
+    if (/^(습관|공부|학습)$/.test(t)) t = "공부 " + (t === "공부" ? "습관" : t);
+    if (!t && r.subject) t = r.subject + " 공부";
+    if (t === r.subject) t = r.subject + " 공부";
+    if (r.choose && !/학원/.test(t)) t = (r.subject || "") + "학원 선택";
+    r.topic = t;
+
+    for (var m = 0; m < SITUATIONS.length; m++){
+      if (SITUATIONS[m][0].test(raw)){ r.problem = SITUATIONS[m][1]; break; }
+    }
+    if (/자신감/.test(raw) && r.subject !== "태권도") r.problem = r.subject ? r.subject + " 시간마다 자신 없어 하는" : "새로운 도전 앞에서 자꾸 주저하는";
+    if (!r.problem && t && !r.choose) r.problem = "열심히 하는데 실력이 제자리인";
+    return r;
+  }
+
+  function stripSubject(topic, subject){
+    if (!subject || topic.indexOf(subject) !== 0) return topic;
+    var rest = topic.slice(subject.length).trim();
+    return (!rest || rest.indexOf("학원") === 0) ? topic : rest;
+  }
+
+  function swapWords(text, level){
+    var out = text, tokens = [];
+    BANK.forEach(function(row){
+      var idx = out.indexOf(row[0]);
+      if (idx >= 0){
+        out = out.slice(0, idx) + "\u0000" + tokens.length + "\u0000" + out.slice(idx + row[0].length);
+        tokens.push({from: row[0], to: row[level]});
+      }
+    });
+    return {raw: out, tokens: tokens};
+  }
+
+  /* ---------- 등록 표현 (academy_title_dataset.json + 책과삶 추가 자료에서 그대로 가져옴) ---------- */
+  var LEX = {"REASON_NOUN": [["진짜 이유", 3], ["숨은 이유", 2], ["결정적인 이유", 2], ["충격적인 이유", 3], ["뜻밖의 이유", 3], ["진짜 원인", 2]], "VM_BOTH": [["망가지는", 3], ["무너지는", 3], ["가장 먼저 무너지는", 3], ["늘 마지막에 막히는", 2], ["제자리걸음 하는", 2], ["매번 원점으로 돌아가는", 2], ["늪에 빠지는", 2], ["흔들리는", 3]], "VM_OWNER": [["선택받지 못하는", 2], ["밀려나는", 2]], "VM_문의": [["문의가 뚝 끊기는", 2]], "VM_광고": [["돈이 새는", 2], ["헛돈 쓰는", 2]], "VM_재등록": [["재등록이 흔들리는", 2]], "RF_BOTH": [["아무리 해도 안 되는 이유", 3], ["따라 해도 실패하는 이유", 3], ["반복해도 달라지지 않는 이유", 3], ["잘되다가 막히는 이유", 3], ["망가지는 이유", 3]], "RF_OWNER": [["선택받지 못하는 이유", 3], ["좋았던 반응이 식는 이유", 3]], "RF_문의": [["문의가 끊기는 이유", 3]], "RF_광고": [["늘렸는데 줄어든 이유", 3]], "RF_재등록": [["싸게 해줬는데 떠나는 이유", 3]], "MS_BOTH": [["가장 많이 하는 실수", 3], ["최악의 선택", 3], ["최악의 습관", 5], ["가장 위험한 습관", 4], ["치명적 허점", 3], ["절대 하면 안되는 행동", 3], ["위험한 착각", 4], ["잘하고 있다는 착각", 3], ["믿었던 방법의 함정", 2]], "MS_OWNER": [["돈 새는 운영 습관", 4], ["고객을 밀어내는 행동", 4], ["신뢰를 무너뜨리는 선택", 4]], "MS_상담": [["관계를 망치는 한마디", 4], ["실패를 부르는 말버릇", 4]], "MS_재등록": [["관계를 망치는 한마디", 4]], "REV": [["오히려 역효과입니다", 2], ["정반대입니다", 2], ["착각입니다", 2], ["순서를 거꾸로 잡았습니다", 2]], "REV_Q": [["좋은 줄 알았는데", 3], ["정답인 줄 알았는데", 2], ["좋다고 해서 했는데", 2]], "CQ_OWNER": [["학부모가 떠납니다", 2], ["결국 떠납니다", 5], ["다시 돌아오지 않습니다", 5], ["선택지에서 밀려납니다", 5], ["무너집니다", 3], ["망합니다", 3]], "CQ_문의": [["문의가 끊깁니다", 2]], "CQ_상담": [["등록으로 이어지지 않습니다", 2], ["마음이 닫힙니다", 2]], "CQ_광고": [["광고비만 사라집니다", 3], ["헛돈 씁니다", 3]], "CQ_재등록": [["재등록이 흔들립니다", 2]], "CQ_PARENT": [["시간만 날립니다", 2], ["헛수고가 됩니다", 2], ["다시 원점입니다", 2], ["문제가 더 커집니다", 5], ["갈수록 불리해집니다", 5], ["격차가 벌어집니다", 2], ["되돌리기 어렵습니다", 2]], "SG_BOTH": [["강력한 신호", 3], ["놓치기 쉬운 경고 신호", 1]], "SG_OWNER": [["이탈 직전의 행동", 3], ["관심이 식는 신호", 3]], "GP_BOTH": [["딱 하나의 차이", 3], ["작지만 결정적인 차이", 3]], "GP_OWNER": [["선택받는 쪽의 차이", 3]], "AC_BOTH": [["이것만 세팅하세요", 3], ["이거 하나로 달라져요", 3], ["여기부터 손보세요", 3], ["이 습관부터 끊으세요", 1], ["당장 멈추세요", 2], ["이대로 두지 마세요", 2], ["더는 미루지 마세요", 2]], "AC_블로그": [["이 문장부터 지우세요", 3]], "AC_인스타": [["이 문장부터 지우세요", 3]], "AC_광고": [["광고비 늘리기 전에 보세요", 1]], "AN": [["가장 먼저 멈출 행동", 3], ["먼저 손봐야 할 부분", 3], ["제일 먼저 볼 것", 3]], "TM": [["늦기 전에", 2], ["무너지기 전", 3], ["문제가 커지기 전", 2]], "HD": [["아무도 말해주지 않는", 3], ["아는 사람만 아는", 3]], "Q_REASON": [["원인은 따로 있었습니다", 3], ["결국 이것 때문입니다", 2], ["알고 보니 이거였습니다", 2], ["다들 이걸 몰라요", 3], ["이제야 알았습니다", 2]], "Q_WARN": [["여기부터 망가져요", 3], ["당장 멈추세요", 2], ["제발 하지 마세요", 3], ["절대 하면 안 됩니다", 3], ["역대급 심각해요", 3], ["이러다 정말 터집니다", 3], ["진작 알았어야 했습니다", 2]], "Q_SIGNAL": [["그냥 넘기지 마세요", 2], ["하나라도 해당한다면", 1], ["혹시 나도?", 1]], "Q_GAP": [["결국 여기서 갈립니다", 3], ["아는 사람만 아는", 3]], "Q_ACTION": [["이거 하나로 달라져요", 3], ["늦게할수록 몇배 손해", 3], ["이것만 세팅하세요", 3]], "SIT_블로그": [["매일 쓰는데 반응은 없는", 1]], "SIT_인스타": [["매일 쓰는데 반응은 없는", 1]], "SIT_상담": [["문의는 오는데 등록은 없는", 1]], "SIT_광고": [["광고비는 늘었는데 문의는 줄어든", 1]], "SIT_영어": [["단어는 아는데 문장이 안 읽히는", 1]], "SIT_수학": [["진도는 빠른데 풀이가 막히는", 1]], "VM_STATE": [["흔들리는", 3], ["무너지는", 3], ["가장 먼저 무너지는", 3], ["망가지는", 3]]};
+
+
+  /* ---------- 생성 엔진: 입력 키워드 + 등록 표현만 조합 (책과삶·지식인사이드 공식: "인용 훅" + 대상 + 강한 결말) ---------- */
+  function pool(keys){
+    var out = [];
+    keys.forEach(function(k){ (LEX[k] || []).forEach(function(x){ if (!out.some(function(y){ return y[0] === x[0]; })) out.push(x); }); });
+    return out;
+  }
+  function seeded(seed){
+    var h = 2166136261;
+    for (var i = 0; i < seed.length; i++){ h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return function(){ h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 100000) / 100000; };
+  }
+  function shuffle(arr, rnd){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(rnd() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function lvOf(){ var m = 0; for (var i = 0; i < arguments.length; i++) if (arguments[i]) m = Math.max(m, arguments[i][1]); return m >= 3 ? 3 : 2; }
+
+  function context(c){
+    var tags = [];
+    var K;
+    if (c.owner){
+      var ch = c.channel || "", g = c.goal ? c.goal.noun : "문의";
+      var biz = (c.raw.match(/공부방|교습소|과외|태권도장|도장|학원/) || [/태권도/.test(c.raw) ? "태권도장" : "학원"])[0];
+      if (ch === "블로그"){ K = biz + " 블로그"; tags.push("블로그", "문의"); }
+      else if (ch === "인스타그램" || ch === "릴스"){ K = biz + " 인스타"; tags.push("인스타", "문의"); }
+      else if (ch === "광고"){ K = biz + " 광고"; tags.push("광고"); }
+      else if (ch){ K = (ch === "네이버 플레이스" ? ch : biz + " " + ch); tags.push("문의"); }
+      if (g === "상담 등록"){ tags.push("상담"); K = K || (biz === "학원" ? "학부모 상담" : biz + " 상담"); }
+      else if (g === "재등록"){ tags.push("재등록"); K = K || biz + " 재등록"; }
+      else if (g === "신규 등록"){ K = K || (biz === "과외" ? "과외 학생 모집" : biz === "학원" ? "원생 모집" : biz + " 원생 모집"); }
+      else if (g === "후기"){ K = K || biz + " 후기"; }
+      else if (g === "설명회 신청"){ K = K || (/방학/.test(c.raw) ? "겨울방학 모집" : "설명회"); }
+      else if (g === "체험 신청"){ K = K || "체험수업"; }
+      else if (g === "상위 노출"){ K = K || biz + " 검색 노출"; }
+      else { tags.push("문의"); K = K || biz + " 홍보"; }
+      if (/광고/.test(c.raw) && tags.indexOf("광고") < 0) tags.push("광고");
+    } else {
+      K = c.topic || c.subject || "";
+      if (c.subject === "영어") tags.push("영어");
+      if (c.subject === "수학") tags.push("수학");
+    }
+    var visible = !c.owner || /블로그|인스타|플레이스|당근|맘카페|유튜브|홍보|모집/.test(K);
+    function k(prefix){ return [prefix + "_BOTH"].concat(c.owner ? (prefix === "VM" && !visible ? [] : [prefix + "_OWNER"]) : [prefix + "_PARENT"]).concat(tags.map(function(t){ return prefix + "_" + t; })); }
+    var sit = null;
+    tags.forEach(function(t){ if (LEX["SIT_" + t]) sit = LEX["SIT_" + t][0]; });
+    var state = !c.owner && /자신감|력$/.test(K) ? K : "";
+    var Kt = K, Km = K;
+    if (!c.owner){
+      // 문장 주어는 과목 단위로: '오답노트가 막히는'보다 '초3 수학이 막히는'
+      var academic = /^(영어|수학|국어|논술|과학)$/.test(c.subject);
+      Km = !c.subject ? K : c.target && academic ? c.target + " " + c.subject
+        : academic ? c.subject + " 공부" : (K.indexOf(c.subject) >= 0 ? K : c.subject + " 수업");
+      if (state) Kt = Km;
+    }
+    return {K: Km, Kt: Kt, Km: Km, k: k, sit: sit, state: state, biz: c.owner ? biz : ""};
+  }
+
+  var SHORT_PREFIX = /^(학원|공부방|교습소|과외|도장) (블로그|인스타|광고|홍보|후기|검색 노출)/;
+  var SHORT_K = {"학원 블로그":"블로그","학원 인스타":"인스타","학원 광고":"광고","학부모 상담":"상담","학원 홍보":"홍보","학원 검색 노출":"검색 노출","학원 후기":"후기"};
+  function reelsLen(it){ return (it.quote ? it.quote.length + 1 : 0) + it.text.length; }
+  function forReels(list){
+    var out = [];
+    list.forEach(function(it){
+      var texts = [it.text];
+      if (it.type !== "검색형" && SHORT_PREFIX.test(it.text)) texts.push(it.text.replace(SHORT_PREFIX, "$2"));
+      if (it.type !== "검색형") Object.keys(SHORT_K).forEach(function(k){ if (it.text.indexOf(k) >= 0) texts.push(it.text.split(k).join(SHORT_K[k])); });
+      texts.forEach(function(t){
+        [it.quote, ""].forEach(function(q){
+          var v = {type: it.type, level: it.level, hl: it.hl, src: it.src, text: t, quote: q};
+          var n = reelsLen(v);
+          if (n >= 15 && n <= 20) out.push(v);
+        });
+      });
+    });
+    var seen = {};
+    return out.filter(function(v){ var k = v.quote + "|" + v.text; if (seen[k]) return false; seen[k] = 1; return true; });
+  }
+
+  function build(c){
+    var x = context(c), K = x.Km, Kt = x.Kt, list = [];
+    if (!K) return list;
+    var rnd = seeded(c.raw), S = function(keys){ return shuffle(pool(keys), rnd); };
+    var Ksub = josa(K, "이", "가");
+    function add(type, text, parts, quote){
+      list.push({type: type, text: text, quote: quote ? quote[0] : "", level: lvOf.apply(null, parts.concat([quote])), hl: parts.map(function(p){ return p[0]; }), src: 0});
+    }
+    // 궁금증
+    var RN = S(["REASON_NOUN"]).filter(function(r){ return r[0].length <= 7; }), VM = S(x.k("VM")), RF = S(x.k("RF")), QR = S(["Q_REASON"]), REV = S(["REV"]), RQ = S(["REV_Q"]), HD = S(["HD"]);
+    for (var i = 0; i < Math.max(VM.length, RF.length, 8); i++){
+      var vm = VM[i % VM.length], rn = RN[i % RN.length], rf = RF[i % RF.length], q = QR[i % QR.length];
+      if (vm) add("궁금증", (/[가이] /.test(vm[0]) ? K + ", " : Ksub + " ") + vm[0] + " " + rn[0], [vm, rn], i % 3 === 2 ? null : q);
+      if (rf) add("궁금증", (i % 2 ? K : Kt) + ", " + rf[0], [rf], i % 2 ? QR[(i + 3) % QR.length] : null);
+      var rv = REV[i % REV.length];
+      add("궁금증", Kt + ", " + rv[0], [rv], RQ[i % RQ.length]);
+      // 등록된 상황 문구만으로 만드는 문장: '진도는 빠른데 풀이가 막히는 진짜 이유'
+      if (x.sit) add("궁금증", x.sit[0] + " " + rn[0], [x.sit, rn], i % 2 ? QR[(i + 1) % QR.length] : null);
+    }
+    if (x.state){
+      var VS = S(["VM_STATE"]), Kst = josa(x.state, "이", "가");
+      VS.forEach(function(v, j){ var rn2 = RN[(j + 1) % RN.length]; add("궁금증", Kst + " " + v[0] + " " + rn2[0], [v, rn2], j % 2 ? null : QR[j % QR.length]); });
+      add("문제 강조", Kst + " 무너지기 전 먼저 나타나는 변화", [["무너지기 전", 2], ["먼저 나타나는 변화", 3]], ["그냥 넘기지 마세요", 2]);
+      add("문제 강조", Kst + " 무너지기 전, 강력한 신호", [["무너지기 전", 3], ["강력한 신호", 3]], ["여기부터 망가져요", 3]);
+    }
+    add("궁금증", "아무도 말해주지 않는 " + K + "의 " + RN[0][0], [["아무도 말해주지 않는", 3], RN[0]], null);
+    add("궁금증", K + ", 아는 사람만 아는 딱 하나의 차이", [["아는 사람만 아는", 3], ["딱 하나의 차이", 3]], null);
+
+
+    // 문제 강조
+    var MS = S(x.k("MS")), CQ = S(x.k("CQ")), SG = S(x.k("SG")), GP = S(x.k("GP")), QW = S(["Q_WARN"]), QS = S(["Q_SIGNAL"]), QG = S(["Q_GAP"]);
+    for (var m = 0; m < Math.max(MS.length, CQ.length); m++){
+      var ms = MS[m % MS.length], cq = CQ[m % CQ.length];
+      var Kx = m % 2 ? K : Kt;
+      var msText = /(습관|선택|행동|관행|말버릇|한마디|친절)$/.test(ms[0]) ? Kx + ", " + ms[0] : Kx + "에서 " + ms[0];
+      add("문제 강조", msText, [ms], m % 3 === 2 ? null : QW[m % QW.length]);
+      add("문제 강조", (m % 2 ? Kt : K) + ", 이렇게 하면 " + cq[0], [cq], m % 2 ? QW[(m + 2) % QW.length] : null);
+      if (m < SG.length) add("문제 강조", K + "에서 " + SG[m][0], [SG[m]], QS[m % QS.length]);
+      if (m < GP.length){ var qg = QG.filter(function(q){ return q[0] !== GP[m][0]; })[m % 2]; add("문제 강조", K + ", " + GP[m][0], [GP[m]], qg); }
+    }
+
+    // 행동 유도
+    var AC = S(x.k("AC")), AN = S(["AN"]), TM = S(["TM"]), QA = S(["Q_ACTION"]);
+    for (var a = 0; a < Math.max(AC.length, TM.length); a++){
+      var ac = AC[a % AC.length], qa = [["늦게할수록 몇배 손해", 3]].concat(TM)[a % (TM.length + 1)];
+      add("행동 유도", (x.sit && a % 3 === 1 ? x.sit[0] + " " + (c.owner ? K : "아이") : (a % 2 ? K : Kt)) + ", " + ac[0], x.sit && a % 3 === 1 ? [ac, x.sit] : [ac], a % 3 === 2 ? TM[a % TM.length] : qa);
+      add("행동 유도", TM[a % TM.length][0] + ", " + K + "에서 " + AN[a % AN.length][0], [TM[a % TM.length], AN[a % AN.length]], (a % 2 || /늦/.test(TM[a % TM.length][0])) ? null : QW[a % QW.length]);
+    }
+
+    // 검색형: 지역·학년·과목(원장님은 학원마케팅)을 앞에 붙인 같은 공식
+    var pre = c.owner ? join(c.region, (x.biz || "학원") + "마케팅") : ((c.region || c.target) ? join(c.region, c.target, c.subject) : "");
+    var Kq = x.state || Kt;
+    if (pre){
+      for (var s2 = 0; s2 < 6; s2++){
+        var v2 = VM[s2 % VM.length], r2 = RN[(s2 + 2) % RN.length], f2 = RF[s2 % RF.length], m2 = MS[s2 % MS.length];
+        if (v2 && Kq !== pre) add("검색형", pre + ", " + (/[가이] /.test(v2[0]) ? Kq + " " : josa(Kq, "이", "가") + " ") + v2[0] + " " + r2[0], [v2, r2], null);
+        if (f2 && !x.state) add("검색형", pre + ", " + Kq + " " + f2[0], [f2], null);
+        if (!x.state) add("검색형", pre + ", " + Kq + "에서 " + m2[0], [m2], null);
+      }
+    }
+    // 입력한 단어가 그대로 들어간 문장을 앞으로
+    var mine = x.state ? [x.state] : [];
+    list = list.map(function(it, i){ it.o = i; it.mine = -mine.filter(function(w){ return it.text.indexOf(w) >= 0; }).length; return it; })
+      .sort(function(a, b){ return a.mine - b.mine || a.o - b.o; });
+    var seen = {};
+    return list.filter(function(it){ var key = it.quote + "|" + it.text; if (seen[key] || seen[it.text]) return false; seen[key] = seen[it.text] = 1; return true; });
+  }
+
+
+  function thumbs(c){
+    var head = join(c.target, c.subject) || c.topic, out = [];
+    if (c.problem) out.push([head, c.problem + " 아이"]);
+    if (c.choose) out.push([c.topic, "의외로 놓치는 것"]);
+    else if (c.topic) out.push([c.topic, "왜 안 될까요?"]);
+    if (c.topic) out.push([head !== c.topic ? head : "우리 아이", c.topic + "의 함정"]);
+    if (c.topic) out.push([c.topic + " 전", "먼저 볼 3가지"]);
+    var seen = {};
+    return out.filter(function(x){ var k = x.join("/"); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 4);
+  }
+
+  /* ---------- 결과 3개 고르기 ---------- */
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(ch){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]; }); }
+  var LV = {2:"강조", 3:"강함"};
+  var HOOK = /(뜻밖의|숨은|진짜|결정적인|치명적인|놓치기 쉬운|의외로|이대로 두지 마세요|더 늦기 전에|자신감을 무너뜨리는|공통 습관|시간을 날리는|후회하기 쉬운|점검할 \d가지|확인할 \d가지|물어볼 질문 \d가지|질문 \d가지|조절이 필요한 신호|먼저 볼 것은 이것|놓치는 것|놓치고 있는 것|이유와 연습 방법|이유와 복습 방법|시작 전에 확인할 것)/;
+  var state = {mode: "blog", level: 3, page: 0, type: "궁금증", query: ""};
+
+  var TYPE_NOTE = {
+    "궁금증": "숨은 이유·반전으로 끝까지 궁금하게 만드는 제목",
+    "문제 강조": "실수·경고·신호로 지금 내 얘기라고 느끼게 하는 제목",
+    "행동 유도": "'이것부터' 바꾸게 만드는 명령형 제목",
+    "검색형": "검색 키워드를 앞에 붙인 같은 공식의 제목"
+  };
+  function keywords(c){
+    var STOPW = /^(학원|방법|법|하는|하기|잘하는|작성법|공부|학습|연습|관리|키우기|늘리기|높이기|안내|소개|운영|점검|선택법|만들기)$/;
+    var ks = [];
+    c.raw.split(/\s+/).forEach(function(w){
+      w = w.replace(/(하는|하기|법|방법)$/, "");
+      if (w.length < 2 || STOPW.test(w) || GRADE.test(w) || w === c.region) return;
+      ks.push(w); if (w.length > 2) ks.push(w.slice(0, 2));
+    });
+    if (c.subject) ks.push(c.subject);
+    if (c.channel) ks.push(c.channel);
+    return ks;
+  }
+  function pickThree(all, page){
+    var lv = state.level;
+    var pool = all.filter(function(x){ return x.type === state.type && (lv === 3 ? x.level === 3 : true); });
+    if (lv === 2) pool.sort(function(a, b){ return a.level - b.level; });
+    if (!pool.length) return {items: [], pages: 0};
+    var pages = Math.ceil(pool.length / 3), start = (page % pages) * 3;
+    var items = pool.slice(start, start + 3);
+    for (var i = 0; items.length < 3 && i < pool.length; i++) if (items.indexOf(pool[i]) < 0) items.push(pool[i]);
+    return {items: items, pages: pages};
+  }
+
+  function splitLines(text){
+    var m = text.match(/^(.+?[,?])\s(.+)$/);
+    var l1 = m ? m[1].replace(/,$/, "") : "", l2 = m ? m[2] : text;
+    var safe = esc(l2).replace(HOOK, "<em>$1</em>");
+    return {l1: l1, l2: safe};
+  }
+
+  function render(){
+    var raw = state.query;
+    var c = parse(raw);
+    var tags = [];
+    if (c.owner) tags.push("대상 <b>원장님</b>");
+    if (c.channel) tags.push("채널 <b>" + esc(c.channel) + "</b>");
+    if (c.goal) tags.push("목표 <b>" + esc(c.goal.noun) + "</b>");
+    if (c.target) tags.push("대상 <b>" + esc(c.target) + "</b>");
+    if (c.region) tags.push("지역 <b>" + esc(c.region) + "</b>");
+    if (c.subject) tags.push("과목 <b>" + esc(c.subject) + "</b>");
+    if (c.topic && !c.owner) tags.push("주제 <b>" + esc(c.topic) + "</b>");
+    $("detected").innerHTML = raw ? "인식: " + tags.join(" · ") + (c.target || c.owner ? "" : " — 앞에 ‘초2’, ‘문정동’을 붙이면 더 구체적으로 나와요") : "";
+
+    var built = raw ? build(c) : [];
+    if (state.mode === "reels") built = forReels(built);
+    var res = raw ? pickThree(built, state.page) : {items: [], pages: 0};
+    $("more").hidden = res.pages < 2;
+    $("typeNote").textContent = TYPE_NOTE[state.type];
+    if (!res.items.length){
+      $("cards").innerHTML = '<p class="empty">' + (!raw ? "위 칸에 제목이나 키워드를 넣어주세요." : state.type === "검색형" ? "앞에 지역이나 학년을 붙이면 검색형 제목이 나와요. (예: 문정동 초2 파닉스)" : "이 유형은 다른 키워드로 넣어보세요.") + '</p>';
+    } else {
+      $("cards").innerHTML = res.items.map(function(x){
+        var full = (x.quote ? "\u201C" + x.quote + "\u201D " : "") + x.text;
+        var body = esc(x.text);
+        x.hl.forEach(function(h){ body = body.split(esc(h)).join("<em>" + esc(h) + "</em>"); });
+        return '<article class="card"><div class="thumb"><div class="thumb-top"><span><span class="tag">' + LV[x.level] + '</span><span class="len">' + reelsLen(x) + '자</span></span>' +
+          '<button type="button" class="copy" data-copy="' + esc(full) + '">복사</button></div>' +
+          (x.quote ? '<span class="l1">\u201C' + esc(x.quote) + '\u201D</span>' : '') + '<span class="l2">' + body + '</span></div></article>';
+      }).join("");
+    }
+
+    var msgs = RISKY.filter(function(r){ return r[0].test(raw); }).map(function(r){ return "<li><b>" + r[1] + "</b> — " + r[2] + "</li>"; });
+    var wb = $("warnBox");
+    wb.hidden = !msgs.length;
+    wb.className = "note warn";
+    wb.innerHTML = msgs.length ? "<b>입력한 문구에서 바꿔 쓸 표현이 있어요</b><ul>" + msgs.join("") + "</ul>" : "";
+  }
+
+  function copyText(text, btn){
+    function ok(){ btn.textContent = "복사됨"; btn.classList.add("done"); setTimeout(function(){ btn.textContent = "복사"; btn.classList.remove("done"); }, 1400); }
+    function fallback(){
+      var ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly",""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); ok(); } catch(e){ btn.textContent = "직접 복사"; }
+      document.body.removeChild(ta);
+    }
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback); else fallback(); } catch(e){ fallback(); }
+  }
+
+  function submit(){ state.query = $("q").value.trim(); state.page = 0; render(); }
+  $("form").addEventListener("submit", function(e){ e.preventDefault(); submit(); });
+  $("examples").addEventListener("click", function(e){
+    var b = e.target.closest(".ex"); if (!b) return;
+    $("q").value = b.textContent; submit();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function(b){
+    b.addEventListener("click", function(){
+      state.level = +b.getAttribute("data-level"); state.page = 0;
+      Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      render();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#tabs button"), function(b){
+    b.addEventListener("click", function(){
+      state.type = b.getAttribute("data-f"); state.page = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("#tabs button"), function(x){ x.setAttribute("aria-selected", x === b ? "true" : "false"); });
+      render();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#mode button"), function(b){
+    b.addEventListener("click", function(){
+      state.mode = b.getAttribute("data-mode"); state.page = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("#mode button"), function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      render();
+    });
+  });
+  $("more").addEventListener("click", function(){ state.page++; render(); });
+  $("cards").addEventListener("click", function(e){
+    var btn = e.target.closest(".copy"); if (btn) copyText(btn.getAttribute("data-copy"), btn);
+  });
+  submit();
+})();
+</script>
+</body>
+</html>
