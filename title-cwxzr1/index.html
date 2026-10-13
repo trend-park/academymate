@@ -86,23 +86,32 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
 
 <main class="wrap">
   <h1>무난한 제목을 <em>클릭하고 싶은 제목</em>으로</h1>
-  <p class="lead">학원·공부방·교습소·과외·예체능 콘텐츠 소재를 한 줄만 넣으세요. 클릭하고 싶어지는 썸네일 제목을 결과 욕구·실력 도전·호기심 세 방향으로 만들어 드립니다.</p>
+  <p class="lead">학원·공부방·교습소·과외·예체능 콘텐츠 주제를 한 줄만 넣으세요. 썸네일에 바로 쓸 15~20자 후킹 문구를 유형별로 3개씩 만들어 드립니다.</p>
 
   <form class="ask" id="form" autocomplete="off">
     <div class="ask-row">
-      <input type="text" id="q" value="쉬운 수학 두뇌퀴즈" placeholder="예: 공부방 상담 잘하는 법, 초3 오답노트" aria-label="제목 또는 키워드">
+      <input type="text" id="q" value="학원 상담 잘하는 방법" placeholder="예: 공부방 상담 잘하는 법, 초3 오답노트" aria-label="제목 또는 키워드">
       <button type="submit" class="btn">만들기</button>
     </div>
     <div class="examples" id="examples">
       <span>예시</span>
-      <button type="button" class="ex">쉬운 수학 두뇌퀴즈</button><button type="button" class="ex">덧셈 곱하기 논란 수학문제</button><button type="button" class="ex">헷갈리는 한글 맞춤법 퀴즈</button><button type="button" class="ex">초3 수학 공부방법</button><button type="button" class="ex">학원 상담 잘하는 방법</button><button type="button" class="ex">공부방 원생 모집</button>
+      <button type="button" class="ex">학원 상담 잘하는 방법</button>
+      <button type="button" class="ex">공부방 원생 모집</button>
+      <button type="button" class="ex">교습소 블로그 운영</button>
+      <button type="button" class="ex">초3 오답노트 작성법</button>
+      <button type="button" class="ex">독해력 키우기</button>
+      <button type="button" class="ex">태권도 재등록</button>
     </div>
     <div class="detected" id="detected"></div>
   </form>
 
-
+  <div class="tabs" id="tabs" role="tablist" aria-label="문구 유형">
+    <button type="button" role="tab" data-f="궁금증" aria-selected="true">궁금증</button>
+    <button type="button" role="tab" data-f="문제 강조" aria-selected="false">문제 강조</button>
+    <button type="button" role="tab" data-f="행동 유도" aria-selected="false">행동 유도</button>
+  </div>
   <div class="bar">
-    
+    <p class="type-note" id="typeNote"></p>
 
   </div>
   <div class="cards" id="cards"></div>
@@ -544,127 +553,6 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     return shuffle(list, rnd);
   }
 
-  /* ---------- 소재 → 클릭 동기 3방향 (결과 욕구 / 실력 도전 / 호기심·논쟁·반전) ---------- */
-  // 퀴즈·문제형 소재: 사용자가 준 기준 예시를 그대로 담고, 같은 원리로 확장
-  var MAT = [
-    [/맞춤법|띄어쓰기|우리말|한글\s?(퀴즈|문제)/, {S:"맞춤법", q:"반전형",
-      R:["쓸 때마다 헷갈리던 맞춤법 끝내기","한 번 보면 다시 안 틀리는 맞춤법","헷갈릴 때 바로 꺼내 쓰는 맞춤법 기준"],
-      C:["매일 쓰는 말, 정확히 알고 있나요?","맞춤법에 자신 있다면 풀어보세요","어른도 헷갈리는 맞춤법, 몇 개 맞힐까?"],
-      Q:["맞는 줄 알고 썼는데, 이게 틀렸다고?","매일 쓰던 말이 틀린 표현이었다면?","다들 맞다고 쓰는데 사실은?"]}],
-    [/틀린\s?그림|다른\s?그림|숨은\s?그림/, {S:"눈썰미",
-      R:["무심코 지나친 차이를 보는 눈 기르기","관찰력 키우는 가장 재밌는 방법","작은 차이를 바로 잡아내는 눈 만들기"],
-      C:["눈썰미에 자신 있다면 찾아보세요","몇 개까지 찾을 수 있나요?","제한 시간 안에 다 찾을 수 있나요?"],
-      Q:["분명 다른데, 어디가 바뀐 걸까요?","보고 있는데도 안 보이는 이유","마지막 하나가 끝까지 안 보이는 이유"]}],
-    [/덧셈|뺄셈|곱셈|나눗셈|곱하기|더하기|빼기|나누기|계산\s?순서|사칙/, {S:"계산 실력",
-      R:["헷갈리던 계산 순서, 이 문제로 끝내세요","계산 순서 한 번에 정리하는 방법","다시는 안 헷갈리는 계산 순서"],
-      C:["수학 좀 한다면? 이 문제에 도전하세요","계산기 없이 바로 풀 수 있나요?","계산 순서, 정확히 알고 있나요?"],
-      Q:["쉬운 계산인데 왜 답이 갈릴까?","계산 순서, 다들 어디서 헷갈릴까?","같은 숫자인데 답이 달라지는 이유"]}],
-    [/규칙|패턴|수열|빈칸/, {S:"규칙 찾는 눈",
-      R:["숫자 너머의 규칙을 보는 연습","규칙 찾는 눈 키우는 방법","답보다 규칙이 먼저 보이는 연습"],
-      C:["빈칸의 숫자, 힌트 없이 찾을 수 있나요?","규칙을 찾으면 바로 풀립니다. 도전?","몇 초 만에 규칙이 보이나요?"],
-      Q:["계산만 하면 놓치는 숫자의 비밀","규칙이 보이는 사람은 뭐가 다를까?","숫자는 쉬운데 왜 답이 안 보일까?"]}],
-    [/수학.*(퀴즈|퍼즐|두뇌|테스트)|(퀴즈|퍼즐|두뇌|테스트).*수학/, {S:"수학 머리",
-      R:["잠자는 수학 머리 깨우는 방법","놀면서 수학 머리 키우는 방법","하루 한 문제로 수학 머리 키우기"],
-      C:["수학 감각, 아직 살아 있나요?","수학에 자신 있다면 도전하세요","힌트 없이 풀 수 있나요?"],
-      Q:["쉬운 문제인데 왜 손이 멈출까?","답이 바로 보이는 사람은 뭐가 다를까?","분명 아는 건데 왜 막힐까?"]}],
-    [/넌센스/, {S:"센스",
-      R:["굳은 머리 말랑하게 푸는 시간","생각을 비틀어 보는 연습"],
-      C:["센스 있다면 바로 맞혀보세요","몇 문제나 맞힐 수 있나요?"],
-      Q:["답 듣고 나면 허탈한 이유","너무 쉬워서 오히려 못 푸는 문제"]}],
-    [/상식/, {S:"상식",
-      R:["알아두면 대화가 달라지는 상식","하루 하나씩 쌓는 상식"],
-      C:["상식에 자신 있다면 도전하세요","몇 개나 맞힐 수 있나요?"],
-      Q:["다들 안다고 생각하는데 틀리는 상식","당연하게 알던 게 사실은 달랐다면?"]}],
-    [/속담|사자성어|어휘|낱말|단어\s?뜻/, {S:"어휘력",
-      R:["말 한마디가 달라지는 어휘력 키우기","쓸수록 늘어나는 어휘력 연습"],
-      C:["어휘력에 자신 있다면 풀어보세요","뜻, 정확히 알고 있나요?"],
-      Q:["알고 쓰던 말, 뜻이 달랐다고?","자주 쓰는데 뜻은 헷갈리는 말"]}],
-    [/한자/, {S:"한자 실력",
-      R:["뜻이 보이면 외워지는 한자 공부","한자 하나로 어휘가 늘어나는 방법"],
-      C:["이 한자, 읽을 수 있나요?","한자에 자신 있다면 도전하세요"],
-      Q:["자주 보는데 못 읽는 한자의 비밀","획은 쉬운데 왜 안 외워질까?"]}],
-    [/도형|공간|입체|블록|전개도/, {S:"공간 감각",
-      R:["머릿속으로 돌려 보는 공간 감각 키우기","도형이 쉬워지는 공간 감각 연습"],
-      C:["공간 감각에 자신 있다면 풀어보세요","머릿속으로만 풀 수 있나요?"],
-      Q:["보이는데 왜 머릿속에선 안 돌아갈까?","도형만 나오면 막히는 진짜 이유"]}],
-    [/기억력|암기\s?(퀴즈|테스트)/, {S:"기억력",
-      R:["깜빡하던 기억력 다시 살리는 방법","한 번 보고 오래 기억하는 연습"],
-      C:["몇 개까지 기억할 수 있나요?","기억력에 자신 있다면 도전하세요"],
-      Q:["방금 봤는데 왜 기억이 안 날까?","잘 외우는 사람은 뭐가 다를까?"]}],
-    [/집중력|주의력/, {S:"집중력",
-      R:["흩어진 집중력 다시 모으는 방법","짧게 끝내도 집중이 남는 연습"],
-      C:["끝까지 집중할 수 있나요?","집중력에 자신 있다면 도전하세요"],
-      Q:["앉아 있는데 왜 집중이 안 될까?","집중 잘하는 아이는 뭐가 다를까?"]}],
-    [/영어.*(퀴즈|퍼즐|테스트)|영단어\s?(퀴즈|테스트)/, {S:"영어 감각",
-      R:["영어 감각 깨우는 가장 쉬운 방법","단어가 문장으로 보이는 연습"],
-      C:["영어 감각, 아직 살아 있나요?","영어에 자신 있다면 맞혀보세요"],
-      Q:["아는 단어인데 왜 뜻이 안 떠오를까?","쉬운 단어에서 다들 멈추는 이유"]}],
-    [/퀴즈|퍼즐|테스트|두뇌|아이큐|IQ/i, {S:"두뇌",
-      R:["잠자는 두뇌 깨우는 방법","놀면서 생각하는 힘 키우기","굳은 머리 말랑하게 만드는 시간"],
-      C:["두뇌 회전, 아직 빠른가요?","힌트 없이 풀 수 있나요?","자신 있다면 도전하세요"],
-      Q:["쉬운 문제인데 왜 손이 멈출까?","답이 바로 보이는 사람은 뭐가 다를까?","분명 아는 건데 왜 막힐까?"]}]
-  ];
-  var DEBATE = /논란|논쟁|의견\s?(차이|대립|갈)|답이\s?갈|의견이\s?갈|\bvs\b|찬반/i;
-  var DEBATE_Q = ["같은 문제인데 답이 다릅니다. 누구 말이 맞을까요?","답이 둘로 갈린 문제, 당신의 답은?","의견이 갈리는 문제, 정답은 하나입니다"];
-  var CONFUSE = /헷갈|착각|오해|잘못 알/;
-
-  // 학부모·학생 주제의 '키우고 싶은 능력'
-  var SKILL = [[/오답|서술형|선행|연산|계산/, "수학 실력"], [/파닉스|원서|리딩|독해|문해력/, "읽는 힘"], [/단어|어휘/, "어휘력"], [/문법/, "문법 실력"], [/말하기|회화|스피킹/, "영어 말하기"],
-    [/독서|책/, "읽는 힘"], [/글쓰기|논술|작문|일기/, "글쓰기 실력"], [/자신감|칭찬/, "아이 자신감"], [/줄넘기/, "줄넘기 실력"], [/태권도|품새|겨루기/, "운동 자신감"], [/피아노|악기|바이올린/, "연주 실력"], [/미술|그림|창의/, "표현력"], [/코딩|프로그래밍/, "코딩 실력"],
-    [/습관|집중|공부\s?시간|숙제|스스로/, "공부 집중력"],
-    [/중간고사|기말고사|내신|시험|기출/, "시험 점수"], [/학원\s?(선택|고르|찾|추천|비교)/, "학원 고르는 눈"], [/수학/, "수학 머리"], [/영어/, "영어 실력"], [/국어/, "국어 실력"]];
-
-  var OWN3 = [
-    [/블로그/, {R:["문의 오는 블로그 글 쓰는 방법","블로그 하나로 문의 늘리는 방법","읽고 나면 전화하게 되는 블로그 글"], C:["우리 학원 블로그 지금 점검해 보세요","우리 블로그는 이 중 몇 개 해당할까?"], Q:["문의 오는 블로그는 뭐가 다를까?","매일 써도 문의가 없는 이유"]}],
-    [/인스타|릴스/, {R:["팔로워보다 문의가 느는 인스타 운영법","릴스 하나로 상담까지 이어지는 방법"], C:["우리 학원 인스타 지금 점검해 보세요","우리 계정은 이 중 몇 개 해당할까?"], Q:["반응 좋은 학원 계정은 뭐가 다를까?","릴스를 올려도 문의가 없는 이유"]}],
-    [/광고/, {R:["광고비 그대로 문의 늘리는 방법","같은 광고비로 상담 늘리는 순서"], C:["우리 학원 광고 이 중 몇 개 해당할까?","광고 효과, 정확히 알고 있나요?"], Q:["같은 광고비인데 결과가 다른 이유","광고를 늘렸는데 문의가 줄어든 이유"]}],
-    [/플레이스|노출|키워드|검색/, {R:["검색에 뜨는 학원 플레이스 만드는 법","지역 검색에서 먼저 보이는 방법"], C:["우리 학원 지금 검색해 보셨나요?","우리 플레이스는 몇 번째에 뜰까?"], Q:["옆 학원만 검색에 뜨는 이유","리뷰가 많아도 안 보이는 이유"]}],
-    [/재등록|퇴원|이탈/, {R:["재등록이 자연스럽게 이어지는 학부모 소통","그만두는 아이를 붙잡는 한 가지"], C:["우리 학원 재등록 이 중 몇 개 해당할까?","학부모 마음, 정확히 알고 있나요?"], Q:["수업은 좋은데 아이가 그만두는 이유","재등록 직전 학부모가 망설이는 순간"]}],
-    [/상담/, {R:["상담하면 등록으로 이어지는 말하기","등록률이 달라지는 상담 순서"], C:["우리 학원 상담 점수는 몇 점일까요?","상담 잘한다고 생각한다면 확인하세요"], Q:["등록하는 학부모는 뭐가 다를까?","같은 상담인데 결과가 다른 이유"]}],
-    [/후기|리뷰/, {R:["후기가 저절로 쌓이는 학원 운영법","부탁하지 않아도 후기가 오는 방법"], C:["우리 학원 후기 지금 확인해 보세요"], Q:["만족한다는데 후기는 없는 이유"]}],
-    [/설명회|특강|방학/, {R:["신청이 먼저 차는 설명회 준비법","자리가 꽉 차는 방학 특강 공지"], C:["우리 설명회 공지 지금 점검해 보세요"], Q:["공지를 올려도 신청이 없는 이유"]}],
-    [/체험/, {R:["체험수업이 등록으로 이어지는 방법"], C:["우리 체험수업 이 중 몇 개 해당할까?"], Q:["체험만 하고 등록은 안 하는 이유"]}],
-    [/./, {R:["{biz} 원생 늘리는 가장 쉬운 방법","홍보비 그대로 원생 늘리는 방법","문의가 끊이지 않는 {biz}의 습관"], C:["우리 {biz} 홍보 지금 점검해 보세요","우리 {biz}는 이 중 몇 개 해당할까?"], Q:["잘되는 {biz}은 뭐가 다를까?","홍보해도 원생이 안 느는 이유"]}]
-  ];
-
-  function build3(c){
-    var raw = c.raw, out = {R: [], C: [], Q: [], qlabel: "호기심형"};
-    var debate = DEBATE.test(raw);
-    function push(k, arr){ arr.forEach(function(t){ t = t.replace(/\s+/g, " ").trim(); if (t.length >= 8 && t.length <= 28 && out[k].indexOf(t) < 0) out[k].push(t); }); }
-    var m = null;
-    for (var i = 0; i < MAT.length; i++) if (MAT[i][0].test(raw)){ m = MAT[i][1]; break; }
-    if (m){
-      push("R", m.R); push("C", m.C); push("Q", m.Q);
-      if (m.q) out.qlabel = m.q;
-    } else if (c.owner){
-      var biz = (raw.match(/공부방(?!법)|교습소|과외|태권도장|도장|학원/) || [/태권도/.test(raw) ? "태권도장" : "학원"])[0];
-      var o = null;
-      for (var j = 0; j < OWN3.length; j++) if (OWN3[j][0].test(raw)){ o = OWN3[j][1]; break; }
-      function r(arr){ return arr.map(function(t){ return t.replace(/\{biz\}[은는]/g, josa(biz, "은", "는")).split("{biz}").join(biz).replace("우리 학원", "우리 " + biz); }); }
-      push("R", r(o.R)); push("C", r(o.C)); push("Q", r(o.Q));
-    } else {
-      var P = ptFor(raw, c.subject), S = "공부 실력";
-      for (var s = 0; s < SKILL.length; s++) if (SKILL[s][0].test(raw)){ S = SKILL[s][1]; break; }
-      var T = c.target ? c.target + " " : "";
-      var A = P.an;
-      var V = /점수$/.test(S) ? "올리는" : "키우는";
-      push("R", [(/^(수학|영어|국어)/.test(S) ? T : "") + S + " " + V + " 가장 쉬운 방법", S + " " + V + " 가장 쉬운 방법", "이것만 바꾸면 " + josa(S, "이", "가") + " 달라집니다", /점수$/.test(S) ? "같은 공부 시간으로 점수 올리는 법" : "잠자는 " + S + " 깨우는 방법",
-        P.first[0] + "부터 하면 " + josa(S, "이", "가") + " 달라집니다"]);
-      push("C", ["우리 아이 " + S + ", 지금 확인해 보세요", "우리 아이는 이 중 몇 개 해당할까?", T + A + ", 제대로 " + (P.exam ? "준비하고" : "하고") + " 있나요?", A + " 제대로 하고 있다고 생각한다면?"]);
-      var tails = P.sit.map(sitTail);
-      push("Q", P.sit.slice(0, 2).map(function(x){ return x + " 이유"; }).concat([P.good ? P.good.replace("아이들의 공통점", "아이는 뭐가 다를까?").replace("부모들의 공통점", "부모는 뭐가 다를까?") : S + " 좋은 아이는 뭐가 다를까?"], tails.slice(0, 2).map(function(x){ return "왜 " + x + " 걸까?"; }), [P.trap[0] + " 생기는 일"]));
-      if (CONFUSE.test(raw)) out.qlabel = "반전형";
-    }
-    if (debate){
-      var vs = raw.match(/([가-힣A-Za-z]+(?:\s[가-힣A-Za-z]+)?)\s*(?:vs|VS|대)\s*([가-힣A-Za-z]+)/);
-      var dq = m ? DEBATE_Q : ["다들 의견이 갈리는 진짜 이유", "뭐가 맞을까? 답이 갈리는 이유"];
-      if (vs) dq = [vs[1] + " vs " + vs[2] + ", 당신의 선택은?", vs[1] + " 먼저? " + vs[2] + " 먼저?"].concat(dq);
-      out.Q = dq.filter(function(t){ return t.length <= 28; }).concat(out.Q); out.qlabel = "논쟁형";
-    }
-    else if (CONFUSE.test(raw) && out.qlabel === "호기심형" && m) out.qlabel = "반전형";
-    return out;
-  }
-
   function build(c){
     if (!c.owner) return buildParent(c);
     var x = context(c), K = x.Km, Kt = x.Kt, list = [];
@@ -826,23 +714,23 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     if (c.region) tags.push("지역 <b>" + esc(c.region) + "</b>");
     if (c.subject) tags.push("과목 <b>" + esc(c.subject) + "</b>");
     if (!c.owner){ var pt = ptFor(c.raw, c.subject); tags.push("주제 <b>" + esc(pt.an) + "</b>"); }
-    var mat = null; MAT.forEach(function(x){ if (!mat && x[0].test(raw)) mat = x[1]; });
-    if (mat) tags = ["소재 <b>" + esc(mat.S) + "</b>"].concat(DEBATE.test(raw) ? ["논쟁 요소 <b>있음</b>"] : []);
-    $("detected").innerHTML = raw ? "인식: " + tags.join(" · ") + (c.target || c.owner || mat ? "" : " — 앞에 ‘초2’, ‘문정동’을 붙이면 더 구체적으로 나와요") : "";
+    $("detected").innerHTML = raw ? "인식: " + tags.join(" · ") + (c.target || c.owner ? "" : " — 앞에 ‘초2’, ‘문정동’을 붙이면 더 구체적으로 나와요") : "";
 
-    var res = raw ? build3(c) : null;
-    var n = res ? Math.max(res.R.length, res.C.length, res.Q.length) : 0;
-    $("more").hidden = n < 2;
-    if (!res){
-      $("cards").innerHTML = '<p class="empty">위 칸에 콘텐츠 소재나 키워드를 넣어주세요.</p>';
+    var built = raw ? build(c) : [];
+    if (state.mode === "reels") built = forReels(built);
+    var res = raw ? pickThree(built, state.page) : {items: [], pages: 0};
+    $("more").hidden = res.pages < 2;
+    $("typeNote").textContent = TYPE_NOTE[state.type];
+    if (!res.items.length){
+      $("cards").innerHTML = '<p class="empty">' + (!raw ? "위 칸에 제목이나 키워드를 넣어주세요." : state.type === "검색형" ? "앞에 지역이나 학년을 붙이면 검색형 제목이 나와요. (예: 문정동 초2 파닉스)" : "이 유형은 다른 키워드로 넣어보세요.") + '</p>';
     } else {
-      var p = state.page;
-      var items = [["결과 욕구형", res.R], ["실력 도전형", res.C], [res.qlabel, res.Q]].filter(function(x){ return x[1].length; })
-        .map(function(x){ return {label: x[0], text: x[1][p % x[1].length]}; });
-      $("cards").innerHTML = items.map(function(x){
-        return '<article class="card"><div class="thumb"><div class="thumb-top"><span><span class="tag">' + esc(x.label) + '</span><span class="len">' + x.text.length + '자</span></span>' +
-          '<button type="button" class="copy" data-copy="' + esc(x.text) + '">복사</button></div>' +
-          '<span class="l2">' + esc(x.text) + '</span></div></article>';
+      $("cards").innerHTML = res.items.map(function(x){
+        var full = (x.quote ? "\u201C" + x.quote + "\u201D " : "") + x.text;
+        var body = esc(x.text);
+        x.hl.forEach(function(h){ body = body.split(esc(h)).join("<em>" + esc(h) + "</em>"); });
+        return '<article class="card"><div class="thumb"><div class="thumb-top"><span><span class="len">' + reelsLen(x) + '자</span></span>' +
+          '<button type="button" class="copy" data-copy="' + esc(full) + '">복사</button></div>' +
+          (x.quote ? '<span class="l1">\u201C' + esc(x.quote) + '\u201D</span>' : '') + '<span class="l2">' + body + '</span></div></article>';
       }).join("");
     }
 
