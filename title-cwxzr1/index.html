@@ -45,7 +45,7 @@ h1 em{font-style:normal;color:var(--primary)}
 .mode button small{font-size:12px;font-weight:500;color:var(--muted);margin-left:4px}
 .mode button[aria-pressed="true"]{border-color:var(--primary);background:var(--soft);color:var(--primary-dark)}
 .mode button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:var(--s3) 0 0;border-bottom:2px solid var(--line)}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:var(--s5) 0 0;border-bottom:2px solid var(--line)}
 .tabs button{font:inherit;font-size:16px;font-weight:700;padding:12px 4px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
 .tabs button[aria-selected="true"]{color:var(--primary);border-bottom-color:var(--primary)}
 .tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
@@ -86,7 +86,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
 
 <main class="wrap">
   <h1>무난한 제목을 <em>클릭하고 싶은 제목</em>으로</h1>
-  <p class="lead">학원·공부방·교습소·과외·예체능 콘텐츠 주제를 한 줄만 넣으세요. 원장님 홍보 주제인지 학부모용 공부 주제인지 알아서 구분하고, 블로그 제목과 릴스 썸네일 문구를 유형별로 만들어 드립니다.</p>
+  <p class="lead">학원·공부방·교습소·과외·예체능 콘텐츠 주제를 한 줄만 넣으세요. 썸네일에 바로 쓸 15~20자 후킹 문구를 유형별로 3개씩 만들어 드립니다.</p>
 
   <form class="ask" id="form" autocomplete="off">
     <div class="ask-row">
@@ -105,15 +105,10 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     <div class="detected" id="detected"></div>
   </form>
 
-  <div class="mode" id="mode" role="group" aria-label="쓰는 곳">
-    <button type="button" data-mode="blog" aria-pressed="true">블로그 제목</button>
-    <button type="button" data-mode="reels" aria-pressed="false">릴스 썸네일 <small>15~20자</small></button>
-  </div>
   <div class="tabs" id="tabs" role="tablist" aria-label="문구 유형">
     <button type="button" role="tab" data-f="궁금증" aria-selected="true">궁금증</button>
     <button type="button" role="tab" data-f="문제 강조" aria-selected="false">문제 강조</button>
     <button type="button" role="tab" data-f="행동 유도" aria-selected="false">행동 유도</button>
-    <button type="button" role="tab" data-f="검색형" aria-selected="false">검색형</button>
   </div>
   <div class="bar">
     <p class="type-note" id="typeNote"></p>
@@ -398,95 +393,123 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     return {K: Km, Kt: Kt, Km: Km, k: k, sit: sit, state: state, biz: c.owner ? biz : ""};
   }
 
-  var SHORT_PREFIX = /^(학원|공부방|교습소|과외|도장) (블로그|인스타|광고|홍보|후기|검색 노출)/;
+  var SHORT_PREFIX = /^(학원|공부방|교습소|과외|태권도장|도장|학부모) (?=\S)/;
   var SHORT_K = {"학원 블로그":"블로그","학원 인스타":"인스타","학원 광고":"광고","학부모 상담":"상담","학원 홍보":"홍보","학원 검색 노출":"검색 노출","학원 후기":"후기"};
   function reelsLen(it){ return (it.quote ? it.quote.length + 1 : 0) + it.text.length; }
   function forReels(list){
-    var out = [];
+    var out = [], usedKey = {}, usedText = {}, usedSkel = {};
+    function skel(t){ return t.replace(/(의 )?(진짜|숨은|결정적인|충격적인|뜻밖의) (이유|원인)$/, "").replace(/^(학원|공부방|교습소|과외|태권도장|학부모) /, ""); }
     list.forEach(function(it){
-      var texts = [it.text];
-      if (it.type !== "검색형" && SHORT_PREFIX.test(it.text)) texts.push(it.text.replace(SHORT_PREFIX, "$2"));
-      if (it.type !== "검색형") Object.keys(SHORT_K).forEach(function(k){ if (it.text.indexOf(k) >= 0) texts.push(it.text.split(k).join(SHORT_K[k])); });
-      texts.forEach(function(t){
-        [it.quote, ""].forEach(function(q){
-          var v = {type: it.type, level: it.level, hl: it.hl, src: it.src, text: t, quote: q};
-          var n = reelsLen(v);
-          if (n >= 15 && n <= 20) out.push(v);
-        });
+      if (usedKey[it.key]) return;
+      var texts = [];
+      (it.alts || [it.text]).forEach(function(t){
+        texts.push(t);
+        if (SHORT_PREFIX.test(t)) texts.push(t.replace(SHORT_PREFIX, ""));
+        Object.keys(SHORT_K).forEach(function(k){ if (t.indexOf(k) >= 0) texts.push(t.split(k).join(SHORT_K[k])); });
       });
+      for (var i = 0; i < texts.length; i++){
+        var hit = null;
+        [it.quote, ""].forEach(function(q){
+          if (hit) return;
+          var v = {type: it.type, level: it.level, hl: it.hl, src: it.src, key: it.key, text: texts[i], quote: q};
+          var n = reelsLen(v);
+          if (n >= 15 && n <= 20 && !usedText[v.text] && !usedSkel[skel(v.text)]) hit = v;
+        });
+        if (hit){ out.push(hit); usedKey[it.key] = 1; usedText[hit.text] = 1; usedSkel[skel(hit.text)] = 1; return; }
+      }
     });
-    var seen = {};
-    return out.filter(function(v){ var k = v.quote + "|" + v.text; if (seen[k]) return false; seen[k] = 1; return true; });
+    return out;
+  }
+
+  /* 주제별 맥락: '무엇을 해도(act) → 무엇이 안 되는(fail)' + 그 대상(who) */
+  var FRAMES_OWNER = [
+    [/블로그/, {act:["블로그를 매일 써도","블로그를 써도"], fail:["문의가 없는","문의가 안 오는"], who:"블로그", own:["문의가 없는 블로그"]}],
+    [/인스타|릴스/, {act:["릴스를 올려도","인스타를 해도"], fail:["문의가 없는","반응이 없는"], who:"계정", own:["반응이 없는 계정","문의가 없는 인스타"]}],
+    [/광고/, {act:["광고비를 써도","광고를 돌려도"], fail:["문의가 없는","등록이 안 되는"], who:"학원", own:["문의가 없는 광고"]}],
+    [/플레이스|노출|키워드/, {act:["플레이스를 관리해도"], fail:["검색에 안 뜨는","문의가 없는"], who:"학원", own:["검색에 안 뜨는 플레이스"]}],
+    [/재등록|퇴원|이탈/, {act:["수업을 잘해도","열심히 가르쳐도"], fail:["재등록을 안 하는","그만두는"], who:"학부모", own:["재등록이 안 되는 {biz}","퇴원이 이어지는 {biz}"]}],
+    [/상담/, {act:["상담을 해도","상담을 잘해도"], fail:["등록을 안 하는","등록으로 안 이어지는"], who:"학부모", own:["등록이 안 되는 상담","상담만 하고 끝나는 {biz}"]}],
+    [/후기|리뷰/, {act:["만족한다면서"], fail:["후기를 안 남기는"], who:"학부모", own:["후기가 없는 {biz}"]}],
+    [/설명회|특강|방학/, {act:["설명회를 열어도","공지를 올려도"], fail:["신청이 없는"], who:"설명회", own:["신청이 없는 설명회"]}],
+    [/체험/, {act:["체험수업을 해도"], fail:["등록을 안 하는"], who:"학부모", own:["등록이 안 되는 체험수업"]}],
+    [/./, {act:["{biz} 홍보해도","홍보를 열심히 해도"], fail:["원생이 안 느는","등록으로 안 이어지는","원생 등록이 없는"], who:"{biz}", own:["원생이 안 느는 {biz}","등록이 없는 {biz}"]}]
+  ];
+  var FRAMES_PARENT = [
+    [/오답/, {act:["오답노트를 써도","오답 정리를 해도"], fail:["또 틀리는","같은 문제를 또 틀리는"]}],
+    [/파닉스/, {act:["파닉스를 끝내도","파닉스를 배워도"], fail:["문장을 못 읽는","읽기가 막히는"]}],
+    [/단어|어휘|암기/, {act:["단어를 외워도","매일 외워도"], fail:["금방 잊어버리는","문장을 못 읽는"]}],
+    [/리딩|원서/, {act:["원서를 읽어도","매일 읽어도"], fail:["내용을 모르는","설명을 못 하는"]}],
+    [/독해|독서|문해력|국어|책/, {act:["책을 읽어도","매일 읽어도"], fail:["내용을 설명 못 하는","문제를 못 푸는"]}],
+    [/선행/, {act:["선행을 해도","진도를 나가도"], fail:["풀이가 흔들리는","시험에서 틀리는"]}],
+    [/글쓰기|논술|작문|일기/, {act:["매일 써도","첨삭을 받아도"], fail:["첫 문장이 막히는","글이 안 느는"]}],
+    [/피아노|악기|바이올린/, {act:["매일 연습해도"], fail:["같은 곳에서 막히는","실력이 안 느는"]}],
+    [/줄넘기/, {act:["매일 연습해도"], fail:["자꾸 줄에 걸리는"]}],
+    [/미술|그림|창의/, {act:["매일 그려도"], fail:["시작을 못 하는","실력이 안 느는"]}],
+    [/코딩|프로그래밍/, {act:["코딩을 배워도"], fail:["혼자 못 만드는","설명을 못 하는"]}],
+    [/자신감/, {act:["칭찬을 해도","열심히 해도"], fail:["자신감이 안 생기는","자꾸 주저하는"]}],
+    [/태권도|품새|겨루기/, {act:["매일 수련해도","열심히 다녀도"], fail:["자신감이 안 생기는","승급이 안 되는"]}],
+    [/수학|연산|서술형|계산|문제집/, {act:["문제집을 풀어도","매일 풀어도"], fail:["점수가 안 오르는","또 틀리는"]}],
+    [/영어|회화|문법/, {act:["영어를 오래 해도","학원을 다녀도"], fail:["말이 안 나오는","실력이 제자리인"]}],
+    [/./, {act:["열심히 해도","공부를 해도"], fail:["성적이 안 오르는","실력이 제자리인"]}]
+  ];
+  function frameFor(c, biz){
+    var list = c.owner ? FRAMES_OWNER : FRAMES_PARENT, f = null;
+    for (var i = 0; i < list.length; i++) if (list[i][0].test(c.raw)){ f = list[i][1]; break; }
+    var b = biz || "학원";
+    function r(s){ return s.split("{biz}").join(b); }
+    var who = r(f.who || "아이");
+    return {act: f.act.map(r), fail: f.fail.map(r), who: who, own: (f.own || f.fail.map(function(x){ return x + " " + who; })).map(r)};
   }
 
   function build(c){
     var x = context(c), K = x.Km, Kt = x.Kt, list = [];
     if (!K) return list;
+    var F = frameFor(c, x.biz);
     var rnd = seeded(c.raw), S = function(keys){ return shuffle(pool(keys), rnd); };
-    var Ksub = josa(K, "이", "가");
-    function add(type, text, parts, quote){
-      list.push({type: type, text: text, quote: quote ? quote[0] : "", level: lvOf.apply(null, parts.concat([quote])), hl: parts.map(function(p){ return p[0]; }), src: 0});
+    var ACT = /(상담|수업|공부|연습|운영|모집|수련|홍보|광고|관리|암기|선행|재등록)$/;
+    function obj(k){ return josa(k, "을", "를"); }
+    function top(k){ return josa(k, "은", "는"); }
+    function at(k){ return ACT.test(k) ? k + " 시" : k + "에서"; }
+    function combos(fn){ var out = []; F.act.forEach(function(a){ F.fail.forEach(function(f){ out.push(fn(a, f)); }); }); return out; }
+    function add(type, texts, parts, quote, key){
+      texts = [].concat(texts);
+      list.push({type: type, text: texts[0], alts: texts, quote: quote ? quote[0] : "", level: lvOf.apply(null, parts.concat([quote])), hl: parts.map(function(p){ return p[0]; }), src: 0, key: type + ":" + (key || parts[0][0])});
     }
-    // 궁금증
-    var RN = S(["REASON_NOUN"]).filter(function(r){ return r[0].length <= 7; }), VM = S(x.k("VM")), RF = S(x.k("RF")), QR = S(["Q_REASON"]), REV = S(["REV"]), RQ = S(["REV_Q"]), HD = S(["HD"]);
-    for (var i = 0; i < Math.max(VM.length, RF.length, 8); i++){
-      var vm = VM[i % VM.length], rn = RN[i % RN.length], rf = RF[i % RF.length], q = QR[i % QR.length];
-      if (vm) add("궁금증", (/[가이] /.test(vm[0]) ? K + ", " : Ksub + " ") + vm[0] + " " + rn[0], [vm, rn], i % 3 === 2 ? null : q);
-      if (rf) add("궁금증", (i % 2 ? K : Kt) + ", " + rf[0], [rf], i % 2 ? QR[(i + 3) % QR.length] : null);
-      var rv = REV[i % REV.length];
-      add("궁금증", Kt + ", " + rv[0], [rv], RQ[i % RQ.length]);
-      // 등록된 상황 문구만으로 만드는 문장: '진도는 빠른데 풀이가 막히는 진짜 이유'
-      if (x.sit) add("궁금증", x.sit[0] + " " + rn[0], [x.sit, rn], i % 2 ? QR[(i + 1) % QR.length] : null);
-    }
-    if (x.state){
-      var VS = S(["VM_STATE"]), Kst = josa(x.state, "이", "가");
-      VS.forEach(function(v, j){ var rn2 = RN[(j + 1) % RN.length]; add("궁금증", Kst + " " + v[0] + " " + rn2[0], [v, rn2], j % 2 ? null : QR[j % QR.length]); });
-      add("문제 강조", Kst + " 무너지기 전 먼저 나타나는 변화", [["무너지기 전", 2], ["먼저 나타나는 변화", 3]], ["그냥 넘기지 마세요", 2]);
-      add("문제 강조", Kst + " 무너지기 전, 강력한 신호", [["무너지기 전", 3], ["강력한 신호", 3]], ["여기부터 망가져요", 3]);
-    }
-    add("궁금증", "아무도 말해주지 않는 " + K + "의 " + RN[0][0], [["아무도 말해주지 않는", 3], RN[0]], null);
-    add("궁금증", K + ", 아는 사람만 아는 딱 하나의 차이", [["아는 사람만 아는", 3], ["딱 하나의 차이", 3]], null);
+    var RN = S(["REASON_NOUN"]), QR = S(["Q_REASON"]), MS = S(x.k("MS")), CQ = S(x.k("CQ")), AN = S(["AN"]), TM = S(["TM"]);
+    var Ks = [K, Kt].filter(function(v, i, a){ return a.indexOf(v) === i; });
+    var whoTop = function(f){ return f + " " + top(F.who); };
 
+    // 궁금증: '홍보해도 원생이 안 느는 진짜 이유' / '원생이 안 느는 학원의 숨은 이유'
+    function rot(i){ return RN.slice(i % RN.length).concat(RN.slice(0, i % RN.length)); }
+    F.fail.forEach(function(f, i){
+      var rs = rot(i);
+      add("궁금증", [].concat.apply([], rs.map(function(r){ return F.act.map(function(a){ return a + " " + f + " " + r[0]; }); })), [rs[0]], i % 2 ? QR[i % QR.length] : null, "act:" + f);
+      add("궁금증", rot(i + 2).map(function(r){ return f + " " + F.who + "의 " + r[0]; }), [rs[0]], null, "who:" + f);
+    });
+    F.own.forEach(function(o, i){ add("궁금증", rot(i + 1).map(function(r){ return o + "의 " + r[0]; }), [RN[0]], null, "own:" + o); });
+    list.forEach(function(it){ if (/^궁금증:(act|who|own):/.test(it.key)) it.level = 3; });
+    if (x.state) S(["VM_STATE"]).forEach(function(v, j){ var r = RN[j % RN.length]; add("궁금증", josa(x.state, "이", "가") + " " + v[0] + " " + r[0], [v, r], null); });
+    if (x.sit) add("궁금증", RN.map(function(r){ return x.sit[0] + " " + r[0]; }), [x.sit], null, "sit");
+    if (!c.owner && !x.state && Kt !== K) add("궁금증", top(Kt) + " 오히려 역효과입니다", [["오히려 역효과입니다", 3]], ["좋은 줄 알았는데", 3]);
 
     // 문제 강조
-    var MS = S(x.k("MS")), CQ = S(x.k("CQ")), SG = S(x.k("SG")), GP = S(x.k("GP")), QW = S(["Q_WARN"]), QS = S(["Q_SIGNAL"]), QG = S(["Q_GAP"]);
-    for (var m = 0; m < Math.max(MS.length, CQ.length); m++){
-      var ms = MS[m % MS.length], cq = CQ[m % CQ.length];
-      var Kx = m % 2 ? K : Kt;
-      var msText = /(습관|선택|행동|관행|말버릇|한마디|친절)$/.test(ms[0]) ? Kx + ", " + ms[0] : Kx + "에서 " + ms[0];
-      add("문제 강조", msText, [ms], m % 3 === 2 ? null : QW[m % QW.length]);
-      add("문제 강조", (m % 2 ? Kt : K) + ", 이렇게 하면 " + cq[0], [cq], m % 2 ? QW[(m + 2) % QW.length] : null);
-      if (m < SG.length) add("문제 강조", K + "에서 " + SG[m][0], [SG[m]], QS[m % QS.length]);
-      if (m < GP.length){ var qg = QG.filter(function(q){ return q[0] !== GP[m][0]; })[m % 2]; add("문제 강조", K + ", " + GP[m][0], [GP[m]], qg); }
-    }
+    add("문제 강조", Ks.map(function(k){ return at(k) + " 이 행동 하지 마세요"; }).concat(Ks.map(function(k){ return at(k) + " 이 행동 제발 하지 마세요"; })), [["하지 마세요", 3]], null, "ban");
+    add("문제 강조", F.fail.map(function(f){ return f + " " + F.who + "의 공통점"; }).concat(F.own.map(function(o){ return o + "의 공통점"; })), [["공통점", 3]], null, "common");
+    add("문제 강조", Ks.map(function(k){ return obj(k) + " 망치는 최악의 습관"; }), [["망치는", 3], ["최악의 습관", 3]], null);
+    MS.forEach(function(m){ if (!/습관$/.test(m[0])) add("문제 강조", Ks.map(function(k){ return at(k) + " " + m[0]; }), [m], null); });
+    CQ.filter(function(q){ return !/^(결국 떠납니다|다시 돌아오지 않습니다)$/.test(q[0]); }).forEach(function(q){ add("문제 강조", Ks.map(function(k){ return obj(k) + " 이렇게 하면 " + q[0]; }), [q], null); });
+    if (x.state) add("문제 강조", josa(x.state, "이", "가") + " 무너지기 전 먼저 나타나는 변화", [["무너지기 전", 3], ["먼저 나타나는 변화", 3]], null);
 
-    // 행동 유도
-    var AC = S(x.k("AC")), AN = S(["AN"]), TM = S(["TM"]), QA = S(["Q_ACTION"]);
-    for (var a = 0; a < Math.max(AC.length, TM.length); a++){
-      var ac = AC[a % AC.length], qa = [["늦게할수록 몇배 손해", 3]].concat(TM)[a % (TM.length + 1)];
-      add("행동 유도", (x.sit && a % 3 === 1 ? x.sit[0] + " " + (c.owner ? K : "아이") : (a % 2 ? K : Kt)) + ", " + ac[0], x.sit && a % 3 === 1 ? [ac, x.sit] : [ac], a % 3 === 2 ? TM[a % TM.length] : qa);
-      add("행동 유도", TM[a % TM.length][0] + ", " + K + "에서 " + AN[a % AN.length][0], [TM[a % TM.length], AN[a % AN.length]], (a % 2 || /늦/.test(TM[a % TM.length][0])) ? null : QW[a % QW.length]);
-    }
+    // 행동 유도: '원생이 안 느는 학원은 이것부터 바꾸세요'
+    [["이것만 세팅하세요", 3], ["여기부터 손보세요", 3], ["이거 하나로 달라져요", 3], ["이것부터 바꾸세요", 1], ["이 습관부터 끊으세요", 2]].forEach(function(a){
+      add("행동 유도", F.own.map(function(o){ return top(o) + " " + a[0]; }).concat(Ks.map(function(k){ return top(k) + " " + a[0]; })), [a], null);
+    });
+    add("행동 유도", Ks.map(function(k){ return obj(k) + " 이대로 두지 마세요"; }), [["이대로 두지 마세요", 2]], ["늦게할수록 몇배 손해", 3]);
+    TM.forEach(function(t, i){ var a = AN[i % AN.length]; add("행동 유도", Ks.map(function(k){ return t[0] + " " + k + "에서 " + a[0]; }), [t, a], null, a[0]); });
 
-    // 검색형: 지역·학년·과목(원장님은 학원마케팅)을 앞에 붙인 같은 공식
-    var pre = c.owner ? join(c.region, (x.biz || "학원") + "마케팅") : ((c.region || c.target) ? join(c.region, c.target, c.subject) : "");
-    var Kq = x.state || Kt;
-    if (pre){
-      for (var s2 = 0; s2 < 6; s2++){
-        var v2 = VM[s2 % VM.length], r2 = RN[(s2 + 2) % RN.length], f2 = RF[s2 % RF.length], m2 = MS[s2 % MS.length];
-        if (v2 && Kq !== pre) add("검색형", pre + ", " + (/[가이] /.test(v2[0]) ? Kq + " " : josa(Kq, "이", "가") + " ") + v2[0] + " " + r2[0], [v2, r2], null);
-        if (f2 && !x.state) add("검색형", pre + ", " + Kq + " " + f2[0], [f2], null);
-        if (!x.state) add("검색형", pre + ", " + Kq + "에서 " + m2[0], [m2], null);
-      }
-    }
-    // 입력한 단어가 그대로 들어간 문장을 앞으로
-    var mine = x.state ? [x.state] : [];
-    list = list.map(function(it, i){ it.o = i; it.mine = -mine.filter(function(w){ return it.text.indexOf(w) >= 0; }).length; return it; })
-      .sort(function(a, b){ return a.mine - b.mine || a.o - b.o; });
-    var seen = {};
-    return list.filter(function(it){ var key = it.quote + "|" + it.text; if (seen[key] || seen[it.text]) return false; seen[key] = seen[it.text] = 1; return true; });
+    list.forEach(function(it){ it.alts = it.alts.map(function(t){ return t.replace(/,/g, "").replace(/\s+/g, " ").trim(); }); it.text = it.alts[0]; });
+    return shuffle(list, rnd).sort(function(a, b){ return (b.hl.indexOf("하지 마세요") >= 0) - (a.hl.indexOf("하지 마세요") >= 0) || (b.key === "궁금증:" + (x.state ? "" : "x")) - 0; });
   }
-
 
   function thumbs(c){
     var head = join(c.target, c.subject) || c.topic, out = [];
@@ -503,7 +526,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
   function esc(s){ return String(s).replace(/[&<>"]/g, function(ch){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]; }); }
   var LV = {2:"강조", 3:"강함"};
   var HOOK = /(뜻밖의|숨은|진짜|결정적인|치명적인|놓치기 쉬운|의외로|이대로 두지 마세요|더 늦기 전에|자신감을 무너뜨리는|공통 습관|시간을 날리는|후회하기 쉬운|점검할 \d가지|확인할 \d가지|물어볼 질문 \d가지|질문 \d가지|조절이 필요한 신호|먼저 볼 것은 이것|놓치는 것|놓치고 있는 것|이유와 연습 방법|이유와 복습 방법|시작 전에 확인할 것)/;
-  var state = {mode: "blog", level: 3, page: 0, type: "궁금증", query: ""};
+  var state = {mode: "reels", level: 3, page: 0, type: "궁금증", query: ""};
 
   var TYPE_NOTE = {
     "궁금증": "숨은 이유·반전으로 끝까지 궁금하게 만드는 제목",
@@ -607,13 +630,6 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     b.addEventListener("click", function(){
       state.type = b.getAttribute("data-f"); state.page = 0;
       Array.prototype.forEach.call(document.querySelectorAll("#tabs button"), function(x){ x.setAttribute("aria-selected", x === b ? "true" : "false"); });
-      render();
-    });
-  });
-  Array.prototype.forEach.call(document.querySelectorAll("#mode button"), function(b){
-    b.addEventListener("click", function(){
-      state.mode = b.getAttribute("data-mode"); state.page = 0;
-      Array.prototype.forEach.call(document.querySelectorAll("#mode button"), function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
       render();
     });
   });
