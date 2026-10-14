@@ -1,0 +1,9 @@
+name = "blog-topic-lab"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://hakwonmate.co.kr,https://www.hakwonmate.co.kr"
+MODEL_DEFAULT = "claude-sonnet-5-5"
+MODEL_QUICK = "claude-haiku-5-5"
+DAILY_LIMIT = "40"
