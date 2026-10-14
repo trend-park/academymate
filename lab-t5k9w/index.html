@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/images/favicon.png">
+<title>탑시크릿 학원 연구소</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap">
+<style>
+/* 학원메이트 디자인 토큰 · 레이아웃: 상단 바(브랜드+탭) + 아래 전체를 채우는 도구 화면 */
+:root{--ink:#1e2a5a;--ink-2:#3b4670;--muted:#6b6b6b;--line:#f0dbe7;--bg:#ffffff;--soft:#fdf0f6;--soft-2:#fce4ef;
+--primary:#e6007e;--primary-dark:#b8005f;--accent:#ffd400;--accent-ink:#1e2a5a;--white:#ffffff;--bar:60px;color-scheme:light}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+.top{border-bottom:1px solid var(--line);background:var(--white);flex:0 0 auto;padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{max-width:1100px;margin:0 auto;padding-inline:max(12px,env(safe-area-inset-left,0px)) max(12px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:14px;height:var(--bar)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:18px;letter-spacing:-0.04em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand svg{width:28px;height:25px;display:block}
+.brand small{font-weight:500;font-size:11px;color:var(--muted);letter-spacing:0;margin-left:2px}
+nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border-radius:999px;border:2px solid transparent;background:transparent;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+nav button:hover{border-color:var(--line)}
+nav button[aria-selected="true"]{background:var(--primary);color:var(--white)}
+nav button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+nav button .n{display:inline-block;min-width:18px;padding:0 5px;margin-left:5px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:11px;line-height:18px;text-align:center}
+.stage{flex:1 1 auto;min-height:0;position:relative}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--white)}
+.stage iframe[hidden]{display:none}
+.panel{position:absolute;inset:0;overflow:auto;-webkit-overflow-scrolling:touch}
+.panel[hidden]{display:none}
+.notice{max-width:760px;margin:0 auto;padding:28px 16px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:26px;line-height:1.3;letter-spacing:-0.02em;margin:0 0 6px;font-weight:800}
+h1 em{font-style:normal;color:var(--primary)}
+.lead{font-size:15px;color:var(--ink-2);margin:0 0 20px}
+.posts{display:grid;gap:14px}
+.post{border:1px solid var(--line);border-radius:16px;background:var(--white);box-shadow:0 1px 2px rgba(31,42,68,.04);overflow:hidden}
+.post-h{padding:14px 18px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;border-bottom:1px solid var(--line);background:var(--soft)}
+.post-h h2{font-size:17px;margin:0;font-weight:800;letter-spacing:-0.01em;flex:1 1 100%}
+.who{font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--accent);padding:2px 9px;border-radius:6px}
+.when{font-size:12px;color:var(--muted)}
+.pin{font-size:12px;font-weight:700;color:var(--primary-dark)}
+.post-b{padding:14px 18px 16px;font-size:15px;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+.post-b a{color:var(--primary-dark);text-decoration:underline}
+.post-b img{max-width:100%;border-radius:10px;display:block;margin:8px 0}
+.empty{color:var(--muted);font-size:15px;padding:28px;border:1px dashed var(--line);border-radius:16px;text-align:center}
+.tools{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tools a{display:block;padding:14px 16px;border:2px solid var(--line);border-radius:12px;color:var(--ink);text-decoration:none;background:var(--white)}
+.tools a:hover{border-color:var(--primary)}
+.tools b{display:block;font-size:15px}
+.tools span{font-size:12.5px;color:var(--muted)}
+.admin{margin-top:28px;font-size:12.5px;color:var(--muted)}
+.admin a{color:var(--primary-dark)}
+.btn{display:inline-block;font:inherit;font-weight:700;font-size:14px;padding:9px 16px;border-radius:10px;border:0;background:var(--primary);color:var(--white);text-decoration:none;cursor:pointer}
+@media (max-width:560px){.brand small{display:none}.brand{font-size:16px}nav button{font-size:13px;padding:7px 11px}.tools{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#notice" id="brand"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#9db7ff"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>탑시크릿 학원 연구소<small>by 친절한미녀강사</small></a>
+  <nav id="nav" role="tablist" aria-label="메뉴">
+    <button type="button" role="tab" data-t="notice" aria-selected="true">공지<span class="n" id="ncount" hidden>0</span></button>
+    <button type="button" role="tab" data-t="thumb" aria-selected="false">후킹 썸네일 메이커</button>
+    <button type="button" role="tab" data-t="topic" aria-selected="false">블로그 주제 연구소</button>
+  </nav>
+</div></header>
+
+<div class="stage">
+  <section class="panel" id="p-notice" role="tabpanel">
+    <div class="notice">
+      <h1>탑시크릿 <em>학원 연구소</em></h1>
+      <p class="lead">친절한미녀강사가 수강생 원장님께 드리는 공지와, 학원 마케팅에 바로 쓰는 도구를 한곳에 모았습니다.</p>
+      <div class="posts" id="posts"><div class="empty">공지를 불러오는 중…</div></div>
+      <div class="tools">
+        <a href="#thumb"><b>후킹 썸네일 메이커</b><span>블로그 제목·릴스 썸네일 15~20자 문구를 유형별로 3개씩</span></a>
+        <a href="#topic"><b>블로그 주제 연구소</b><span>과목·지역만 고르면 목적별 블로그 글 주제와 글 방향 추천</span></a>
+      </div>
+      <p class="admin" id="admin">공지 작성은 운영자(친절한미녀강사)만 할 수 있습니다. <a href="https://github.com/trend-park/academymate/issues/new?labels=%EA%B3%B5%EC%A7%80&title=%5B%EA%B3%B5%EC%A7%80%5D%20" target="_blank" rel="noopener">운영자 공지 쓰기</a> · <a href="https://github.com/trend-park/academymate/issues" target="_blank" rel="noopener">공지 관리</a></p>
+    </div>
+  </section>
+  <iframe id="f-thumb" title="후킹 썸네일 메이커" hidden loading="lazy"></iframe>
+  <iframe id="f-topic" title="블로그 주제 연구소" hidden loading="lazy"></iframe>
+</div>
+
+<script>
+(() => {
+"use strict";
+const SRC = { thumb: "/title-cwxzr1/", topic: "/blogtopic-h3q8z/" };
+const REPO = "trend-park/academymate";
+const OWNER = "trend-park";            // 이 계정이 쓴 이슈만 공지로 표시
+const AUTHOR_LABEL = "친절한미녀강사";
+const $ = (s) => document.querySelector(s);
+
+function show(t) {
+  if (!["notice","thumb","topic"].includes(t)) t = "notice";
+  document.querySelectorAll("#nav button").forEach(b => b.setAttribute("aria-selected", b.dataset.t === t ? "true" : "false"));
+  $("#p-notice").hidden = t !== "notice";
+  ["thumb","topic"].forEach(k => {
+    const f = $("#f-" + k);
+    if (t === k && !f.src) f.src = SRC[k];
+    f.hidden = t !== k;
+  });
+  if (location.hash !== "#" + t) history.replaceState(null, "", "#" + t);
+  document.title = (t === "notice" ? "공지" : t === "thumb" ? "후킹 썸네일 메이커" : "블로그 주제 연구소") + " · 탑시크릿 학원 연구소";
+}
+$("#nav").addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(b.dataset.t); });
+window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.getAttribute("href").slice(1)); }));
+
+/* ----- 공지: GitHub 이슈(운영자가 쓴 열린 이슈)를 글로 표시 ----- */
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function render(md) {
+  // 아주 작은 변환: 이미지 ![alt](url), 링크 [t](url), 맨 URL, **굵게**, 줄 앞 "- " 목록은 그대로 둠
+  let s = esc(md || "").replace(/\r\n?/g, "\n");
+  s = s.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g, (m, a, u) => `<img src="${u}" alt="${a}" loading="lazy">`);
+  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (m, t, u) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`);
+  s = s.replace(/(^|[^"=>])(https?:\/\/[^\s<]+)/g, (m, p, u) => `${p}<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+  s = s.replace(/\*\*([^*\n]+)\*\*/g, "<b>$1</b>");
+  s = s.replace(/^#{1,3}\s+(.+)$/gm, "<b>$1</b>");
+  return s;
+}
+const fmt = (iso) => { const d = new Date(iso); return isNaN(d) ? "" : `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`; };
+async function loadNotices() {
+  const box = $("#posts");
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/issues?state=open&creator=${OWNER}&per_page=30&sort=created&direction=desc`, { headers: { Accept: "application/vnd.github+json" } });
+    if (!r.ok) throw new Error("http " + r.status);
+    const list = (await r.json()).filter(i => !i.pull_request);
+    const pinned = list.filter(i => (i.labels||[]).some(l => /고정|pinned/i.test(l.name)));
+    const rest = list.filter(i => !pinned.includes(i));
+    const posts = pinned.concat(rest);
+    const n = $("#ncount"); n.textContent = posts.length; n.hidden = !posts.length;
+    if (!posts.length) { box.innerHTML = `<div class="empty">아직 올라온 공지가 없습니다.</div>`; return; }
+    box.innerHTML = posts.map(i => `<article class="post">
+      <div class="post-h"><h2>${esc(i.title.replace(/^\[공지\]\s*/, ""))}</h2><span class="who">${AUTHOR_LABEL}</span><span class="when">${fmt(i.created_at)}</span>${pinned.includes(i) ? '<span class="pin">고정</span>' : ""}</div>
+      <div class="post-b">${render(i.body)}</div></article>`).join("");
+  } catch (e) {
+    box.innerHTML = `<div class="empty">공지를 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요.</div>`;
+  }
+}
+loadNotices();
+show(location.hash.slice(1) || "notice");
+})();
+</script>
+</body>
+</html>
