@@ -117,7 +117,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
 
 <main class="wrap">
   <h1>오늘 블로그에 <em>무엇을 쓸지</em> 고민 끝</h1>
-  <p class="lead">과목과 지역만 고르세요. 학부모 고민에서 출발한 블로그 글 주제를 목적별로 추천하고, 글의 방향과 준비할 자료까지 함께 드립니다.</p>
+  <p class="lead">과목과 대상만 고르세요. 학부모 고민에서 출발한 블로그 글 주제를 목적별로 추천하고, 글의 방향과 준비할 자료까지 함께 드립니다.</p>
 
   <form class="ask" id="start" autocomplete="off">
     <div class="ask-row">
@@ -126,7 +126,7 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
         <option value="과학">과학</option><option value="피아노·음악">피아노·음악</option><option value="미술">미술</option>
         <option value="태권도·줄넘기">태권도·줄넘기</option><option value="코딩">코딩</option><option value="공부방(전과목)">공부방(전과목)</option>
       </select>
-      <input type="text" class="in" id="region" placeholder="지역 (예: 송파구 문정동) — 선택">
+      
       <button type="submit" class="btn" id="btn-go">시작하기</button>
     </div>
     <div class="examples" id="stages">
@@ -373,7 +373,7 @@ $("#start").addEventListener("submit", (e) => {
   e.preventDefault();
   const stages = $$("#stages .ex[aria-pressed='true']").map(b => b.dataset.s);
   if (!stages.length) { $("#detected").innerHTML = "<b>대상을 하나 이상 골라 주세요.</b>"; return; }
-  profile = { ...(profile||{}), subject: $("#subject").value, region: $("#region").value.trim(), stages, savedAt: new Date().toISOString() };
+  profile = { ...(profile||{}), subject: $("#subject").value, region: "", stages, savedAt: new Date().toISOString() };
   save(KEY_P, profile); fillAdv(); showDetected(); openReco();
 });
 function showDetected() {
@@ -638,7 +638,7 @@ $("#btn-reset").addEventListener("click", (e) => {
 
 /* ----- 시작 상태 ----- */
 if (profile && profile.subject && S[profile.subject]) {
-  $("#subject").value = profile.subject; $("#region").value = profile.region || "";
+  $("#subject").value = profile.subject;
   $$("#stages .ex").forEach(b => b.setAttribute("aria-pressed", profile.stages.includes(b.dataset.s) ? "true" : "false"));
   fillAdv(); showDetected(); $("#reco").hidden = false;
 }
