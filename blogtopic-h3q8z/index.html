@@ -151,12 +151,6 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
       <button type="button" role="tab" data-p="inquiry_conversion" aria-selected="false"><b>상담 유도</b><span>누구에게 상담이 필요한지</span></button>
     </div>
     <div class="opts">
-      <select id="r-stage" aria-label="대상"></select>
-      <select id="r-season" aria-label="발행 시기">
-        <option value="상시">상시</option><option value="신학기">신학기</option><option value="방학">방학</option>
-        <option value="시험 전후">시험 전후</option><option value="학년 전환">학년 전환</option>
-      </select>
-      <select id="r-count" aria-label="주제 수"><option value="5">5개</option><option value="10" selected>10개</option></select>
       <details id="advbox">
         <summary>자세히 설정 (고민·최근 이야기·학원 정보)</summary>
         <div class="adv">
@@ -388,9 +382,6 @@ function showDetected() {
 }
 function openReco() {
   $("#reco").hidden = false;
-  const sel = $("#r-stage"); const prev = sel.value; sel.innerHTML = "";
-  profile.stages.forEach(s => { const o = document.createElement("option"); o.value = s; o.textContent = s; sel.appendChild(o); });
-  if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
   $("#reco").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 const ADV = ["name","schools","strength","recruit","until"];
@@ -506,11 +497,11 @@ function concernScore(o, concern) {
 function seeded(seed) { let h = 2166136261; for (let i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619); } return () => { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 100000) / 100000; }; }
 
 function generate(mode, parent) {
-  const req = { purpose, stage: $("#r-stage").value, season: $("#r-season").value, count: Number($("#r-count").value), concern: $("#r-concern").value.trim(), story: $("#r-story").value.trim(), parent: parent || null };
-  if (parent) req.count = 5;
+  const req = { purpose, season: "상시", count: parent ? 5 : 10, concern: $("#r-concern").value.trim(), story: $("#r-story").value.trim(), parent: parent || null };
   if (mode === "new") { current = []; $("#cards").innerHTML = ""; batch = 0; } else batch++;
-  const rnd = seeded(profile.subject + req.stage + req.season + batch);
-  let cands = candidates(req);
+  const rnd = seeded(profile.subject + profile.stages.join() + batch);
+  const stages = parent ? [parent.stage] : profile.stages;
+  let cands = stages.flatMap(st => candidates({ ...req, stage: st }));
   if (req.purpose !== "all") cands = cands.filter(o => o.purpose === req.purpose);
   if (parent) { const ps = norm(parent.slot), pp = parent.purpose; cands = cands.filter(o => o.fp !== parent.fp && (norm(o.slot) === ps || o.pat.slice(0,1) === parent.pat.slice(0,1) && o.purpose === pp)); }
   const pool = history.concat(current.map(t => ({ ...t, state: "shown" })));
@@ -540,7 +531,7 @@ function generate(mode, parent) {
   const byP = {}; picked.forEach(t => byP[t.purpose] = (byP[t.purpose]||0)+1);
   let msg = picked.length ? `<b>${picked.length}개 추천</b> — ${Object.entries(byP).map(([k,v]) => `${PURPOSES[k]} ${v}`).join(" · ")}` : "<b>이 조건에서 더 보여 드릴 새 주제가 없습니다.</b>";
   if (dup) msg += `<br>이미 추천했거나 쓰신 글과 겹쳐 뺀 주제 ${dup}개`;
-  if (picked.length < req.count) msg += `<br>요청한 수보다 적습니다. 비슷한 주제로 채우지 않았습니다. 대상이나 시기를 바꾸거나, '자세히 설정'에 고민·최근 이야기를 넣어 보세요. 보관함에서 '제외'를 되돌리면 다시 나옵니다.`;
+  if (picked.length < req.count) msg += `<br>요청한 수보다 적습니다. 비슷한 주제로 채우지 않았습니다. 위에서 대상을 추가하거나, '자세히 설정'에 고민·최근 이야기를 넣어 보세요. 보관함에서 '제외'를 되돌리면 다시 나옵니다.`;
   status(msg, picked.length === 0);
   $("#btn-more").hidden = false;
   if (mode === "new" && picked.length) $("#status").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -650,7 +641,6 @@ if (profile && profile.subject && S[profile.subject]) {
   $("#subject").value = profile.subject; $("#region").value = profile.region || "";
   $$("#stages .ex").forEach(b => b.setAttribute("aria-pressed", profile.stages.includes(b.dataset.s) ? "true" : "false"));
   fillAdv(); showDetected(); $("#reco").hidden = false;
-  const sel = $("#r-stage"); sel.innerHTML = ""; profile.stages.forEach(s => { const o = document.createElement("option"); o.value = s; o.textContent = s; sel.appendChild(o); });
 }
 })();
 </script>
