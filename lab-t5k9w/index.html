@@ -87,7 +87,7 @@ h1 em{font-style:normal;color:var(--primary)}
 <header class="top"><div class="wrap">
   <a class="brand" href="#notice" id="brand"><svg viewBox="10 8 148 132" aria-hidden="true"><path d="M26 44q40-14 58 4v82q-18-16-58-4z" fill="#1a5cff"/><path d="M142 44q-40-14-58 4v82q18-16 58-4z" fill="#9db7ff"/><circle cx="84" cy="30" r="14" fill="#ffd400"/></svg>탑시크릿 학원 연구소<small>by 친절한미녀강사</small></a>
   <nav id="nav" role="tablist" aria-label="메뉴">
-    <button type="button" role="tab" data-t="notice" aria-selected="true">공지<span class="n" id="ncount" hidden>0</span></button>
+    <button type="button" role="tab" data-t="notice" aria-selected="true">공지</button>
     <button type="button" role="tab" data-t="thumb" aria-selected="false">후킹 썸네일 메이커</button>
     <button type="button" role="tab" data-t="topic" aria-selected="false">블로그 주제 연구소</button>
   </nav>
@@ -177,7 +177,6 @@ async function loadNotices() {
     const list = (await r.json()).filter(i => !i.pull_request);
     list.forEach(i => i.pinned = (i.labels||[]).some(l => /고정|pinned/i.test(l.name)));
     posts = list.filter(i => i.pinned).concat(list.filter(i => !i.pinned));
-    const nc = $("#ncount"); nc.textContent = posts.length; nc.hidden = !posts.length;
     loaded = true;
     const h = parseHash(); if ((h.t || "notice") === "notice") renderNotice(h.id);
   } catch (e) {
