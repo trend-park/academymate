@@ -508,6 +508,9 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
   // '다시 풀면 맞는데 시험에서 틀리는' → '시험에서 틀리는'
   function sitTail(s){ var m = s.match(/(?:는데|해도|어도|아도|도) (.+)$/); return m ? m[1] : s; }
 
+  /* 후킹 문구 모음(docx) 공식: 금지형·고민형 질문·오해/비밀/지름길·당장/매일 */
+  function banOf(t){ return t.replace(/으면$/, "").replace(/면$/, "") + "지 마세요"; }
+  function stopOf(t){ return t.replace(/면$/, "는 것"); }
   function buildParent(c){
     var P = ptFor(c.raw, c.subject), list = [], rnd = seeded(c.raw);
     var sfx = P.subj && !P.exam ? " 공부" : "";
@@ -519,7 +522,8 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
       list.push({type: type, fam: fam, text: alts[0], alts: alts, quote: quote || "", level: level, hl: [], src: 0, key: type + ":" + fam + ":" + alts[0], anchor: anchorWords});
     }
     function ea(fn){ return As.map(fn); }
-    var RN = ["진짜 이유", "숨은 이유", "결정적인 이유"];
+    var RN = ["진짜 이유", "숨은 이유", "결정적인 이유", "충격적인 이유", "뜻밖의 이유"];
+    var N = c.count;
     var tails = P.sit.map(sitTail);
     function top(k){ return josa(k, "은", "는"); }
 
@@ -555,6 +559,28 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     add("행동 유도", "늦기전", ea(function(a){ return a + " 늦기 전에 이것부터 잡으세요"; }).concat(ea(function(a){ return a + " 늦기 전에 꼭 잡으세요"; })), 3);
     add("행동 유도", "두지마", ea(function(a){ return josa(a, "을", "를") + " 이대로 두지 마세요"; }), 3, "늦게할수록 몇배 손해");
     add("행동 유도", "달라짐", ea(function(a){ return a + " 이것만 바꾸면 달라집니다"; }).concat(ea(function(a){ return a + " 이거 하나로 달라져요"; })), 3);
+    // ── 문서 공식 추가 (학부모·학생) ──
+    add("궁금증", "질문", tails.map(function(t){ return "왜 " + t + " 걸까?"; }).concat(P.sit.map(function(x){ return x + " 아이 왜 그럴까?"; })), 3);
+    add("궁금증", "오해", ea(function(a){ return a + "에 대한 가장 흔한 오해"; }).concat(ea(function(a){ return a + " 다들 잘못 알고 있는 것"; })), 3);
+    add("궁금증", "비밀", ea(function(a){ return "나만 알고 싶었던 " + a + "의 비밀"; }).concat(ea(function(a){ return "아무도 안 알려주는 " + a + " 꿀팁"; }), ea(function(a){ return "전문가도 말 안 하는 " + a + " 꿀팁"; })), 3);
+    add("궁금증", "소용", ea(function(a){ return a + " 열심히 해도 소용없는 이유"; }).concat(ea(function(a){ return a + " 도움이 안 됐던 진짜 이유"; })), 3);
+    add("궁금증", "방해", ea(function(a){ return "모르는 사이 " + josa(a, "을", "를") + " 망치는 것"; }).concat(ea(function(a){ return "나도 모르게 " + josa(a, "을", "를") + " 방해하는 것"; })), 3);
+    add("문제 강조", "금지", P.trap.map(function(t){ return banOf(t); }).concat(P.trap.map(function(t){ return "제발 " + banOf(t); })), 3);
+    add("문제 강조", "치명", ea(function(a){ return josa(a, "을", "를") + " 방해하는 치명적인 실수"; }).concat(ea(function(a){ return a + " 안 되는 의외의 실수"; })), 3);
+    add("문제 강조", "그러니까", P.trap.map(function(t){ return "그렇게 " + t.replace(/으?면$/, "니까") + " 안 되죠"; }).concat(P.subj ? ea(function(a){ return "그렇게 하니까 " + josa(a, "이", "가") + " 안 되죠"; }) : []), 3);
+    add("문제 강조", "망칩니다", P.trap.map(function(t){ return stopOf(t) + "은 " + josa(P.an, "을", "를") + " 망칩니다"; }).concat(P.trap.map(function(t){ return stopOf(t) + " 결국 " + josa(P.an, "을", "를") + " 망칩니다"; })), 3);
+    add("행동 유도", "당장", ea(function(a){ return a + " 안 될 때 당장 해야 할 행동"; }).concat(ea(function(a){ return a + " 안 될 때 당장 할 것"; })), 3);
+    add("행동 유도", "매일", ea(function(a){ return josa(a, "을", "를") + " 위해 매일 해야 하는 것"; }).concat(ea(function(a){ return a + " 매일 이것만 하세요"; })), 3);
+    add("행동 유도", "지름길", ea(function(a){ return a + " 빨리 잡고 싶다면 이것부터"; }).concat(ea(function(a){ return "빠른 " + a + " 원한다면 이것부터 보세요"; }), ea(function(a){ return josa(a, "으로", "로") + " 가는 지름길"; })), 3);
+    add("행동 유도", "점검", ea(function(a){ return a + " 느리다면 이것부터 점검하세요"; }).concat(ea(function(a){ return a + " 안 늘면 이것부터 확인하세요"; })), 3);
+    add("행동 유도", "없이는", ea(function(a){ return "이것 없이는 " + a + " 절대 안 됩니다"; }), 3);
+    add("행동 유도", "그만", P.trap.map(function(t){ return "이제 " + stopOf(t) + " 그만하세요"; }).concat(P.trap.map(function(t){ return stopOf(t) + " 당장 멈추세요"; })), 3);
+    add("행동 유도", "타겟", tails.map(function(t){ return t + " 아이 부모님만 보세요"; }).concat(tails.map(function(t){ return t + " 아이만 보세요"; })), 3);
+    if (N){
+      add("궁금증", "숫자", ea(function(a){ return a + " 안 되는 이유 " + N + "가지"; }).concat(ea(function(a){ return a + "에 대한 진실 " + N + "가지"; })), 3);
+      add("문제 강조", "숫자", ea(function(a){ return josa(a, "을", "를") + " 망치는 실수 " + N + "가지"; }).concat(ea(function(a){ return a + " 절대 하면 안 될 행동 " + N + "가지"; })), 3);
+      add("행동 유도", "숫자", ea(function(a){ return a + " 위해 반드시 할 " + N + "가지"; }).concat(ea(function(a){ return a + " 지금 당장 할 것 " + N + "가지"; })), 3);
+    }
     return shuffle(list, rnd);
   }
 
@@ -617,6 +643,30 @@ footer{margin-top:var(--s5);font-size:12px;color:var(--muted)}
     addF("궁금증", "차이", Ks.map(function(k){ return k + " 결국 여기서 갈립니다"; }).concat(["잘되는 " + x.biz + "은 여기서 갈립니다"]));
     addF("궁금증", "진실", Ks.map(function(k){ return k + " 아무도 말해주지 않는 진실"; }).concat(Ks.map(function(k){ return k + " 아무도 말 안 해주는 것"; })));
     addF("궁금증", "반전", Ks.map(function(k){ return k + " 열심히 할수록 꼬이는 이유"; }).concat(Ks.map(function(k){ return k + " 좋은 줄 알았는데 역효과"; })));
+    // ── 문서 공식 추가 (원장님) ──
+    var N = c.count, B = x.biz;
+    addF("궁금증", "질문", F.fail.map(function(f){ return "왜 " + f + " 걸까?"; }).concat(F.act.map(function(a, i){ return a + " 왜 " + (F.fail[i % F.fail.length]) + " 걸까?"; })));
+    addF("궁금증", "오해", Ks.map(function(k){ return k + "에 대한 가장 흔한 오해"; }).concat(Ks.map(function(k){ return k + " 원장님들이 잘못 아는 것"; })));
+    addF("궁금증", "비밀", Ks.map(function(k){ return "나만 알고 싶었던 " + k + "의 비밀"; }).concat(Ks.map(function(k){ return "아무도 안 알려주는 " + k + " 꿀팁"; }), Ks.map(function(k){ return "대행사가 말 안 하는 " + k + " 꿀팁"; })));
+    addF("궁금증", "소용", Ks.map(function(k){ return k + " 열심히 해도 소용없는 이유"; }).concat(Ks.map(function(k){ return k + " 도움이 안 됐던 진짜 이유"; })));
+    addF("궁금증", "싫어", ["이거 공개하면 대행사가 싫어합니다", "이걸 알면 광고 대행사가 싫어합니다"]);
+    addF("문제 강조", "금지", F.trap.map(function(t){ return banOf(t); }).concat(F.trap.map(function(t){ return "제발 " + banOf(t); })));
+    addF("문제 강조", "치명", Ks.map(function(k){ return josa(k, "을", "를") + " 방해하는 치명적인 실수"; }).concat(Ks.map(function(k){ return k + " 안 되는 의외의 실수"; })));
+    addF("문제 강조", "그러니까", F.trap.map(function(t){ return "그렇게 " + t.replace(/으?면$/, "니까") + " 안 되죠"; }).concat(["그렇게 하니까 " + F.fail[0].replace(/는$/, "") + " 거죠"]));
+    addF("문제 강조", "망칩니다", F.trap.map(function(t){ return stopOf(t) + "은 " + josa(Ks[0], "을", "를") + " 망칩니다"; }));
+    addF("문제 강조", "실패공통", ["실패하는 " + josa(B, "이", "가") + " 꼭 하는 행동", "망하는 " + B + "의 공통된 습관"]);
+    addF("행동 유도", "당장", Ks.map(function(k){ return k + " 안 될 때 당장 해야 할 행동"; }).concat(Ks.map(function(k){ return k + " 안 될 때 당장 할 것"; })));
+    addF("행동 유도", "매일", Ks.map(function(k){ return josa(k, "을", "를") + " 위해 매일 해야 하는 것"; }).concat(Ks.map(function(k){ return k + " 매일 이것만 하세요"; })));
+    addF("행동 유도", "성공공통", ["잘되는 " + josa(B, "이", "가") + " 반드시 하는 것", "잘되는 " + B + " 원장님이 매일 하는 것"]);
+    addF("행동 유도", "지름길", Ks.map(function(k){ return "빠른 " + k + " 원한다면 이것부터 보세요"; }).concat(x.biz && !/블로그|인스타|광고|플레이스/.test(Ks[0]) ? Ks.map(function(k){ return josa(k, "으로", "로") + " 가는 지름길"; }) : Ks.map(function(k){ return k + " 빨리 키우는 지름길"; })));
+    addF("행동 유도", "점검", Ks.map(function(k){ return k + " 느리다면 이것부터 점검하세요"; }).concat(Ks.map(function(k){ return k + " 안 되면 이것부터 확인하세요"; })));
+    addF("행동 유도", "없이는", Ks.map(function(k){ return "이것 없이는 " + k + " 절대 안 됩니다"; }));
+    addF("행동 유도", "타겟", F.fail.map(function(f){ return f + " " + F.who + "만 보세요"; }).concat(F.own.map(function(o){ return o + "만 보세요"; })));
+    if (N){
+      addF("궁금증", "숫자", Ks.map(function(k){ return k + " 안 되는 이유 " + N + "가지"; }));
+      addF("문제 강조", "숫자", Ks.map(function(k){ return josa(k, "을", "를") + " 망치는 실수 " + N + "가지"; }));
+      addF("행동 유도", "숫자", Ks.map(function(k){ return k + " 위해 반드시 할 " + N + "가지"; }));
+    }
     var anc = (Ks.join(" ") + " " + x.biz + " 학원").split(" ");
     list.forEach(function(it){ it.anchor = anc; });
     list.forEach(function(it){ it.alts = it.alts.map(function(t){ return t.replace(/,/g, "").replace(/\s+/g, " ").trim(); }); it.text = it.alts[0]; });
