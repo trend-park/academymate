@@ -23,8 +23,13 @@ body{background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans K
 nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
 nav button{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border-radius:999px;border:2px solid transparent;background:transparent;color:var(--ink-2);cursor:pointer;white-space:nowrap}
-nav button:hover{border-color:var(--line)}
-nav button[aria-selected="true"]{background:var(--primary);color:var(--white)}
+nav button:hover{filter:brightness(.96)}
+nav button[data-t="notice"]{background:var(--soft);color:var(--ink);border-color:var(--line)}
+nav button[data-t="thumb"]{background:var(--accent);color:var(--accent-ink)}
+nav button[data-t="topic"]{background:#e8f1ff;color:#1d4ed8;border-color:#bfd6ff}
+nav button[aria-selected="true"]{background:var(--primary);color:var(--white);border-color:var(--primary);box-shadow:0 4px 12px rgba(230,0,126,.25)}
+nav button[data-t="topic"][aria-selected="true"]{background:#1d4ed8;border-color:#1d4ed8;box-shadow:0 4px 12px rgba(29,78,216,.25)}
+nav button[data-t="thumb"][aria-selected="true"]{background:#111;color:var(--accent);border-color:#111;box-shadow:0 4px 12px rgba(0,0,0,.2)}
 nav button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 nav button .n[hidden]{display:none}
 nav button .n{display:inline-block;min-width:18px;padding:0 5px;margin-left:5px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:11px;line-height:18px;text-align:center}
@@ -37,16 +42,29 @@ nav button .n{display:inline-block;min-width:18px;padding:0 5px;margin-left:5px;
 h1{font-size:26px;line-height:1.3;letter-spacing:-0.02em;margin:0 0 6px;font-weight:800}
 h1 em{font-style:normal;color:var(--primary)}
 .lead{font-size:15px;color:var(--ink-2);margin:0 0 20px}
-.posts{display:grid;gap:14px}
-.post{border:1px solid var(--line);border-radius:16px;background:var(--white);box-shadow:0 1px 2px rgba(31,42,68,.04);overflow:hidden}
-.post-h{padding:14px 18px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;border-bottom:1px solid var(--line);background:var(--soft)}
-.post-h h2{font-size:17px;margin:0;font-weight:800;letter-spacing:-0.01em;flex:1 1 100%}
-.who{font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--accent);padding:2px 9px;border-radius:6px}
-.when{font-size:12px;color:var(--muted)}
-.pin{font-size:12px;font-weight:700;color:var(--primary-dark)}
-.post-b{padding:14px 18px 16px;font-size:15px;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
-.post-b a{color:var(--primary-dark);text-decoration:underline}
-.post-b img{max-width:100%;border-radius:10px;display:block;margin:8px 0}
+.board{border-top:2px solid var(--ink);border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:44px 1fr 118px 84px;align-items:center;gap:8px;padding:12px 6px;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.row.head{font-size:12.5px;font-weight:700;color:var(--muted);background:var(--soft);padding:9px 6px}
+.row .no{text-align:center;color:var(--muted);font-variant-numeric:tabular-nums}
+.row .ttl{min-width:0;font-weight:700;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px;overflow:hidden}
+.row .ttl span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .ttl:hover span{text-decoration:underline;color:var(--primary-dark)}
+.row .pin{font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent);padding:1px 7px;border-radius:5px;flex:0 0 auto}
+.row .new{font-size:10px;font-weight:800;color:var(--primary);flex:0 0 auto}
+.row .who{text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .when{text-align:center;color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:560px){.row{grid-template-columns:1fr 72px;padding:11px 4px}.row .no,.row .who,.row.head .when{display:none}.row.head{display:none}.board{border-top-width:1px}}
+.view{border:1px solid var(--line);border-radius:16px;background:var(--white);overflow:hidden}
+.view-h{padding:16px 18px 12px;border-bottom:1px solid var(--line);background:var(--soft)}
+.view-h h2{font-size:19px;margin:0 0 6px;font-weight:800;letter-spacing:-0.01em;line-height:1.35}
+.view-h .meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:12.5px;color:var(--muted)}
+.view-h .meta b{font-weight:700;color:var(--accent-ink);background:var(--accent);padding:1px 8px;border-radius:5px}
+.view-b{padding:16px 18px 18px;font-size:15px;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+.view-b a{color:var(--primary-dark);text-decoration:underline}
+.view-b img{max-width:100%;border-radius:10px;display:block;margin:8px 0}
+.view-f{display:flex;justify-content:space-between;gap:8px;padding:12px 18px;border-top:1px solid var(--line)}
+.back{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--white);color:var(--ink-2);cursor:pointer;text-decoration:none}
+.back:hover{border-color:var(--primary);color:var(--primary-dark)}
 .empty{color:var(--muted);font-size:15px;padding:28px;border:1px dashed var(--line);border-radius:16px;text-align:center}
 .tools{margin:0 0 8px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tools a{display:block;padding:14px 16px;border:2px solid var(--line);border-radius:12px;color:var(--ink);text-decoration:none;background:var(--white)}
@@ -80,11 +98,7 @@ h1 em{font-style:normal;color:var(--primary)}
         <a href="#topic"><b>블로그 주제 연구소</b><span>과목·대상만 고르면 목적별 블로그 글 주제와 글 방향 추천</span></a>
       </div>
       <h2 class="sec">공지</h2>
-      <div class="posts" id="posts"><div class="empty">공지를 불러오는 중…</div></div>
-      <div class="tools">
-        
-        
-      </div>
+      <div id="posts"><div class="empty">공지를 불러오는 중…</div></div>
       <p class="admin" id="admin">공지 작성은 운영자(친절한미녀강사)만 할 수 있습니다. <a href="https://github.com/trend-park/academymate/issues/new?labels=%EA%B3%B5%EC%A7%80&title=%5B%EA%B3%B5%EC%A7%80%5D%20" target="_blank" rel="noopener">운영자 공지 쓰기</a> · <a href="https://github.com/trend-park/academymate/issues" target="_blank" rel="noopener">공지 관리</a></p>
     </div>
   </section>
@@ -101,26 +115,25 @@ const OWNER = "trend-park";            // 이 계정이 쓴 이슈만 공지로 
 const AUTHOR_LABEL = "친절한미녀강사";
 const $ = (s) => document.querySelector(s);
 
-function show(t) {
+let posts = [], loaded = false;
+function parseHash() { const h = location.hash.slice(1); const m = h.match(/^notice-(\d+)$/); return m ? { t: "notice", id: +m[1] } : { t: h }; }
+function show(t, id) {
   if (!["notice","thumb","topic"].includes(t)) t = "notice";
   document.querySelectorAll("#nav button").forEach(b => b.setAttribute("aria-selected", b.dataset.t === t ? "true" : "false"));
   $("#p-notice").hidden = t !== "notice";
-  ["thumb","topic"].forEach(k => {
-    const f = $("#f-" + k);
-    if (t === k && !f.src) f.src = SRC[k];
-    f.hidden = t !== k;
-  });
-  if (location.hash !== "#" + t) history.replaceState(null, "", "#" + t);
+  ["thumb","topic"].forEach(k => { const f = $("#f-" + k); if (t === k && !f.src) f.src = SRC[k]; f.hidden = t !== k; });
+  const want = t === "notice" && id ? "#notice-" + id : "#" + t;
+  if (location.hash !== want) history.replaceState(null, "", want);
   document.title = (t === "notice" ? "공지" : t === "thumb" ? "후킹 썸네일 메이커" : "블로그 주제 연구소") + " · 탑시크릿 학원 연구소";
+  if (t === "notice") renderNotice(id);
 }
 $("#nav").addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(b.dataset.t); });
-window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+window.addEventListener("hashchange", () => { const h = parseHash(); show(h.t, h.id); });
 document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => { e.preventDefault(); show(a.getAttribute("href").slice(1)); }));
 
-/* ----- 공지: GitHub 이슈(운영자가 쓴 열린 이슈)를 글로 표시 ----- */
+/* ----- 공지: GitHub 이슈(운영자가 쓴 열린 이슈)를 게시판 목록/본문으로 표시 ----- */
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function render(md) {
-  // 아주 작은 변환: 이미지 ![alt](url), 링크 [t](url), 맨 URL, **굵게**, 줄 앞 "- " 목록은 그대로 둠
   let s = esc(md || "").replace(/\r\n?/g, "\n");
   s = s.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g, (m, a, u) => `<img src="${u}" alt="${a}" loading="lazy">`);
   s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (m, t, u) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`);
@@ -130,26 +143,44 @@ function render(md) {
   return s;
 }
 const fmt = (iso) => { const d = new Date(iso); return isNaN(d) ? "" : `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`; };
+const isNew = (iso) => (Date.now() - new Date(iso).getTime()) < 3 * 86400000;
+const clean = (t) => t.replace(/^\[공지\]\s*/, "");
+function renderNotice(id) {
+  const box = $("#posts");
+  if (!loaded) return;
+  if (id) {
+    const p = posts.find(x => x.number === id);
+    if (!p) { box.innerHTML = `<div class="empty">해당 공지를 찾을 수 없습니다.</div><p style="margin-top:12px"><a class="back" href="#notice">목록으로</a></p>`; bindBack(); return; }
+    box.innerHTML = `<article class="view">
+      <div class="view-h"><h2>${esc(clean(p.title))}</h2><div class="meta"><b>${AUTHOR_LABEL}</b><span>${fmt(p.created_at)}</span>${p.pinned ? '<span class="pin">고정</span>' : ""}</div></div>
+      <div class="view-b">${render(p.body)}</div>
+      <div class="view-f"><a class="back" href="#notice">목록으로</a></div></article>`;
+    $("#p-notice").scrollTop = 0; bindBack(); return;
+  }
+  if (!posts.length) { box.innerHTML = `<div class="empty">아직 올라온 공지가 없습니다.</div>`; return; }
+  const total = posts.filter(p => !p.pinned).length; let n = total;
+  box.innerHTML = `<div class="board"><div class="row head"><span class="no">번호</span><span>제목</span><span class="who">작성자</span><span class="when">날짜</span></div>` +
+    posts.map(p => `<div class="row"><span class="no">${p.pinned ? "공지" : n--}</span><a class="ttl" href="#notice-${p.number}">${p.pinned ? '<span class="pin">고정</span>' : ""}<span>${esc(clean(p.title))}</span>${isNew(p.created_at) ? '<span class="new">N</span>' : ""}</a><span class="who">${AUTHOR_LABEL}</span><span class="when">${fmt(p.created_at)}</span></div>`).join("") + `</div>`;
+  box.querySelectorAll("a.ttl").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show("notice", +a.getAttribute("href").split("-")[1]); }));
+}
+function bindBack() { document.querySelectorAll("a.back").forEach(a => a.addEventListener("click", e => { e.preventDefault(); show("notice"); })); }
 async function loadNotices() {
   const box = $("#posts");
   try {
-    const r = await fetch(`https://api.github.com/repos/${REPO}/issues?state=open&creator=${OWNER}&per_page=30&sort=created&direction=desc`, { headers: { Accept: "application/vnd.github+json" } });
+    const r = await fetch(`https://api.github.com/repos/${REPO}/issues?state=open&creator=${OWNER}&per_page=50&sort=created&direction=desc`, { headers: { Accept: "application/vnd.github+json" } });
     if (!r.ok) throw new Error("http " + r.status);
     const list = (await r.json()).filter(i => !i.pull_request);
-    const pinned = list.filter(i => (i.labels||[]).some(l => /고정|pinned/i.test(l.name)));
-    const rest = list.filter(i => !pinned.includes(i));
-    const posts = pinned.concat(rest);
-    const n = $("#ncount"); n.textContent = posts.length; n.hidden = !posts.length;
-    if (!posts.length) { box.innerHTML = `<div class="empty">아직 올라온 공지가 없습니다.</div>`; return; }
-    box.innerHTML = posts.map(i => `<article class="post">
-      <div class="post-h"><h2>${esc(i.title.replace(/^\[공지\]\s*/, ""))}</h2><span class="who">${AUTHOR_LABEL}</span><span class="when">${fmt(i.created_at)}</span>${pinned.includes(i) ? '<span class="pin">고정</span>' : ""}</div>
-      <div class="post-b">${render(i.body)}</div></article>`).join("");
+    list.forEach(i => i.pinned = (i.labels||[]).some(l => /고정|pinned/i.test(l.name)));
+    posts = list.filter(i => i.pinned).concat(list.filter(i => !i.pinned));
+    const nc = $("#ncount"); nc.textContent = posts.length; nc.hidden = !posts.length;
+    loaded = true;
+    const h = parseHash(); if ((h.t || "notice") === "notice") renderNotice(h.id);
   } catch (e) {
     box.innerHTML = `<div class="empty">공지를 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요.</div>`;
   }
 }
 loadNotices();
-show(location.hash.slice(1) || "notice");
+{ const h = parseHash(); show(h.t || "notice", h.id); }
 })();
 </script>
 </body>
