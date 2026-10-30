@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      COOKIE_SECURE: "1"
+    volumes:
+      - rank-data:/data
+    init: true
+  worker:
+    build: .
+    restart: unless-stopped
+    command: ["python", "server.py", "--worker"]
+    volumes:
+      - rank-data:/data
+    shm_size: "512mb"
+    init: true
+volumes:
+  rank-data:

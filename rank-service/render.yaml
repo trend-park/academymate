@@ -1,0 +1,26 @@
+# Review Render's quote before approving creation. No resources created by this file alone.
+services:
+  - type: web
+    name: hakwonmate-rank
+    runtime: docker
+    rootDir: rank-service
+    plan: 1c-2g
+    region: singapore
+    numInstances: 1
+    dockerfilePath: ./Dockerfile.managed
+    healthCheckPath: /api/health
+    autoDeployTrigger: "off"
+    envVars:
+      - key: COOKIE_SECURE
+        value: "1"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hakwonmate-rank-db
+          property: connectionString
+databases:
+  - name: hakwonmate-rank-db
+    plan: 0.1c-256mb
+    region: singapore
+    databaseName: academyrank
+    user: academyrank
+    ipAllowList: []

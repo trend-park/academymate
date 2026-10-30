@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    environment:
+      COOKIE_SECURE: "1"
+    volumes:
+      - rank-data:/data
+    init: true
+  worker:
+    build: .
+    restart: unless-stopped
+    command: ["python", "server.py", "--worker"]
+    volumes:
+      - rank-data:/data
+    shm_size: "512mb"
+    init: true
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      RANK_DOMAIN: ${RANK_DOMAIN:-rank.hakwonmate.co.kr}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+volumes:
+  rank-data:
+  caddy-data:
+  caddy-config:

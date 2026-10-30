@@ -1,0 +1,4 @@
+{$RANK_DOMAIN:rank.hakwonmate.co.kr} {
+    encode zstd gzip
+    reverse_proxy web:8000
+}

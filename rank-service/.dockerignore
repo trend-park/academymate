@@ -1,0 +1,7 @@
+data
+.deps
+.venv
+__pycache__
+.env
+*.zip
+tests
