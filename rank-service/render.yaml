@@ -20,6 +20,7 @@ services:
 databases:
   - name: hakwonmate-rank-db
     plan: 0.1c-256mb
+    diskSizeGB: 1
     region: singapore
     databaseName: academyrank
     user: academyrank
