@@ -120,7 +120,6 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 
   <div class="grid">
     <section class="panel input-panel">
-      <div class="chips" style="margin-bottom:14px"><span class="hint" style="margin:0 2px 0 0">예시 불러오기</span><button type="button" class="btn sm ghost" id="exEng">영어학원</button><button type="button" class="btn sm ghost" id="exMath">수학학원</button><button type="button" class="btn sm ghost" id="exTkd">태권도학원</button><button type="button" class="btn sm ghost" id="exDance">무용학원</button><button type="button" class="btn sm ghost" id="exMusic">음악학원</button></div>
       <label class="field" for="locs">지역·학교 <span class="hint">쉼표로 구분</span></label>
       <input type="text" id="locs" placeholder="예: 송파동, 중대초, 잠실여중, 가락중">
 
@@ -165,9 +164,6 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
         <label class="chip"><input type="checkbox" value="explore" id="go-explore" checked>탐색형 (추천·후기·비용·수업·체험)</label>
         <label class="chip"><input type="checkbox" value="concern" id="go-concern">고민형 (레벨테스트·늦게 시작)</label>
       </div>
-
-      <label class="field" for="titles">이미 쓴 글 제목 <span class="hint">선택 · 한 줄에 하나</span></label>
-      <textarea id="titles" placeholder="블로그 글 제목을 붙여넣으면 이미 글이 있는 키워드에 '글 있음' 표시가 붙습니다"></textarea>
 
       <div class="actions">
         <button class="btn" id="runBtn">키워드 정리</button>
@@ -410,7 +406,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
       if(b.mods[0] && b.areas[0]) want.push(b.areas[0].name+' '+b.mods[0]);
       want.forEach(w=>{ if(core.size<CORE_MAX && all.includes(w)) core.add(w); });
     }
-    state = {groups:b.groups, sel, core, seen:new Set(all), titles:$('titles').value.split('\n').map(norm).filter(Boolean)};
+    state = {groups:b.groups, sel, core, seen:new Set(all), titles:[]};
     renderResults();
     save();
   }
@@ -482,11 +478,11 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
   let tt; function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),1600); }
 
   const KEY='blog-kw-tool-v5';
-  function save(){ try{ localStorage.setItem(KEY,JSON.stringify({locs:$('locs').value,subject:$('subject').value,mods:$('mods').value,titles:$('titles').value,levels:checked('levels'),grades:checked('grades'),on:checked('groupsOn'),modChips:[...document.querySelectorAll('#modSets input:checked')].map(i=>i.value),sel:[...state.sel],core:[...state.core],seen:[...(state.seen||[])]})); }catch(e){} }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify({locs:$('locs').value,subject:$('subject').value,mods:$('mods').value,levels:checked('levels'),grades:checked('grades'),on:checked('groupsOn'),modChips:[...document.querySelectorAll('#modSets input:checked')].map(i=>i.value),sel:[...state.sel],core:[...state.core],seen:[...(state.seen||[])]})); }catch(e){} }
   function load(){
     try{
       const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(!d) return false;
-      $('locs').value=d.locs||''; $('subject').value=d.subject||''; $('mods').value=d.mods||''; $('titles').value=d.titles||'';
+      $('locs').value=d.locs||''; $('subject').value=d.subject||''; $('mods').value=d.mods||'';
       [['levels',d.levels],['grades',d.grades],['groupsOn',d.on]].forEach(([id,vals])=>{ if(vals) document.querySelectorAll('#'+id+' input').forEach(i=>i.checked=vals.includes(i.value)); });
       setModChips(d.modChips||[]);
       state.sel=new Set(d.sel||[]); state.core=new Set(d.core||[]); state.seen=new Set(d.seen||d.sel||[]);
@@ -503,20 +499,15 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
   };
   function setModChips(vals){ renderModSets(); document.querySelectorAll('#modSets input').forEach(i=>i.checked=vals.includes(i.value)); }
   function loadExample(k){
-    const e=EXAMPLES[k]; $('locs').value=e.locs; $('subject').value=e.subject; $('mods').value=e.mods; $('titles').value='';
+    const e=EXAMPLES[k]; $('locs').value=e.locs; $('subject').value=e.subject; $('mods').value=e.mods;
     [['levels',e.levels],['grades',e.grades],['groupsOn',e.on]].forEach(([id,vals])=>document.querySelectorAll('#'+id+' input').forEach(i=>i.checked=vals.includes(i.value)));
     setModChips(e.modChips);
     state={groups:[],sel:new Set(),core:new Set(),titles:[]}; run();
   }
-  $('exEng').addEventListener('click',()=>loadExample('eng'));
-  $('exMath').addEventListener('click',()=>loadExample('math'));
-  $('exTkd').addEventListener('click',()=>loadExample('tkd'));
-  $('exDance').addEventListener('click',()=>loadExample('dance'));
-  $('exMusic').addEventListener('click',()=>loadExample('music'));
   $('subject').addEventListener('input',renderModSets);
   $('runBtn').addEventListener('click',run);
   $('clearBtn').addEventListener('click',()=>{
-    ['locs','subject','mods','titles'].forEach(id=>$(id).value='');
+    ['locs','subject','mods'].forEach(id=>$(id).value='');
     setModChips([]);
     state={groups:[],sel:new Set(),core:new Set(),titles:[]};
     $('parsed').innerHTML=''; renderResults(); try{ localStorage.removeItem(KEY); }catch(e){}
@@ -544,11 +535,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     }
   });
 
-  if(!load()){
-    $('locs').value='송파동, 중대초, 잠실여중, 가락중';
-    $('subject').value='영어';
-    setModChips(['파닉스','내신']);
-  }
+  if(!load()){ setModChips([]); }
   run();
 })();
 </script>
