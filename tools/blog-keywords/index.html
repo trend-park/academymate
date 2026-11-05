@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>블로그 순위체크 키워드 정리 | 학원메이트 도구</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="학원 블로그 글에 쓸 키워드를 지역·학교·과목·대상으로 넣으면 통합검색 순위를 잴 키워드 목록을 그룹별로 만들어 주는 도구입니다.">
+<link rel="icon" href="/images/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#F4F5F8; --panel:#FFFFFF; --ink:#1A2030; --ink-2:#4B5568; --ink-3:#7E889A;
+  --line:#D8DCE5; --line-2:#E9ECF2;
+  --accent:#2F4FA0; --accent-ink:#FFFFFF; --accent-soft:#E6ECF9; --accent-soft-ink:#213B7E;
+  --warn-soft:#FBEFD9; --warn-ink:#8A5A00;
+  --school-soft:#E4F2EC; --school-ink:#1F6F57;
+  --star:#C8841A; --star-soft:#FBF1DC;
+  --done-soft:#EEF0F4; --done-ink:#5B6578;
+  --serif:"Noto Serif KR","Apple SD Gothic Neo",serif;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#13161D; --panel:#1B2029; --ink:#ECEFF5; --ink-2:#B6BECD; --ink-3:#7F8898;
+    --line:#2D3340; --line-2:#242A35;
+    --accent:#8BA6F0; --accent-ink:#0E1424; --accent-soft:#222C48; --accent-soft-ink:#B8C8F5;
+    --warn-soft:#3C3017; --warn-ink:#F0C978;
+    --school-soft:#1E3A30; --school-ink:#9ADBC2;
+    --star:#F0B85A; --star-soft:#3A2E16;
+    --done-soft:#262C38; --done-ink:#9AA3B5;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-block:36px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{margin-bottom:24px}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:600;text-transform:uppercase}
+h1{font-family:var(--serif);font-weight:700;font-size:30px;line-height:1.25;margin:6px 0 10px;text-wrap:balance}
+.lede{color:var(--ink-2);max-width:62ch;margin:0}
+.rule{font-size:13px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:12px 16px;margin-bottom:22px}
+.rule b{color:var(--ink)}
+.grid{display:grid;grid-template-columns:370px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.input-panel{padding:20px;position:sticky;top:env(safe-area-inset-top,0px);max-height:calc(100vh - 24px);overflow:auto}
+@media (max-width:880px){.input-panel{position:static;max-height:none}}
+label.field{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin:16px 0 6px}
+label.field:first-child{margin-top:0}
+.hint{font-size:12px;color:var(--ink-3);font-weight:400;margin-left:6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink)}
+textarea{min-height:78px;resize:vertical;font-size:13.5px;line-height:1.5}
+input[type=text]:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+input::placeholder,textarea::placeholder{color:var(--ink-3)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipgroup{display:grid;grid-template-columns:34px 1fr;gap:6px;align-items:start;margin-bottom:8px}
+.chiphead{font-size:11.5px;color:var(--ink-3);padding-top:7px;letter-spacing:.04em}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:13px;padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--bg);cursor:pointer;user-select:none;color:var(--ink-2)}
+.chip input{accent-color:var(--accent);margin:0;width:14px;height:14px}
+.chip:has(input:checked){background:var(--accent-soft);color:var(--accent-soft-ink);border-color:transparent}
+.chip:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:1px}
+.btn{font:inherit;font-size:14px;font-weight:600;padding:10px 16px;border-radius:7px;border:1px solid transparent;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn:hover{filter:brightness(1.05)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--ink-2);border-color:var(--line)}
+.btn.ghost:hover{background:var(--line-2);filter:none}
+.btn.sm{font-size:12.5px;padding:6px 10px;font-weight:500}
+.actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.parsed{margin-top:20px;padding-top:16px;border-top:1px solid var(--line-2)}
+.parsed h3{font-size:13px;margin:0 0 10px;color:var(--ink-2);font-weight:600}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center}
+.tagrow .k{font-size:12px;color:var(--ink-3);min-width:34px}
+.tag{font-size:12.5px;padding:3px 9px;border-radius:999px;background:var(--line-2);color:var(--ink-2)}
+.tag.area{background:var(--accent-soft);color:var(--accent-soft-ink)}
+.tag.school{background:var(--school-soft);color:var(--school-ink)}
+.tag.warn{background:var(--warn-soft);color:var(--warn-ink)}
+.note{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.results{display:flex;flex-direction:column;gap:16px;min-width:0}
+.summary{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px}
+.summary .count{font-size:14px;color:var(--ink-2);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.summary .count b{color:var(--ink);font-variant-numeric:tabular-nums;font-size:18px}
+.summary .copy{display:flex;gap:6px;flex-wrap:wrap}
+.group{padding:18px 20px 14px}
+.group-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+.group-head h2{font-size:17px;margin:0;font-weight:600;display:flex;align-items:center;gap:8px}
+.group-head .kind{font-size:11.5px;letter-spacing:.06em;padding:2px 7px;border-radius:4px;font-weight:600;background:var(--accent-soft);color:var(--accent-soft-ink)}
+.group-head .meta{font-size:12.5px;color:var(--ink-3);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.group-desc{font-size:12.5px;color:var(--ink-3);margin:0 0 10px}
+.kws{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 14px}
+.kw{display:flex;gap:8px;align-items:center;padding:5px 4px;border-radius:5px;font-size:14.5px;min-width:0}
+.kw:hover{background:var(--line-2)}
+.kw input{accent-color:var(--accent);margin:0;width:15px;height:15px;flex:none}
+.kw .t{flex:1;min-width:0;overflow-wrap:anywhere}
+.kw .loc{color:var(--accent);font-weight:600}
+.kw.school .loc{color:var(--school-ink)}
+.kw.off .t{opacity:.45;text-decoration:line-through}
+.kw .done{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--done-soft);color:var(--done-ink);flex:none}
+.star{flex:none;border:0;background:transparent;cursor:pointer;font-size:17px;line-height:1;color:var(--line);padding:2px 4px;border-radius:4px}
+.star:hover{background:var(--star-soft)}
+.star.on{color:var(--star)}
+.star:focus-visible{outline:2px solid var(--accent)}
+.empty{padding:40px 20px;text-align:center;color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-size:13.5px;opacity:0;transition:opacity .18s,transform .18s;pointer-events:none;max-width:90vw}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.foot{margin-top:40px;font-size:12.5px;color:var(--ink-3);text-align:center}
+.foot a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">네이버 블로그 · 통합검색 순위 추적</div>
+    <h1>블로그 순위체크 키워드 정리</h1>
+    <p class="lede">학원이 블로그 글에 쓸 키워드를 지역·학교·과목·대상으로 넣으면, 통합검색 첫 페이지에서 매주 순위를 잴 키워드 목록을 그룹별로 만들어 줍니다. 수량 제한 없이 모두 뽑고, 어색한 것만 끄고, 핵심에 별을 붙인 뒤 복사해 순위판에 넣으세요.</p>
+  </header>
+
+  <div class="rule"><b>플레이스 키워드와 다른 점</b> — 플레이스는 지역·학교 + 과목 조합만 봅니다. 블로그는 글로 자리를 잡는 싸움이라 <b>학년·연령(7세 영어, 영어학원 4학년), 시험(잠실여중 영어 중간고사), 탐색형(추천·후기·비용), 고민형(레벨테스트·늦게 시작)</b> 키워드까지 함께 추적합니다. 그래도 순위 의미가 있으려면 모든 키워드는 <b>지역명 또는 학교명으로 시작</b>해야 합니다. 개수 제한은 두지 않습니다. 후보를 다 뽑아 놓고 글로 공략할 키워드를 고르는 것이 목적입니다.</div>
+
+  <div class="grid">
+    <section class="panel input-panel">
+      <div class="chips" style="margin-bottom:14px"><span class="hint" style="margin:0 2px 0 0">예시 불러오기</span><button type="button" class="btn sm ghost" id="exEng">영어학원</button><button type="button" class="btn sm ghost" id="exMath">수학학원</button><button type="button" class="btn sm ghost" id="exTkd">태권도학원</button><button type="button" class="btn sm ghost" id="exDance">무용학원</button><button type="button" class="btn sm ghost" id="exMusic">음악학원</button></div>
+      <label class="field" for="locs">지역·학교 <span class="hint">쉼표로 구분</span></label>
+      <input type="text" id="locs" placeholder="예: 송파동, 중대초, 잠실여중, 가락중">
+
+      <label class="field" for="subject">과목</label>
+      <input type="text" id="subject" placeholder="예: 영어, 수학, 태권도">
+
+      <label class="field">대상</label>
+      <div class="chips" id="levels">
+        <label class="chip"><input type="checkbox" value="유아" id="lv-유아">유아</label>
+        <label class="chip"><input type="checkbox" value="어린이" id="lv-어린이" checked>어린이</label>
+        <label class="chip"><input type="checkbox" value="키즈" id="lv-키즈">키즈</label>
+        <label class="chip"><input type="checkbox" value="초등" id="lv-초등" checked>초등</label>
+        <label class="chip"><input type="checkbox" value="중등" id="lv-중등" checked>중등</label>
+        <label class="chip"><input type="checkbox" value="고등" id="lv-고등">고등</label>
+      </div>
+
+      <label class="field">학년·연령 <span class="hint">글로 노릴 학년만</span></label>
+      <div class="chips" id="grades">
+        <label class="chip"><input type="checkbox" value="5세" id="g-5세">5세</label>
+        <label class="chip"><input type="checkbox" value="6세" id="g-6세">6세</label>
+        <label class="chip"><input type="checkbox" value="7세" id="g-7세" checked>7세</label>
+        <label class="chip"><input type="checkbox" value="1학년" id="g-1학년">1학년</label>
+        <label class="chip"><input type="checkbox" value="2학년" id="g-2학년">2학년</label>
+        <label class="chip"><input type="checkbox" value="3학년" id="g-3학년" checked>3학년</label>
+        <label class="chip"><input type="checkbox" value="4학년" id="g-4학년" checked>4학년</label>
+        <label class="chip"><input type="checkbox" value="5학년" id="g-5학년" checked>5학년</label>
+        <label class="chip"><input type="checkbox" value="6학년" id="g-6학년">6학년</label>
+        <label class="chip"><input type="checkbox" value="예비중" id="g-예비중">예비중</label>
+        <label class="chip"><input type="checkbox" value="중학생" id="g-중학생" checked>중학생</label>
+        <label class="chip"><input type="checkbox" value="예비고" id="g-예비고">예비고</label>
+        <label class="chip"><input type="checkbox" value="고등학생" id="g-고등학생">고등학생</label>
+        <label class="chip"><input type="checkbox" value="성인" id="g-성인">성인</label>
+      </div>
+
+      <label class="field">강점·프로그램 <span class="hint">학원이 내세우는 것만</span></label>
+      <div id="modSets"></div>
+      <input type="text" id="mods" placeholder="직접 추가 · 쉼표로 구분" style="margin-top:8px">
+
+      <label class="field">함께 만들 그룹</label>
+      <div class="chips" id="groupsOn">
+        <label class="chip"><input type="checkbox" value="exam" id="go-exam" checked>시험 (중간·기말고사)</label>
+        <label class="chip"><input type="checkbox" value="explore" id="go-explore" checked>탐색형 (추천·후기·비용·수업·체험)</label>
+        <label class="chip"><input type="checkbox" value="concern" id="go-concern">고민형 (레벨테스트·늦게 시작)</label>
+      </div>
+
+      <label class="field" for="titles">이미 쓴 글 제목 <span class="hint">선택 · 한 줄에 하나</span></label>
+      <textarea id="titles" placeholder="블로그 글 제목을 붙여넣으면 이미 글이 있는 키워드에 '글 있음' 표시가 붙습니다"></textarea>
+
+      <div class="actions">
+        <button class="btn" id="runBtn">키워드 정리</button>
+        <button class="btn ghost" id="clearBtn">비우기</button>
+      </div>
+
+      <div class="parsed" id="parsed"></div>
+    </section>
+
+    <section class="results" id="results"></section>
+  </div>
+  <p class="foot">학원메이트 · 친절한 마케팅 수강생용 도구 · <a href="/">학원메이트 홈</a></p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const MAX = Infinity, CORE_MAX = Infinity;
+  const LEVEL_ORDER = ['유아','어린이','키즈','초등','중등','고등'];
+  const MODS = {
+    '파닉스':{levels:['유아','어린이','키즈','초등'],pos:'pre',standalone:true},
+    '내신':{levels:['중등','고등'],pos:'post'},
+    '수능':{levels:['고등'],pos:'pre'},
+    '회화':{levels:null,pos:'post'},
+    '문법':{levels:null,pos:'post'},'독해':{levels:null,pos:'post'},'리딩':{levels:null,pos:'post'},
+    '라이팅':{levels:null,pos:'post'},'스피킹':{levels:null,pos:'post'},'듣기':{levels:null,pos:'post'},
+    '원어민':{levels:null,pos:'pre'},'화상':{levels:null,pos:'pre'},
+    '심화':{levels:null,pos:'post'},'기초':{levels:null,pos:'post'},
+    '사고력':{levels:['어린이','키즈','초등'],pos:'pre'},'연산':{levels:['어린이','키즈','초등'],pos:'pre',standalone:true},
+    '서술형':{levels:['초등','중등'],pos:'both'},
+    '입시':{levels:['초등','중등','고등'],pos:'both'},
+    '경시':{levels:['초등','중등'],pos:'post'},
+    '영재':{levels:['초등','중등'],pos:'pre'},'특목고':{levels:['중등'],pos:'pre'},'외고':{levels:['중등'],pos:'pre'},'자사고':{levels:['중등'],pos:'pre'},
+    '소수정예':{levels:null,pos:'pre'},'1:1':{levels:null,pos:'pre'},'일대일':{levels:null,pos:'pre'},
+    '기출':{levels:['중등','고등'],pos:'post'},'단과':{levels:['중등','고등'],pos:'post'},
+    '원서읽기':{levels:['어린이','키즈','초등','중등'],pos:'pre',standalone:true,noSubject:true,alt:'원서'},
+    '디베이트':{levels:['초등','중등'],pos:'pre',standalone:true,noSubject:true},
+    '에세이':{levels:['초등','중등'],pos:'pre',standalone:true,noSubject:true},
+    '도형':{levels:['초등','중등'],pos:'post'},
+    '단원평가':{levels:['초등'],pos:'post',sep:true},
+    '줄넘기':{levels:['유아','어린이','키즈','초등'],pos:'pre',standalone:true,noSubject:true},
+    '품새':{levels:null,pos:'post',sep:true},'겨루기':{levels:null,pos:'post',sep:true},'시범단':{levels:null,pos:'post',sep:true},
+    '승급심사':{levels:null,pos:'post',sep:true},'체력':{levels:null,pos:'post',sep:true},'키성장':{levels:['유아','어린이','키즈','초등'],pos:'post',sep:true},
+    '인성':{levels:null,pos:'post',sep:true},'예절':{levels:null,pos:'post',sep:true},'집중력':{levels:['유아','어린이','키즈','초등'],pos:'post',sep:true},
+    '방과후':{levels:['어린이','키즈','초등'],pos:'pre'},
+    '발레':{levels:null,pos:'pre',standalone:true,noSubject:true},'한국무용':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '현대무용':{levels:null,pos:'pre',standalone:true,noSubject:true},'재즈댄스':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '콩쿠르':{levels:null,pos:'post',sep:true},'자세교정':{levels:null,pos:'post',sep:true},'스트레칭':{levels:null,pos:'post',sep:true},'유연성':{levels:null,pos:'post',sep:true},
+    '취미':{levels:[],pos:'pre'},
+    '피아노':{levels:null,pos:'pre',standalone:true,noSubject:true},'바이올린':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '첼로':{levels:null,pos:'pre',standalone:true,noSubject:true},'플루트':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '드럼':{levels:null,pos:'pre',standalone:true,noSubject:true},'기타':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '우쿨렐레':{levels:null,pos:'pre',standalone:true,noSubject:true},'보컬':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '작곡':{levels:null,pos:'pre',standalone:true,noSubject:true},'실용음악':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '이론':{levels:null,pos:'post'},'발표회':{levels:null,pos:'post',sep:true},'예중':{levels:['초등'],pos:'pre'},'예고':{levels:['중등'],pos:'pre'},'차량운행':{levels:null,pos:'post',sep:true},'성인':{levels:null,pos:'pre'},
+    '교과':{levels:['초등','중등'],pos:'pre'},
+    '창의':{levels:['어린이','키즈','초등'],pos:'pre'},
+    '교구':{levels:['유아','어린이','키즈','초등'],pos:'pre'},
+    '융합':{levels:['초등','중등'],pos:'pre'},
+    '주산':{levels:['유아','어린이','키즈','초등'],pos:'pre',standalone:true,noSubject:true},
+    '올림피아드':{levels:['초등','중등'],pos:'pre',standalone:true,noSubject:true},
+    'KMC':{levels:['초등','중등'],pos:'pre',standalone:true,noSubject:true},
+    '내신수학':{levels:['중등','고등'],pos:'pre',standalone:true,noSubject:true}
+  };
+  const MOD_ALIAS = {'원서':'원서읽기','영어원서':'원서읽기','원서수업':'원서읽기','영어디베이트':'디베이트','영어에세이':'에세이','그래머':'문법',
+    '수학경시':'경시','경시대회':'경시','수학올림피아드':'올림피아드','창의수학':'창의','교구수학':'교구','사고력수학':'사고력','연산수학':'연산','도형수학':'도형','서술형수학':'서술형','교과수학':'교과','융합수학':'융합','주산암산':'주산','암산':'주산','줄넘기교실':'줄넘기','차량':'차량운행','성인태권도':'성인','예중입시':'입시','예고입시':'입시','대입':'입시','콩쿨':'콩쿠르','음악이론':'이론','연주회':'발표회','통기타':'기타','취미반':'취미','성인반':'성인'};
+  const BANNED = ['선행','선행학습','중등선행','고등선행','중등수학선행','고등수학선행'];
+  const PLACES = ['영어도서관','수학도서관','영어유치원','놀이학교','영어놀이터','독서실','스터디카페','영어공부방','수학공부방','공부방'];
+  const MOD_SETS = [
+    {name:'영어', match:['영어','영어회화','어학'], items:['파닉스','문법','회화','독해','리딩','라이팅','스피킹','원서읽기','디베이트','에세이','원어민','화상','영어도서관']},
+    {name:'수학', match:['수학'], items:['연산','사고력','서술형','단원평가','도형','경시','올림피아드','교과','창의','교구','주산','수학도서관']},
+    {name:'태권도', match:['태권도'], items:['줄넘기','품새','겨루기','시범단','승급심사','체력','키성장','집중력','인성','예절','방과후']},
+    {name:'무용', match:['무용','발레','댄스'], items:['발레','한국무용','현대무용','재즈댄스','콩쿠르','자세교정','스트레칭','유연성','예중','예고']},
+    {name:'음악', match:['음악','피아노','바이올린','실용음악','보컬'], items:['피아노','바이올린','첼로','플루트','드럼','기타','우쿨렐레','보컬','작곡','실용음악','이론','콩쿠르','발표회','예중','예고']},
+    {name:'교과', match:['영어','수학','국어','과학','논술','사회','한국사','독서','글쓰기'], items:['내신','심화','기초','영재','특목고','기출','단과']},
+    {name:'공통', match:null, items:['취미','입시','수능','소수정예','1:1','차량운행','공부방','스터디카페']}
+  ];
+  function renderModSets(){
+    const S = $('subject').value.trim();
+    const keep = new Set([...document.querySelectorAll('#modSets input:checked')].map(i=>i.value));
+    const html = MOD_SETS.filter(set=>!set.match || set.match.some(m=>S.includes(m))).map(set=>
+      `<div class="chipgroup"><span class="chiphead">${set.name}</span><div class="chips">`+
+      set.items.map(v=>`<label class="chip"><input type="checkbox" value="${v}" id="m-${v.replace(':','')}" ${keep.has(v)?'checked':''}>${v}</label>`).join('')+
+      `</div></div>`).join('');
+    $('modSets').innerHTML = html || '<p class="note">과목을 적으면 그 업종에 맞는 강점 목록이 나옵니다. 목록이 없는 업종은 아래 칸에 직접 적어 주세요.</p>';
+  }
+  const ARTS = ['태권도','무용','발레','피아노','미술','음악','줄넘기','수영','축구','농구','검도','합기도','유도','주짓수','댄스','보컬','바이올린','드럼','기타','체육','첼로','플루트','우쿨렐레','실용음악','작곡'];
+  const ARTS_FORM = {'태권도':'태권도장','합기도':'합기도장','유도':'유도장','검도':'검도장','미술':'미술교습소','피아노':'피아노교습소'};
+  const EXPLORE = ['추천','후기','비용'];
+  const CONCERN_ARTS = ['몇 살부터','처음','적응'];
+  const CONCERN = ['레벨테스트','늦게 시작','학원 고르는 법'];
+  const EXAMS = ['중간고사','기말고사'];
+
+  const AREA_SUFFIX = '(사거리|신도시|지구|시장|마을|아파트|동|역|구|읍|면|리|가|로|시|군)';
+  const WHOLE_AREA = new RegExp('^[가-힣0-9]{1,6}'+AREA_SUFFIX+'$');
+  function schoolType(name){
+    if(/(초등학교|초)$/.test(name)) return '초';
+    if(/(중학교|여중|남중|중)$/.test(name)) return '중';
+    if(/(고등학교|여고|남고|고)$/.test(name)) return '고';
+    return null;
+  }
+  const SCHOOL_LEVELS = {'초':['어린이','키즈','초등'],'중':['중등'],'고':['고등']};
+  function classify(name){
+    name = name.trim(); if(!name) return null;
+    const t = schoolType(name);
+    if(t && !WHOLE_AREA.test(name)) return {name,kind:'school',type:t};
+    return {name,kind:'area'};
+  }
+  const $ = id=>document.getElementById(id);
+  const checked = id=>[...document.querySelectorAll('#'+id+' input:checked')].map(i=>i.value);
+  const uniq = a=>[...new Set(a)];
+  const norm = s=>s.replace(/\s+/g,'');
+
+  function build(){
+    const locs=[]; $('locs').value.split(/[,、\n]+/).map(s=>s.trim()).filter(Boolean).forEach(n=>{ const c=classify(n); if(c && !locs.some(x=>x.name===c.name)) locs.push(c); });
+    const S = $('subject').value.trim();
+    const levels = LEVEL_ORDER.filter(l=>checked('levels').includes(l));
+    const grades = checked('grades');
+    const chipMods = [...document.querySelectorAll('#modSets input:checked')].map(i=>i.value);
+    const rawMods = uniq(chipMods.concat($('mods').value.split(/[,、\n]+/)).map(s=>norm(s)).filter(Boolean).map(m=>{ if(m==='공부방'&&S) return S+'공부방'; return MOD_ALIAS[m]||m; }));
+    const banned = rawMods.filter(m=>BANNED.includes(m)||m.includes('선행'));
+    const isPlace = m=>PLACES.includes(m)||/공부방$/.test(m);
+    const places = rawMods.filter(isPlace);
+    const mods = rawMods.filter(m=>!isPlace(m)&&!banned.includes(m));
+    const on = checked('groupsOn');
+    const areas = locs.filter(l=>l.kind==='area'), schools = locs.filter(l=>l.kind==='school'), unknown = locs.filter(l=>l.kind==='unknown');
+
+    const groups=[];
+    const G=(id,title,desc)=>{ const g={id,title,desc,kws:[]}; g.add=(k,loc)=>{ if(!g.kws.some(x=>x.text===k)) g.kws.push({text:k,loc}); }; groups.push(g); return g; };
+
+    const g1 = G('base','지역·종합','검색량이 가장 큰 기본형. 플레이스 키워드와 같지만 여기서는 글 순위를 봅니다.');
+    areas.forEach(a=>{
+      const L=a.name+' ';
+      if(S){ g1.add(L+S+'학원',a); if(ARTS.includes(S)){ g1.add(L+S,a); if(ARTS_FORM[S]) g1.add(L+ARTS_FORM[S],a); } levels.forEach(l=>g1.add(L+l+S+'학원',a)); levels.forEach(l=>g1.add(L+l+S,a)); }
+    });
+
+    const g2 = G('school','학교','학교명 뒤에는 대상 단어를 붙이지 않습니다. 학부모가 학교 이름으로 검색하는 흐름.');
+    schools.forEach(s=>{
+      const L=s.name+' ', nat=SCHOOL_LEVELS[s.type]||[];
+      if(S){ if(ARTS.includes(S)) g2.add(L+S,s); else g2.add(L+S+'학원',s); }
+      places.forEach(P=>g2.add(L+P,s));
+      mods.forEach(M=>{
+        const d=MODS[M]; if(d && d.levels && !d.levels.some(l=>nat.includes(l))) return;
+        if(!S){ g2.add(L+M,s); return; }
+        if(!d){ g2.add(L+S+' '+M,s); return; }
+        if(d.noSubject){ g2.add(L+M,s); if(d.alt) g2.add(L+S+d.alt,s); return; }
+        if(d.sep){ g2.add(L+S+' '+M,s); return; }
+        if(d.standalone){ g2.add(L+M,s); g2.add(L+M+'학원',s); }
+        else if(d.pos==='post'){ g2.add(L+S+M,s); }
+        else if(d.pos==='both'){ g2.add(L+M+S,s); g2.add(L+S+M,s); }
+        else { g2.add(L+M+S,s); }
+      });
+    });
+
+    const g2b = G('exam','시험','중·고등은 시험 직전 검색이 몰립니다. 학교별 중간·기말 글은 시즌마다 한 편씩.');
+    if(on.includes('exam') && S && !ARTS.includes(S)){
+      schools.filter(s=>s.type==='중'||s.type==='고').forEach(s=>{
+        EXAMS.forEach(x=>g2b.add(s.name+' '+S+' '+x,s));
+      });
+      if(levels.includes('중등')||levels.includes('고등')){
+        areas.forEach(a=>EXAMS.forEach(x=>g2b.add(a.name+' '+S+' '+x,a)));
+      }
+    }
+
+    const g3 = G('mods','강점·프로그램','학원이 내세우는 프로그램. 대상에 맞는 조합만 만듭니다 (파닉스→유아·초등, 내신→중·고등).');
+    areas.forEach(a=>{
+      const L=a.name+' ';
+      places.forEach(P=>g3.add(L+P,a));
+      mods.forEach(M=>{
+        const d=MODS[M];
+        const ml = d && d.levels ? levels.filter(l=>d.levels.includes(l)) : levels;
+        if(!d){ if(S){ g3.add(L+S+' '+M,a); } else g3.add(L+M,a); return; }
+        if(d.sep&&S){ g3.add(L+S+' '+M,a); if(d.levels) ml.forEach(l=>g3.add(L+l+S+' '+M,a)); return; }
+        if(d.noSubject){ g3.add(L+M,a); g3.add(L+M+'학원',a); ml.forEach(l=>g3.add(L+l+M,a)); if(d.alt&&S){ g3.add(L+S+d.alt,a); ml.forEach(l=>g3.add(L+l+S+d.alt,a)); } return; }
+        if(d.standalone){ g3.add(L+M,a); g3.add(L+M+'학원',a); ml.forEach(l=>g3.add(L+l+M,a)); }
+        if(S){
+          if(d.pos==='both'){ g3.add(L+M+S,a); g3.add(L+S+M,a); g3.add(L+M+S+'학원',a); g3.add(L+S+M+'학원',a); ml.forEach(l=>{ g3.add(L+l+M+S,a); g3.add(L+l+S+M,a); }); }
+          else if(d.pos==='post'){ g3.add(L+S+M,a); ml.forEach(l=>g3.add(L+l+S+M,a)); g3.add(L+S+M+'학원',a); }
+          else if(!d.standalone){ g3.add(L+M+S,a); g3.add(L+M+S+'학원',a); ml.forEach(l=>g3.add(L+l+M+S,a)); }
+        }
+      });
+    });
+
+    const g4 = G('grade','학년·연령','플레이스 묶음이 거의 없는 순수 게시물 싸움. 학년 글 한 편이 바로 순위에 잡힙니다.');
+    areas.forEach(a=>{
+      const L=a.name+' ';
+      grades.forEach(g=>{
+        if(!S) return;
+        if(/세$/.test(g)){ g4.add(L+g+' '+S,a); if(ARTS.includes(S)) g4.add(L+S+' '+g,a); }
+        else if(/학년$/.test(g)) g4.add(L+S+'학원 '+g,a);
+        else if(g==='예비중'||g==='예비고') g4.add(L+g+' '+S,a);
+        else if(g==='성인'){ g4.add(L+'성인'+S,a); g4.add(L+'성인'+S+'학원',a); }
+        else g4.add(L+S+'학원 '+g,a);
+      });
+    });
+
+    const g5 = G('explore','탐색형','학원을 고르는 단계의 검색(추천·후기·비용·수업·체험). 글 제목에 그대로 쓰기 좋고, 상담 전환이 가장 가까운 키워드.');
+    if(on.includes('explore') && S){
+      areas.forEach(a=>{
+        const L=a.name+' ';
+        EXPLORE.forEach(w=>g5.add(L+S+'학원 '+w,a));
+        g5.add(L+S+'수업',a); levels.forEach(l=>g5.add(L+l+S+'수업',a));
+        g5.add(L+S+' 체험수업',a); g5.add(L+S+'학원 체험',a);
+        places.forEach(P=>g5.add(L+P+' 추천',a));
+        levels.filter(l=>ARTS.includes(S)?(l==='유아'||l==='어린이'||l==='키즈'||l==='초등'):(l==='초등'||l==='중등')).forEach(l=>g5.add(L+l+S+'학원 추천',a));
+      });
+      schools.forEach(s=>g5.add(s.name+' '+S+(ARTS.includes(S)?'':'학원')+' 추천',s));
+    }
+
+    const g6 = G('concern','고민형','학부모 고민을 그대로 담은 검색. 경쟁 글이 적어 새 블로그도 자리를 잡기 쉬운 편.');
+    if(on.includes('concern') && S){
+      areas.forEach(a=>{
+        const L=a.name+' ';
+        if(ARTS.includes(S)){ CONCERN_ARTS.forEach(w=>g6.add(L+S+' '+w,a)); g6.add(L+S+'학원 고르는 법',a); return; }
+        g6.add(L+S+' 레벨테스트',a);
+        g6.add(L+S+' 늦게 시작',a);
+        g6.add(L+S+'학원 고르는 법',a);
+        if(levels.includes('초등')) g6.add(L+'초등 '+S+' 처음',a);
+      });
+    }
+
+    return {groups:groups.filter(g=>g.kws.length), areas, schools, unknown, S, levels, grades, mods, places, banned};
+  }
+
+  let state = {groups:[], sel:new Set(), core:new Set(), titles:[]};
+
+  function run(){
+    const b = build();
+    renderParsed(b);
+    const existing = state.sel, existingCore = state.core;
+    const all = b.groups.flatMap(g=>g.kws.map(k=>k.text));
+    const seen = state.seen || new Set();
+    const sel = new Set(all.filter(k=>existing.has(k)));
+    all.forEach(k=>{ if(!seen.has(k) && sel.size<MAX) sel.add(k); });
+    const core = new Set(all.filter(k=>existingCore.has(k)));
+    if(!core.size){
+      const want=[];
+      b.areas.forEach(a=>{ want.push(a.name+' '+b.S+'학원'); if(b.levels.includes('초등')) want.push(a.name+' 초등'+b.S+'학원'); });
+      b.schools.forEach(s=>want.push(s.name+' '+b.S+'학원'));
+      if(b.mods[0] && b.areas[0]) want.push(b.areas[0].name+' '+b.mods[0]);
+      want.forEach(w=>{ if(core.size<CORE_MAX && all.includes(w)) core.add(w); });
+    }
+    state = {groups:b.groups, sel, core, seen:new Set(all), titles:$('titles').value.split('\n').map(norm).filter(Boolean)};
+    renderResults();
+    save();
+  }
+
+  function hasPost(kw){
+    if(!state.titles.length) return false;
+    const parts = kw.split(/\s+/).map(norm).filter(Boolean);
+    return state.titles.some(t=>parts.every(p=>t.includes(p)));
+  }
+
+  function esc(s){ return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function renderParsed(p){
+    const el=$('parsed');
+    const row=(k,tags,cls)=>`<div class="tagrow"><span class="k">${k}</span>${tags.length?tags.map(t=>`<span class="tag ${cls||''}">${esc(t)}</span>`).join(''):'<span class="tag">—</span>'}</div>`;
+    let html='<h3>인식된 요소</h3>';
+    html+=row('지역',p.areas.map(a=>a.name),'area');
+    html+=row('학교',p.schools.map(s=>s.name+'('+s.type+')'),'school');
+    html+='<p class="note">초·중·고로 끝나면 학교, 나머지는 지역명으로 읽습니다.</p>';
+    html+=row('과목',p.S?[p.S]:[]);
+    html+=row('대상',p.levels);
+    html+=row('강점',p.mods.map(m=>MODS[m]?m:m+'(일반)'));
+    if(p.banned.length) html+=row('제외',p.banned,'warn')+'<p class="note">"선행"은 학원 홍보에 쓸 수 없는 단어라 키워드를 만들지 않습니다.</p>';
+    if(p.places.length) html+=row('업종',p.places)+'<p class="note">업종명은 지역·학교만 붙입니다 (송파동 영어도서관). 다른 단어와 조합하지 않습니다.</p>';
+    if(p.mods.some(m=>!MODS[m])) html+='<p class="note">(일반)으로 표시된 단어는 사전에 없어 "지역 과목 단어" 한 가지만 만듭니다. 자주 쓰는 단어면 사전에 추가해 두세요.</p>';
+    if(!p.areas.length && !p.schools.length) html+='<p class="note">지역이나 학교를 하나 이상 넣어 주세요.</p>';
+    el.innerHTML=html;
+  }
+
+  function renderResults(){
+    const el=$('results');
+    const groups=state.groups;
+    if(!groups.length){ el.innerHTML='<div class="panel empty">왼쪽에 지역·학교와 과목을 넣고 "키워드 정리"를 누르세요.</div>'; return; }
+    const total=groups.reduce((n,g)=>n+g.kws.length,0);
+    const selN=state.sel.size, coreN=state.core.size;
+    const coreStat = `<span>핵심 <b>${coreN}</b></span>`;
+    let html=`<div class="panel summary"><div class="count"><span>선택 <b>${selN}</b></span>${coreStat}<span>후보 ${total}개</span></div>
+      <div class="copy"><button class="btn sm ghost" data-copy="list">전체 복사</button><button class="btn sm ghost" data-copy="table">표로 복사</button><button class="btn sm ghost" data-copy="config">순위판 설정 복사</button></div></div>`;
+    groups.forEach(g=>{
+      const n=g.kws.filter(k=>state.sel.has(k.text)).length;
+      html+=`<div class="panel group" data-g="${g.id}"><div class="group-head"><h2><span class="kind">${esc(g.title)}</span></h2><div class="meta"><span>${n}/${g.kws.length} 선택</span><button class="btn sm ghost" data-gall="${g.id}">모두 켜기</button><button class="btn sm ghost" data-gnone="${g.id}">모두 끄기</button><button class="btn sm ghost" data-gcopy="${g.id}">복사</button></div></div><p class="group-desc">${esc(g.desc)}</p><div class="kws">`;
+      g.kws.forEach(k=>{
+        const on=state.sel.has(k.text), core=state.core.has(k.text), post=hasPost(k.text);
+        const loc=k.loc.name;
+        html+=`<label class="kw ${k.loc.kind==='school'?'school':''} ${on?'':'off'}"><input type="checkbox" data-kw="${esc(k.text)}" ${on?'checked':''}><span class="t"><span class="loc">${esc(loc)}</span>${esc(k.text.slice(loc.length))}</span>${post?'<span class="done">글 있음</span>':''}<button type="button" class="star ${core?'on':''}" data-star="${esc(k.text)}" aria-label="핵심 키워드" title="핵심 키워드">★</button></label>`;
+      });
+      html+='</div></div>';
+    });
+    el.innerHTML=html;
+  }
+
+  function selectedByGroup(){ return state.groups.map(g=>({title:g.title,kws:g.kws.filter(k=>state.sel.has(k.text)).map(k=>k.text)})).filter(g=>g.kws.length); }
+  function textFor(kind, gid){
+    if(gid){ const g=state.groups.find(x=>x.id===gid); return g.kws.filter(k=>state.sel.has(k.text)).map(k=>k.text).join('\n'); }
+    const gs=selectedByGroup();
+    if(kind==='list') return gs.flatMap(g=>g.kws).map(k=>k+(state.core.has(k)?' ★':'')).join('\n');
+    if(kind==='table') return '그룹\t키워드\t핵심\n'+gs.flatMap(g=>g.kws.map(k=>g.title+'\t'+k+'\t'+(state.core.has(k)?'★':''))).join('\n');
+    if(kind==='config'){
+      const q=s=>JSON.stringify(s);
+      return 'const GROUPS = [\n'+gs.map(g=>'  {name:'+q(g.title)+', kws:['+g.kws.map(q).join(', ')+']}').join(',\n')+'\n];\nconst CORE = ['+gs.flatMap(g=>g.kws).filter(k=>state.core.has(k)).map(q).join(', ')+'];';
+    }
+    return '';
+  }
+  function copy(text,msg){
+    if(!text){ toast('선택된 키워드가 없습니다'); return; }
+    const done=()=>toast(msg);
+    const fallback=()=>{ const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){ toast('복사가 막혔습니다. 직접 선택해 복사하세요'); } ta.remove(); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done,fallback); else fallback();
+  }
+  let tt; function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),1600); }
+
+  const KEY='blog-kw-tool-v5';
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify({locs:$('locs').value,subject:$('subject').value,mods:$('mods').value,titles:$('titles').value,levels:checked('levels'),grades:checked('grades'),on:checked('groupsOn'),modChips:[...document.querySelectorAll('#modSets input:checked')].map(i=>i.value),sel:[...state.sel],core:[...state.core],seen:[...(state.seen||[])]})); }catch(e){} }
+  function load(){
+    try{
+      const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(!d) return false;
+      $('locs').value=d.locs||''; $('subject').value=d.subject||''; $('mods').value=d.mods||''; $('titles').value=d.titles||'';
+      [['levels',d.levels],['grades',d.grades],['groupsOn',d.on]].forEach(([id,vals])=>{ if(vals) document.querySelectorAll('#'+id+' input').forEach(i=>i.checked=vals.includes(i.value)); });
+      setModChips(d.modChips||[]);
+      state.sel=new Set(d.sel||[]); state.core=new Set(d.core||[]); state.seen=new Set(d.seen||d.sel||[]);
+      return true;
+    }catch(e){ return false; }
+  }
+
+  const EXAMPLES = {
+    eng:{locs:'송파동, 중대초, 잠실여중, 가락중',subject:'영어',modChips:['파닉스','문법','원서읽기','내신'],mods:'',levels:['어린이','키즈','초등','중등'],grades:['7세','3학년','4학년','5학년','중학생'],on:['exam','explore']},
+    music:{locs:'송파동, 중대초',subject:'음악',modChips:['피아노','바이올린','드럼','콩쿠르','발표회','예중'],mods:'',levels:['유아','어린이','초등'],grades:['5세','6세','7세','1학년','2학년','3학년'],on:['explore','concern']},
+    dance:{locs:'송파동, 중대초, 잠실여중',subject:'무용',modChips:['발레','한국무용','콩쿠르','자세교정','입시','예중'],mods:'',levels:['유아','어린이','초등','중등'],grades:['5세','6세','7세','1학년','2학년','3학년'],on:['explore','concern']},
+    tkd:{locs:'중계동, 수암초, 불암초',subject:'태권도',modChips:['줄넘기','품새','승급심사','키성장','인성','차량운행'],mods:'',levels:['유아','어린이','키즈','초등'],grades:['5세','6세','7세','1학년','2학년','3학년'],on:['explore','concern']},
+    math:{locs:'송파동, 중대초, 잠실여중, 가락중',subject:'수학',modChips:['연산','사고력','서술형','경시','내신'],mods:'',levels:['초등','중등'],grades:['7세','3학년','4학년','5학년','6학년','예비중','중학생'],on:['exam','explore']}
+  };
+  function setModChips(vals){ renderModSets(); document.querySelectorAll('#modSets input').forEach(i=>i.checked=vals.includes(i.value)); }
+  function loadExample(k){
+    const e=EXAMPLES[k]; $('locs').value=e.locs; $('subject').value=e.subject; $('mods').value=e.mods; $('titles').value='';
+    [['levels',e.levels],['grades',e.grades],['groupsOn',e.on]].forEach(([id,vals])=>document.querySelectorAll('#'+id+' input').forEach(i=>i.checked=vals.includes(i.value)));
+    setModChips(e.modChips);
+    state={groups:[],sel:new Set(),core:new Set(),titles:[]}; run();
+  }
+  $('exEng').addEventListener('click',()=>loadExample('eng'));
+  $('exMath').addEventListener('click',()=>loadExample('math'));
+  $('exTkd').addEventListener('click',()=>loadExample('tkd'));
+  $('exDance').addEventListener('click',()=>loadExample('dance'));
+  $('exMusic').addEventListener('click',()=>loadExample('music'));
+  $('subject').addEventListener('input',renderModSets);
+  $('runBtn').addEventListener('click',run);
+  $('clearBtn').addEventListener('click',()=>{
+    ['locs','subject','mods','titles'].forEach(id=>$(id).value='');
+    setModChips([]);
+    state={groups:[],sel:new Set(),core:new Set(),titles:[]};
+    $('parsed').innerHTML=''; renderResults(); try{ localStorage.removeItem(KEY); }catch(e){}
+  });
+  $('results').addEventListener('change',e=>{
+    const kw=e.target.dataset.kw; if(kw===undefined) return;
+    if(e.target.checked) state.sel.add(kw); else { state.sel.delete(kw); state.core.delete(kw); }
+    renderResults(); save();
+  });
+  $('results').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    e.preventDefault();
+    if(b.dataset.star!==undefined){
+      const kw=b.dataset.star;
+      if(state.core.has(kw)) state.core.delete(kw);
+      else { state.core.add(kw); state.sel.add(kw); }
+      renderResults(); save(); return;
+    }
+    if(b.dataset.gall){ state.groups.find(g=>g.id===b.dataset.gall).kws.forEach(k=>state.sel.add(k.text)); renderResults(); save(); return; }
+    if(b.dataset.gnone){ state.groups.find(g=>g.id===b.dataset.gnone).kws.forEach(k=>{state.sel.delete(k.text);state.core.delete(k.text);}); renderResults(); save(); return; }
+    if(b.dataset.gcopy){ copy(textFor('list',b.dataset.gcopy),'그룹 키워드를 복사했습니다'); return; }
+    if(b.dataset.copy){
+      const k=b.dataset.copy;
+      copy(textFor(k), k==='table'?'표로 복사했습니다 — 시트에 붙여넣으세요':k==='config'?'순위판 설정(GROUPS/CORE)을 복사했습니다':'전체 키워드를 복사했습니다');
+    }
+  });
+
+  if(!load()){
+    $('locs').value='송파동, 중대초, 잠실여중, 가락중';
+    $('subject').value='영어';
+    setModChips(['파닉스','내신']);
+  }
+  run();
+})();
+</script>
+</body>
+</html>
