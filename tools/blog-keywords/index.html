@@ -123,8 +123,8 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
       <label class="field" for="locs">지역·학교 <span class="hint">쉼표로 구분</span></label>
       <input type="text" id="locs" placeholder="예: 송파동, 중대초, 잠실여중, 가락중">
 
-      <label class="field" for="subject">과목</label>
-      <input type="text" id="subject" placeholder="예: 영어, 수학, 태권도">
+      <label class="field" for="subject">과목 <span class="hint">여럿이면 쉼표로</span></label>
+      <input type="text" id="subject" placeholder="예: 영어 / 태권도, 줄넘기">
 
       <label class="field">대상</label>
       <div class="chips" id="levels">
@@ -241,6 +241,11 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     {name:'교과', match:['영어','수학','국어','과학','논술','사회','한국사','독서','글쓰기'], items:['내신','심화','기초','영재','특목고','기출','단과']},
     {name:'공통', match:null, items:['취미','입시','수능','소수정예','1:1','차량운행','공부방','스터디카페']}
   ];
+  function modApplies(M,S){
+    const sets = MOD_SETS.filter(set=>set.items.includes(M));
+    if(!sets.length) return true;
+    return sets.some(set=>!set.match || set.match.some(m=>S.includes(m)));
+  }
   function renderModSets(){
     const S = $('subject').value.trim();
     const keep = new Set([...document.querySelectorAll('#modSets input:checked')].map(i=>i.value));
@@ -279,11 +284,12 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 
   function build(){
     const locs=[]; $('locs').value.split(/[,、\n]+/).map(s=>s.trim()).filter(Boolean).forEach(n=>{ const c=classify(n); if(c && !locs.some(x=>x.name===c.name)) locs.push(c); });
-    const S = $('subject').value.trim();
+    const SUBJECTS = uniq($('subject').value.split(/[,、\n/]+/).map(x=>x.trim()).filter(Boolean));
+    const S0 = SUBJECTS[0]||'';
     const levels = LEVEL_ORDER.filter(l=>checked('levels').includes(l));
     const grades = checked('grades');
     const chipMods = [...document.querySelectorAll('#modSets input:checked')].map(i=>i.value);
-    const rawMods = uniq(chipMods.concat($('mods').value.split(/[,、\n]+/)).map(s=>norm(s)).filter(Boolean).map(m=>{ if(m==='공부방'&&S) return S+'공부방'; return MOD_ALIAS[m]||m; }));
+    const rawMods = uniq(chipMods.concat($('mods').value.split(/[,、\n]+/)).map(s=>norm(s)).filter(Boolean).map(m=>{ if(m==='공부방'&&S0) return S0+'공부방'; return MOD_ALIAS[m]||m; }));
     const banned = rawMods.filter(m=>BANNED.includes(m)||m.includes('선행'));
     const isPlace = m=>PLACES.includes(m)||/공부방$/.test(m);
     const places = rawMods.filter(isPlace);
@@ -295,17 +301,24 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     const G=(id,title,desc)=>{ const g={id,title,desc,kws:[]}; g.add=(k,loc)=>{ if(!g.kws.some(x=>x.text===k)) g.kws.push({text:k,loc}); }; groups.push(g); return g; };
 
     const g1 = G('base','지역·종합','검색량이 가장 큰 기본형. 플레이스 키워드와 같지만 여기서는 글 순위를 봅니다.');
+    const g2 = G('school','학교','학교명 뒤에는 대상 단어를 붙이지 않습니다. 학부모가 학교 이름으로 검색하는 흐름.');
+    const g2b = G('exam','시험','중·고등은 시험 직전 검색이 몰립니다. 학교별 중간·기말 글은 시즌마다 한 편씩.');
+    const g3 = G('mods','강점·프로그램','학원이 내세우는 프로그램. 대상에 맞는 조합만 만듭니다 (파닉스→유아·초등, 내신→중·고등).');
+    const g4 = G('grade','학년·연령','플레이스 묶음이 거의 없는 순수 게시물 싸움. 학년 글 한 편이 바로 순위에 잡힙니다.');
+    const g5 = G('explore','탐색형','학원을 고르는 단계의 검색(추천·후기·비용·수업·체험). 글 제목에 그대로 쓰기 좋고, 상담 전환이 가장 가까운 키워드.');
+    const g6 = G('concern','고민형','학부모 고민을 그대로 담은 검색. 경쟁 글이 적어 새 블로그도 자리를 잡기 쉬운 편.');
+
+    (SUBJECTS.length?SUBJECTS:['']).forEach(S=>{
     areas.forEach(a=>{
       const L=a.name+' ';
       if(S){ g1.add(L+S+'학원',a); if(ARTS.includes(S)){ g1.add(L+S,a); if(ARTS_FORM[S]) g1.add(L+ARTS_FORM[S],a); } levels.forEach(l=>g1.add(L+l+S+'학원',a)); levels.forEach(l=>g1.add(L+l+S,a)); }
     });
 
-    const g2 = G('school','학교','학교명 뒤에는 대상 단어를 붙이지 않습니다. 학부모가 학교 이름으로 검색하는 흐름.');
     schools.forEach(s=>{
       const L=s.name+' ', nat=SCHOOL_LEVELS[s.type]||[];
       if(S){ if(ARTS.includes(S)) g2.add(L+S,s); else g2.add(L+S+'학원',s); }
-      places.forEach(P=>g2.add(L+P,s));
-      mods.forEach(M=>{
+      if(S===S0) places.forEach(P=>g2.add(L+P,s));
+      mods.filter(M=>modApplies(M,S)).forEach(M=>{
         const d=MODS[M]; if(d && d.levels && !d.levels.some(l=>nat.includes(l))) return;
         if(!S){ g2.add(L+M,s); return; }
         if(!d){ g2.add(L+S+' '+M,s); return; }
@@ -318,7 +331,6 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
       });
     });
 
-    const g2b = G('exam','시험','중·고등은 시험 직전 검색이 몰립니다. 학교별 중간·기말 글은 시즌마다 한 편씩.');
     if(on.includes('exam') && S && !ARTS.includes(S)){
       schools.filter(s=>s.type==='중'||s.type==='고').forEach(s=>{
         EXAMS.forEach(x=>g2b.add(s.name+' '+S+' '+x,s));
@@ -328,11 +340,10 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
       }
     }
 
-    const g3 = G('mods','강점·프로그램','학원이 내세우는 프로그램. 대상에 맞는 조합만 만듭니다 (파닉스→유아·초등, 내신→중·고등).');
     areas.forEach(a=>{
       const L=a.name+' ';
-      places.forEach(P=>g3.add(L+P,a));
-      mods.forEach(M=>{
+      if(S===S0) places.forEach(P=>g3.add(L+P,a));
+      mods.filter(M=>modApplies(M,S)).forEach(M=>{
         const d=MODS[M];
         const ml = d && d.levels ? levels.filter(l=>d.levels.includes(l)) : levels;
         if(!d){ if(S){ g3.add(L+S+' '+M,a); } else g3.add(L+M,a); return; }
@@ -347,7 +358,6 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
       });
     });
 
-    const g4 = G('grade','학년·연령','플레이스 묶음이 거의 없는 순수 게시물 싸움. 학년 글 한 편이 바로 순위에 잡힙니다.');
     areas.forEach(a=>{
       const L=a.name+' ';
       grades.forEach(g=>{
@@ -360,20 +370,18 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
       });
     });
 
-    const g5 = G('explore','탐색형','학원을 고르는 단계의 검색(추천·후기·비용·수업·체험). 글 제목에 그대로 쓰기 좋고, 상담 전환이 가장 가까운 키워드.');
     if(on.includes('explore') && S){
       areas.forEach(a=>{
         const L=a.name+' ';
         EXPLORE.forEach(w=>g5.add(L+S+'학원 '+w,a));
         g5.add(L+S+'수업',a); levels.forEach(l=>g5.add(L+l+S+'수업',a));
         g5.add(L+S+' 체험수업',a); g5.add(L+S+'학원 체험',a);
-        places.forEach(P=>g5.add(L+P+' 추천',a));
+        if(S===S0) places.forEach(P=>g5.add(L+P+' 추천',a));
         levels.filter(l=>ARTS.includes(S)?(l==='유아'||l==='어린이'||l==='키즈'||l==='초등'):(l==='초등'||l==='중등')).forEach(l=>g5.add(L+l+S+'학원 추천',a));
       });
       schools.forEach(s=>g5.add(s.name+' '+S+(ARTS.includes(S)?'':'학원')+' 추천',s));
     }
 
-    const g6 = G('concern','고민형','학부모 고민을 그대로 담은 검색. 경쟁 글이 적어 새 블로그도 자리를 잡기 쉬운 편.');
     if(on.includes('concern') && S){
       areas.forEach(a=>{
         const L=a.name+' ';
@@ -384,8 +392,9 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
         if(levels.includes('초등')) g6.add(L+'초등 '+S+' 처음',a);
       });
     }
+    });
 
-    return {groups:groups.filter(g=>g.kws.length), areas, schools, unknown, S, levels, grades, mods, places, banned};
+    return {groups:groups.filter(g=>g.kws.length), areas, schools, unknown, S:SUBJECTS.join(', '), levels, grades, mods, places, banned};
   }
 
   let state = {groups:[], sel:new Set(), core:new Set(), titles:[]};
@@ -490,20 +499,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     }catch(e){ return false; }
   }
 
-  const EXAMPLES = {
-    eng:{locs:'송파동, 중대초, 잠실여중, 가락중',subject:'영어',modChips:['파닉스','문법','원서읽기','내신'],mods:'',levels:['어린이','키즈','초등','중등'],grades:['7세','3학년','4학년','5학년','중학생'],on:['exam','explore']},
-    music:{locs:'송파동, 중대초',subject:'음악',modChips:['피아노','바이올린','드럼','콩쿠르','발표회','예중'],mods:'',levels:['유아','어린이','초등'],grades:['5세','6세','7세','1학년','2학년','3학년'],on:['explore','concern']},
-    dance:{locs:'송파동, 중대초, 잠실여중',subject:'무용',modChips:['발레','한국무용','콩쿠르','자세교정','입시','예중'],mods:'',levels:['유아','어린이','초등','중등'],grades:['5세','6세','7세','1학년','2학년','3학년'],on:['explore','concern']},
-    tkd:{locs:'중계동, 수암초, 불암초',subject:'태권도',modChips:['줄넘기','품새','승급심사','키성장','인성','차량운행'],mods:'',levels:['유아','어린이','키즈','초등'],grades:['5세','6세','7세','1학년','2학년','3학년'],on:['explore','concern']},
-    math:{locs:'송파동, 중대초, 잠실여중, 가락중',subject:'수학',modChips:['연산','사고력','서술형','경시','내신'],mods:'',levels:['초등','중등'],grades:['7세','3학년','4학년','5학년','6학년','예비중','중학생'],on:['exam','explore']}
-  };
   function setModChips(vals){ renderModSets(); document.querySelectorAll('#modSets input').forEach(i=>i.checked=vals.includes(i.value)); }
-  function loadExample(k){
-    const e=EXAMPLES[k]; $('locs').value=e.locs; $('subject').value=e.subject; $('mods').value=e.mods;
-    [['levels',e.levels],['grades',e.grades],['groupsOn',e.on]].forEach(([id,vals])=>document.querySelectorAll('#'+id+' input').forEach(i=>i.checked=vals.includes(i.value)));
-    setModChips(e.modChips);
-    state={groups:[],sel:new Set(),core:new Set(),titles:[]}; run();
-  }
   $('subject').addEventListener('input',renderModSets);
   $('runBtn').addEventListener('click',run);
   $('clearBtn').addEventListener('click',()=>{
