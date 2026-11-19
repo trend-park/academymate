@@ -129,6 +129,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
         <button type="button" class="chip bizbtn" data-subject="태권도">태권도학원</button>
         <button type="button" class="chip bizbtn" data-subject="무용">무용학원</button>
         <button type="button" class="chip bizbtn" data-subject="음악">음악학원</button>
+        <button type="button" class="chip bizbtn" data-subject="미술">미술학원</button>
       </div>
 
       <label class="field" for="locs">지역·학교 <span class="hint">쉼표로 구분</span></label>
@@ -159,7 +160,13 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
         <label class="chip"><input type="checkbox" value="5학년" id="g-5학년" checked>5학년</label>
         <label class="chip"><input type="checkbox" value="6학년" id="g-6학년">6학년</label>
         <label class="chip"><input type="checkbox" value="예비중" id="g-예비중">예비중</label>
+        <label class="chip"><input type="checkbox" value="중1" id="g-중1">중1</label>
+        <label class="chip"><input type="checkbox" value="중2" id="g-중2">중2</label>
+        <label class="chip"><input type="checkbox" value="중3" id="g-중3">중3</label>
         <label class="chip"><input type="checkbox" value="중학생" id="g-중학생" checked>중학생</label>
+        <label class="chip"><input type="checkbox" value="고1" id="g-고1">고1</label>
+        <label class="chip"><input type="checkbox" value="고2" id="g-고2">고2</label>
+        <label class="chip"><input type="checkbox" value="고3" id="g-고3">고3</label>
         <label class="chip"><input type="checkbox" value="예비고" id="g-예비고">예비고</label>
         <label class="chip"><input type="checkbox" value="고등학생" id="g-고등학생">고등학생</label>
         <label class="chip"><input type="checkbox" value="성인" id="g-성인">성인</label>
@@ -229,6 +236,12 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     '드럼':{levels:null,pos:'pre',standalone:true,noSubject:true},'기타':{levels:null,pos:'pre',standalone:true,noSubject:true},
     '우쿨렐레':{levels:null,pos:'pre',standalone:true,noSubject:true},'보컬':{levels:null,pos:'pre',standalone:true,noSubject:true},
     '작곡':{levels:null,pos:'pre',standalone:true,noSubject:true},'실용음악':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '드로잉':{levels:null,pos:'pre',standalone:true,noSubject:true},'수채화':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '소묘':{levels:null,pos:'pre',standalone:true,noSubject:true},'아크릴':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '만화':{levels:null,pos:'pre',standalone:true,noSubject:true},'웹툰':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '클레이':{levels:null,pos:'pre',standalone:true,noSubject:true},'창의미술':{levels:['유아','어린이','키즈','초등'],pos:'pre',standalone:true,noSubject:true},
+    '오감미술':{levels:['유아','어린이','키즈'],pos:'pre',standalone:true,noSubject:true},'디자인':{levels:null,pos:'pre',standalone:true,noSubject:true},
+    '포트폴리오':{levels:['중등','고등'],pos:'post',sep:true},'공모전':{levels:null,pos:'post',sep:true},'전시회':{levels:null,pos:'post',sep:true},
     '이론':{levels:null,pos:'post'},'발표회':{levels:null,pos:'post',sep:true},'예중':{levels:['초등'],pos:'pre'},'예고':{levels:['중등'],pos:'pre'},'차량운행':{levels:null,pos:'post',sep:true},'성인':{levels:null,pos:'pre'},
     '교과':{levels:['초등','중등'],pos:'pre'},
     '창의':{levels:['어린이','키즈','초등'],pos:'pre'},
@@ -240,7 +253,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     '내신수학':{levels:['중등','고등'],pos:'pre',standalone:true,noSubject:true}
   };
   const MOD_ALIAS = {'원서':'원서읽기','영어원서':'원서읽기','원서수업':'원서읽기','영어디베이트':'디베이트','영어에세이':'에세이','그래머':'문법',
-    '수학경시':'경시','경시대회':'경시','수학올림피아드':'올림피아드','창의수학':'창의','교구수학':'교구','사고력수학':'사고력','연산수학':'연산','도형수학':'도형','서술형수학':'서술형','교과수학':'교과','융합수학':'융합','주산암산':'주산','암산':'주산','줄넘기교실':'줄넘기','차량':'차량운행','성인태권도':'성인','예중입시':'입시','예고입시':'입시','대입':'입시','콩쿨':'콩쿠르','음악이론':'이론','연주회':'발표회','통기타':'기타','취미반':'취미','성인반':'성인'};
+    '수학경시':'경시','경시대회':'경시','수학올림피아드':'올림피아드','창의수학':'창의','교구수학':'교구','사고력수학':'사고력','연산수학':'연산','도형수학':'도형','서술형수학':'서술형','교과수학':'교과','융합수학':'융합','주산암산':'주산','암산':'주산','줄넘기교실':'줄넘기','차량':'차량운행','성인태권도':'성인','예중입시':'입시','예고입시':'입시','대입':'입시','콩쿨':'콩쿠르','음악이론':'이론','연주회':'발표회','통기타':'기타','미술공모전':'공모전','유아미술':'오감미술','아동미술':'창의미술','입시미술':'입시','취미반':'취미','성인반':'성인'};
   const BANNED = ['선행','선행학습','중등선행','고등선행','중등수학선행','고등수학선행'];
   const PLACES = ['영어도서관','수학도서관','영어유치원','놀이학교','영어놀이터','독서실','스터디카페','영어공부방','수학공부방','공부방'];
   const MOD_SETS = [
@@ -249,6 +262,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
     {name:'태권도', match:['태권도'], items:['줄넘기','품새','겨루기','시범단','승급심사','체력','키성장','집중력','인성','예절','방과후']},
     {name:'무용', match:['무용','발레','댄스'], items:['발레','한국무용','현대무용','재즈댄스','콩쿠르','자세교정','스트레칭','유연성','예중','예고']},
     {name:'음악', match:['음악','피아노','바이올린','실용음악','보컬'], items:['피아노','바이올린','첼로','플루트','드럼','기타','우쿨렐레','보컬','작곡','실용음악','이론','콩쿠르','발표회','예중','예고']},
+    {name:'미술', match:['미술','드로잉','디자인'], items:['드로잉','수채화','소묘','아크릴','만화','웹툰','클레이','창의미술','오감미술','디자인','포트폴리오','공모전','전시회','예중','예고']},
     {name:'교과', match:['영어','수학','국어','과학','논술','사회','한국사','독서','글쓰기'], items:['내신','심화','기초','영재','특목고','기출','단과']},
     {name:'공통', match:null, items:['취미','입시','수능','소수정예','1:1','차량운행','공부방','스터디카페']}
   ];
@@ -375,6 +389,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
         if(!S) return;
         if(/세$/.test(g)){ g4.add(L+g+' '+S,a); if(ARTS.includes(S)) g4.add(L+S+' '+g,a); }
         else if(/학년$/.test(g)) g4.add(L+S+'학원 '+g,a);
+        else if(/^[중고][123]$/.test(g)){ g4.add(L+g+' '+S,a); g4.add(L+g+' '+S+'학원',a); }
         else if(g==='예비중'||g==='예비고') g4.add(L+g+' '+S,a);
         else if(g==='성인'){ g4.add(L+'성인'+S,a); g4.add(L+'성인'+S+'학원',a); }
         else g4.add(L+S+'학원 '+g,a);
